@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 25, 2021 at 08:52 PM
+-- Generation Time: Jan 25, 2021 at 09:11 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.1
 
@@ -78,6 +78,7 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `role` (`role`);
 
 --
