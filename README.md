@@ -27,3 +27,6 @@ git commit -m "Put a commit message here"
 
 When you are done with a feature and it works, use *git push* to update the Github repository.
 
+## Test Users
+
+The test users in the system are admin@muskingum.edu, student@muskingum.edu, and site@muskingum.edu.  Each one has the password *password*.
