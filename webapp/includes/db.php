@@ -49,3 +49,21 @@ function login_user ($email, $password)
     return False;
 }
 
+function get_user ($email)
+{
+    global $pdo;
+
+    $sql = "SELECT * FROM Users where email=:email";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':email', $email);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() == 0)
+        return False;
+    
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    return $user;
+}
