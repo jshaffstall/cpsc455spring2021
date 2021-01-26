@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 25, 2021 at 09:11 PM
+-- Generation Time: Jan 26, 2021 at 02:27 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.1
 
@@ -19,6 +19,51 @@ SET time_zone = "+00:00";
 --
 -- Database: `cpsc455spring2021`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `formfields`
+--
+
+CREATE TABLE `formfields` (
+  `id` int(11) NOT NULL,
+  `form` int(11) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `default` varchar(255) DEFAULT NULL,
+  `order` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `formfieldtypes`
+--
+
+CREATE TABLE `formfieldtypes` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `formfieldtypes`
+--
+
+INSERT INTO `formfieldtypes` (`id`, `name`) VALUES
+(1, 'Edit Field'),
+(2, 'Checkbox');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forms`
+--
+
+CREATE TABLE `forms` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -68,6 +113,26 @@ INSERT INTO `users` (`id`, `email`, `name`, `password`, `role`) VALUES
 --
 
 --
+-- Indexes for table `formfields`
+--
+ALTER TABLE `formfields`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `type` (`type`),
+  ADD KEY `form` (`form`);
+
+--
+-- Indexes for table `formfieldtypes`
+--
+ALTER TABLE `formfieldtypes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `forms`
+--
+ALTER TABLE `forms`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
@@ -86,6 +151,21 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `formfields`
+--
+ALTER TABLE `formfields`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `formfieldtypes`
+--
+ALTER TABLE `formfieldtypes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `forms`
+--
+ALTER TABLE `forms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
@@ -98,6 +178,13 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `formfields`
+--
+ALTER TABLE `formfields`
+  ADD CONSTRAINT `formfields_ibfk_1` FOREIGN KEY (`type`) REFERENCES `formfieldtypes` (`id`),
+  ADD CONSTRAINT `formfields_ibfk_2` FOREIGN KEY (`form`) REFERENCES `forms` (`id`);
 
 --
 -- Constraints for table `users`
