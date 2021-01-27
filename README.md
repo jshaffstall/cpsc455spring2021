@@ -4,7 +4,7 @@ This is the repository for the project for Software Engineering for Spring 2021.
 
 ## Setup Notes
 
-1) Clone this onto your system in the www folder of your Uniform Server install.  That will create a cpsc455spring2021 folder that contains everything.
+1) Clone this onto your system in the www folder of your Uniform Server install.  That will create a cpsc455spring2021 folder that contains everything.  See the bottom of this document for step by step cloning instructions if you need them.
 
 2) Start Uniform Server and go to http://localhost and then click on PhpMyAdmin
 
@@ -30,3 +30,17 @@ When you are done with a feature and it works, use *git push* to update the Gith
 ## Test Users
 
 The test users in the system are admin@muskingum.edu, student@muskingum.edu, and site@muskingum.edu.  Each one has the password *password*.
+
+## Cloning This Repository
+
+To get the repository into the right place:
+
+1) Open a file explorer and go to your UniserverZ/www folder.
+
+2) Right click and choose Git Bash Here
+
+3) Type: git clone https://github.com/jshaffstall/cpsc455spring2021.git
+
+## Opening Git Bash Subsequent Times
+
+After that, you want to open Git Bash (to commit, pull, push, etc) in the cpsc455spring2021 folder.  All your commands to commit, pull, push should be done in that folder.
