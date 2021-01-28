@@ -107,7 +107,7 @@
 		// Connect to database
 		$server = "localhost";
 		$user = "root";
-		$password = "deek";
+		$password = "cpsc455spring2021password";
 		$db = "cpsc455spring2021";
 		
 		try {
