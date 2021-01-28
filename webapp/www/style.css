@@ -1,0 +1,89 @@
+header {
+	background-color: black;
+}
+
+a {
+	font-family: "Verdana";
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	cursor: pointer;
+	font-size: 1.2em;
+	width: 10%;
+	padding: 12px 20px;
+	border-color: black;
+	display: inline-block;
+	border-width: 0px;
+}
+
+a:hover {
+	/* background-color: #7a7f7d; */
+	background-color: #7a7f7d;
+}
+
+/*
+  background: #298371;
+  color: white;
+  line-height: 104px;
+  width: 308px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  border-width: 0px;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  */
+
+form {
+	font-family: "Verdana";
+	font-size: 1.2em;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-right: 50px;
+	margin-left: 50px;
+}
+
+h1 {
+	font-family: "Verdana";
+}
+
+input[type=text], select {
+	font-size: 1em;
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	border-radius: 8px;
+}
+
+input[type=submit] {
+	font-family: "Verdana";
+	font-size: 1em;
+	cursor: pointer;
+	width: 100%;
+	background-color: #608ee5;
+	color: white;
+	padding: 14px 20px;
+	margin: 60px 0;
+	border-radius: 4px;
+}
+
+input[type=submit]:hover {
+	background-color: #6045e6;
+}
+
+button {
+	color: white;
+	background-color: black;
+	cursor: pointer;
+	font-size: 1em;
+	width: 10%;
+	padding: 12px 20px;
+	border-color: black;
+	
+}
+
+div {
+	border-radius: 5px;
+	background-color: #cccccc;
+	padding: 20px;
+}
