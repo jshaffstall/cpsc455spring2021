@@ -2,22 +2,19 @@
 
 // This is an example showing how to use the db functions
 
-require '../includes/db.php';
+require 'config.php';
+require $INCLUDES.'db.php';
 
 $roles = get_roles();
 
-foreach ($roles as $row)
-{
-    echo $row['name'].'<br>';
-}    
-
 if (login_user('admin@muskingum.edu', 'password'))
-    echo 'Logged in with password<br>';
+    $success_status = 'Logged in with password';
 else
-    echo 'Could not login with password<br>';
+    $success_status = 'Could not login with password';
     
 if (login_user('admin@muskingum.edu', 'notthepassword'))
-    echo 'Logged in with notthepassword<br>';
+    $fail_status = 'Logged in with notthepassword';
 else
-    echo 'Could not login with notthepassword<br>';
+    $fail_status = 'Could not login with notthepassword';
 
+echo $twig->render('db_example.html', ['roles' => $roles, 'success_status' => $success_status, 'fail_status' => $fail_status]);

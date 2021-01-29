@@ -1,0 +1,20 @@
+<html>
+<head><title>Example Page</title></html>
+</head>
+<body>
+<h2>Template Example</h2>
+<p><a href="https://twig.symfony.com/doc/2.x/templates.html">Click here for template docs</a>.  That goes to the Twig v2.x documentation, which is the version we need to use.</p>
+
+<p>Templates get stored in includes/templates as .html files.  See db_example.html (this file) for a simple example.</p>
+
+<h2>Roles from DB</h2>
+<ul>
+{% for role in roles %}
+<li>id: {{role.id}}, name: {{role.name}}</li>
+{% endfor %}
+</ul>
+
+{{ success_status }}<br>
+{{ fail_status }}
+</body>
+</html>
