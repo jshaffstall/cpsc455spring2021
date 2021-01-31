@@ -6,6 +6,9 @@ echo '
         <title> Login Page </title>
         <link rel="stylesheet" href ="style.css"
     </head>
+	<header>
+		<a href = "index.php"> Home Page </a>
+	</header>
     <body>
 
         <!-- TO DO: ADD ACTION.PHP FOR FORM -->
