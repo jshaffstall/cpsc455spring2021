@@ -8,7 +8,7 @@ if (!isset($TEMPLATES))
 if (!isset($INCLUDES))
     $INCLUDES = '../includes/';
 
-require $INCLUDES.'db.php';
+require_once $INCLUDES.'db.php';
 
 session_start();
 
