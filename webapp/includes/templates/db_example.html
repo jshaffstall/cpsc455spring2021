@@ -15,6 +15,12 @@
 </ul>
 
 {{ success_status }}<br>
-{{ fail_status }}
+{{ fail_status }}<br>
+
+{% if user %}
+User is logged in, email {{ user.email }}<br>
+{% else %}
+User is not logged in
+{% endif %}
 </body>
 </html>

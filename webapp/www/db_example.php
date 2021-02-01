@@ -3,7 +3,6 @@
 // This is an example showing how to use the db functions
 
 require 'config.php';
-require $INCLUDES.'db.php';
 
 $roles = get_roles();
 
