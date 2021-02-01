@@ -22,8 +22,10 @@ When you first start working with the repository, use Git Bash to do a *git pull
 
 Be sure to commit often so you get the benefit of rolling back to previous versions if needed:
 
+```
 git add .
 git commit -m "Put a commit message here"
+```
 
 When you are done with a feature and it works, use *git push* to update the Github repository.
 
