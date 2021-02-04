@@ -1,7 +1,7 @@
 <?php
 
 require 'config.php';
-require $INCLUDES.'db.php';
+
 
 echo '
 <DOCTYPE! html>

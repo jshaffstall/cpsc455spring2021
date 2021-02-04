@@ -1,27 +1,23 @@
 <?php
-echo '
-<DOCTYPE! html>
-<html>
-    <head>
-        <title> Login Page </title>
-        <link rel="stylesheet" href ="style.css"
-    </head>
-	<header>
-		<a href = "index.php"> Home Page </a>
-	</header>
-    <body>
 
-        <!-- TO DO: ADD ACTION.PHP FOR FORM -->
-        <form>
-            <label for "email">Email: </label>
-            <input type="text" id="email" placeholder="Email" name ="email" pattern = "email" title = "username@domainname">
-            <label for "password">Password: </label>
-            <input type="password" id="password" placeholder="Password" name ="password">
-            <input type="submit" value = "Submit">
-        </form>
+require 'config.php';
 
-    </body>
-</html>
-';
+
+if(isset($_POST['email'])){
+	$email = $_POST['email'];
+	$password = $_POST['password'];
+	
+	if(login_user($email, $password) != False){
+		$id = session_regenerate_id(true);
+		$_SESSION['user'] = $email;
+		header("Location: http://localhost/cpsc455spring2021/webapp/www/index.php");
+		exit();
+	}
+	else{
+		print("Email/Password combination not found");
+	}
+}
+
+echo $twig->render('login.html',['user' => $user]);
 
 ?>
