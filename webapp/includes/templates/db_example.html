@@ -14,6 +14,13 @@
 {% endfor %}
 </ul>
 
+<h2>Form Field Types</h2>
+<ul>
+{% for type in types %}
+<li>id: {{type.id}}, name: {{type.name}}</li>
+{% endfor %}
+</ul>
+
 {{ success_status }}<br>
 {{ fail_status }}<br>
 
