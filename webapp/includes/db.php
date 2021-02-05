@@ -129,3 +129,104 @@ function set_user_password ($email, $password)
     
     $stmt->execute();
 }
+
+function get_form_field_types()
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM Formfieldtypes ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute ();
+
+    return $stmt;
+}
+
+function get_form($name)
+{
+    global $pdo;
+	
+    $sql = "SELECT * FROM Forms where name=:name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function add_form ($name)
+{
+    global $pdo;
+
+	// Returns False if the name is already used by another form
+	// Returns the form object if creation is successful
+	
+    $sql = "SELECT * FROM Forms where name=:name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0)
+        return False;
+
+    $sql = "INSERT INTO Forms (name) VALUES (:name)";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':name', $name);
+    $stmt->execute();
+	
+	return get_form($name);
+}
+
+function get_form_fields($form)
+{
+    global $pdo;
+
+	$sql = "SELECT * FROM FormFields WHERE form=:form ORDER BY order";
+	
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':form', $form);
+    
+    $stmt->execute();
+	
+    return stmt;
+}
+
+function add_form_field ($form, $type, $label, $default, $order)
+{
+    global $pdo;
+
+    $sql = "INSERT INTO Formfields (form, type, label, default, order) VALUES (:form, :type, :label, :default, :order)";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':form', $form);
+    $stmt->bindValue(':type', $type);
+    $stmt->bindValue(':label', $label);
+    $stmt->bindValue(':default', $default);
+    $stmt->bindValue(':order', $order);
+    
+    $stmt->execute();
+}
+
+function delete_form_field($formfield)
+{
+	global $pdo;
+	
+    $sql = "DELETE FROM Formfields where id=:id";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':id', $formfield);
+    
+    $stmt->execute();
+}
+
+function update_form_field()
+{
+}
