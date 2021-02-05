@@ -21,9 +21,21 @@
 {% endfor %}
 </ul>
 
-{{ success_status }}<br>
-{{ fail_status }}<br>
+<h2>Forms</h2>
+<ul>
+{% for form in forms %}
+<li>id: {{form.id}}, name: {{form.name}}</li>
+{% endfor %}
+</ul>
 
+<h2>Form Fields</h2>
+<ul>
+{% for field in fields %}
+<li>id: {{field.id}}, type: {{field.type}}, label: {{field.label}}, order: {{field.order}}</li>
+{% endfor %}
+</ul>
+
+<h2>User Status</h2>
 {% if user %}
 User is logged in, email {{ user.email }}<br>
 {% else %}

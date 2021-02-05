@@ -141,6 +141,17 @@ function get_form_field_types()
     return $stmt;
 }
 
+function get_forms()
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM Forms ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute ();
+
+    return $stmt;
+}
+
 function get_form($name)
 {
     global $pdo;
@@ -188,7 +199,7 @@ function get_form_fields($form)
 {
     global $pdo;
 
-	$sql = "SELECT * FROM FormFields WHERE form=:form ORDER BY order";
+	$sql = "SELECT * FROM FormFields WHERE form=:form ORDER BY `order`";
 	
     $stmt = $pdo->prepare($sql);
     
@@ -196,14 +207,14 @@ function get_form_fields($form)
     
     $stmt->execute();
 	
-    return stmt;
+    return $stmt;
 }
 
 function add_form_field ($form, $type, $label, $default, $order)
 {
     global $pdo;
 
-    $sql = "INSERT INTO Formfields (form, type, label, default, order) VALUES (:form, :type, :label, :default, :order)";
+    $sql = "INSERT INTO Formfields (form, type, label, `default`, `order`) VALUES (:form, :type, :label, :default, :order)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
@@ -227,6 +238,18 @@ function delete_form_field($formfield)
     $stmt->execute();
 }
 
-function update_form_field()
+function update_form_field($formfield, $type, $label, $default, $order)
 {
+    global $pdo;
+
+    $sql = "UPDATE Formfields SET type=:type, label=:label, `default`=:default, `order`=:order WHERE id=:formfield";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formfield', $formfield);
+    $stmt->bindValue(':type', $type);
+    $stmt->bindValue(':label', $label);
+    $stmt->bindValue(':default', $default);
+    $stmt->bindValue(':order', $order);
+    
+    $stmt->execute();
 }
