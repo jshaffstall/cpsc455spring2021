@@ -5,9 +5,11 @@
         <link rel="stylesheet" href ="style.css"
      </head>
 	<header>
-		
-		<a href = "login.php"> Login Page </a>
-		{{user.role}}
+		{% if user == False %}
+			<a href = "login.php"> Login Page </a>
+		{% else %}
+			<a href = "logout.php"> Log Out </a>
+		{% endif %}
 		{% if user.role == '1' %}
 			<a href = "admin-panel.php"> Admin Panel </a>
 		{% endif %}
