@@ -6,7 +6,7 @@ function get_roles()
 {
     global $pdo;
     
-    $sql = "SELECT * FROM Roles ORDER BY name";
+    $sql = "SELECT * FROM roles ORDER BY name";
     $stmt = $pdo->prepare($sql);
     $stmt->execute ();
 
@@ -20,7 +20,7 @@ function add_user($name, $email, $role)
     if (get_user($email))
         return False;
     
-    $sql = "INSERT INTO Users (name, email, role) VALUES (:name, :email, :role)";
+    $sql = "INSERT INTO users (name, email, role) VALUES (:name, :email, :role)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':name', $name);
@@ -36,7 +36,7 @@ function login_user ($email, $password)
 {
     global $pdo;
 
-    $sql = "SELECT * FROM Users where email=:email";
+    $sql = "SELECT * FROM users where email=:email";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':email', $email);
@@ -58,7 +58,7 @@ function get_user ($email)
 {
     global $pdo;
 
-    $sql = "SELECT * FROM Users where email=:email";
+    $sql = "SELECT * FROM users where email=:email";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':email', $email);
@@ -77,7 +77,7 @@ function get_user_by_token ($token)
 {
     global $pdo;
 
-    $sql = "SELECT * FROM Users where token=:token";
+    $sql = "SELECT * FROM users where token=:token";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':token', $token);
@@ -96,7 +96,7 @@ function set_user_token ($email, $token)
 {
     global $pdo;
 
-    $sql = "UPDATE Users SET token=:token WHERE email=:email";
+    $sql = "UPDATE users SET token=:token WHERE email=:email";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':email', $email);
@@ -109,7 +109,7 @@ function clear_user_token ($email)
 {
     global $pdo;
 
-    $sql = "UPDATE Users SET token=NULL WHERE email=:email";
+    $sql = "UPDATE users SET token=NULL WHERE email=:email";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':email', $email);
@@ -121,7 +121,7 @@ function set_user_password ($email, $password)
 {
     global $pdo;
 
-    $sql = "UPDATE Users SET password=:password WHERE email=:email";
+    $sql = "UPDATE users SET password=:password WHERE email=:email";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':email', $email);
@@ -134,7 +134,7 @@ function get_form_field_types()
 {
     global $pdo;
     
-    $sql = "SELECT * FROM Formfieldtypes ORDER BY name";
+    $sql = "SELECT * FROM formfieldtypes ORDER BY name";
     $stmt = $pdo->prepare($sql);
     $stmt->execute ();
 
@@ -145,7 +145,7 @@ function get_forms()
 {
     global $pdo;
     
-    $sql = "SELECT * FROM Forms ORDER BY name";
+    $sql = "SELECT * FROM forms ORDER BY name";
     $stmt = $pdo->prepare($sql);
     $stmt->execute ();
 
@@ -156,7 +156,7 @@ function get_form($name)
 {
     global $pdo;
 	
-    $sql = "SELECT * FROM Forms where name=:name";
+    $sql = "SELECT * FROM forms where name=:name";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':name', $name);
@@ -176,7 +176,7 @@ function add_form ($name)
 	// Returns False if the name is already used by another form
 	// Returns the form object if creation is successful
 	
-    $sql = "SELECT * FROM Forms where name=:name";
+    $sql = "SELECT * FROM forms where name=:name";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':name', $name);
@@ -186,7 +186,7 @@ function add_form ($name)
     if ($stmt->rowCount() > 0)
         return False;
 
-    $sql = "INSERT INTO Forms (name) VALUES (:name)";
+    $sql = "INSERT INTO forms (name) VALUES (:name)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':name', $name);
@@ -199,7 +199,7 @@ function get_form_fields($form)
 {
     global $pdo;
 
-	$sql = "SELECT * FROM FormFields WHERE form=:form ORDER BY `order`";
+	$sql = "SELECT * FROM formfields WHERE form=:form ORDER BY `order`";
 	
     $stmt = $pdo->prepare($sql);
     
@@ -214,7 +214,7 @@ function add_form_field ($form, $type, $label, $default, $order)
 {
     global $pdo;
 
-    $sql = "INSERT INTO Formfields (form, type, label, `default`, `order`) VALUES (:form, :type, :label, :default, :order)";
+    $sql = "INSERT INTO formfields (form, type, label, `default`, `order`) VALUES (:form, :type, :label, :default, :order)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
@@ -230,7 +230,7 @@ function delete_form_field($formfield)
 {
 	global $pdo;
 	
-    $sql = "DELETE FROM Formfields where id=:id";
+    $sql = "DELETE FROM formfields where id=:id";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':id', $formfield);
@@ -242,7 +242,7 @@ function update_form_field($formfield, $type, $label, $default, $order)
 {
     global $pdo;
 
-    $sql = "UPDATE Formfields SET type=:type, label=:label, `default`=:default, `order`=:order WHERE id=:formfield";
+    $sql = "UPDATE formfields SET type=:type, label=:label, `default`=:default, `order`=:order WHERE id=:formfield";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':formfield', $formfield);
