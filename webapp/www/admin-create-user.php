@@ -1,24 +1,7 @@
-<html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-<link rel="stylesheet" href="style.css">
-<title> Create User </title>
-</head>
-
-<header>
-<a href="index.php"> Home </a>
-<a href="admin-panel.php"> Admin Panel </a>
-</header>
-
-<body>
-<h1> Create new user </h1>
-<p id="errorMessage"></p>
-
 <?php
-	require '../includes/db.php';
-
+	require 'config.php';
+	
+	$roles = get_roles();
 	$submitted = false;
 	
 	// TODO: check if valid email
@@ -32,10 +15,17 @@
 	
     displayForm();
 	
-	
 	function displayForm() {
-		$roles = get_roles();
-		require '../includes/admin-create-user-template.php';
+		global $twig;
+		global $roles;
+		echo $twig->render('admin-create-user-template.html', ['roles' => $roles]);
+	}
+	
+	function displayFormWithMessage($message) {
+		global $twig;
+		global $roles;
+		echo $twig->render('admin-create-user-template.html', ['roles' => $roles, 'message' => $message]);
+		exit();
 	}
 	
 	function submitForm() {
@@ -43,30 +33,57 @@
 		$name = $_POST["name"];
 		$email = $_POST["email"];
 		
-		// Ensure form is valid
-		if (! validForm($role, $name, $email)) {
-			return;
-		}
-		
-		else {
-			$uniqueEmail = add_user($name, $email, $role);
-			
-			// Check if user email already exists
-			if (! $uniqueEmail) {
-				echo '<script type="text/javascript">
-				document.getElementById("errorMessage").textContent = "User was not created: A user with that email already exists";
-				</script>';
-			
-				return;
-			}
-			
-		generateAndSetToken($email);
+		validateForm($name, $email, $role);
+		checkIfUniqueEmail($name, $email, $role);
+		sendEmail($email);
 		
 		// Report success
-		echo '<script type="text/javascript">
-			document.getElementById("errorMessage").textContent = "User was successfully created";
-			</script>';
+		$success = "User was successfully created";
+		displayFormWithMessage($success);
+	}
+	
+	function validateForm($name, $email, $role) {
+		$error = "";
+		
+		// An empty role shouldn't happen, but this is here just in case
+		if (isEmptyOrWhiteSpace($role)) {
+			$error = "Please select a role";
 		}
+		
+		else if (isEmptyOrWhiteSpace($name)) {
+			$error = "Please fill in the name field";
+		}
+		
+		else if (isEmptyOrWhiteSpace($email)) {
+			$error = "Please fill in the email field";
+		}
+		
+		if ($error != "") {
+			displayFormWithMessage($error);
+		}
+	}
+	
+	function checkIfUniqueEmail($name, $email, $role) {
+		$uniqueEmail = add_user($name, $email, $role);
+		
+		if (! $uniqueEmail) {
+			$error = "User was not created: A user with that email already exists";
+			displayFormWithMessage($error);
+		}
+	}
+	
+	function sendEmail($email) {
+		global $twig;
+		$token = generateAndSetToken($email);
+		
+		$message = $twig->render('password-email.html',['token' => $token]);
+		$subject = "Password reset";
+		
+		// send email
+		mail($email, $subject, $message);
+		
+		echo $message;
+		exit();
 	}
 	
 	function generateAndSetToken($email) {
@@ -78,6 +95,8 @@
 		}
 		
 		set_user_token ($email, $token);
+		
+		return $token;
 	}
 	
 	function isEmptyOrWhiteSpace($data) {
@@ -86,38 +105,4 @@
 		
 		return false;
 	}
-	
-	function validForm($role, $name, $email) {
-		
-		// An empty role shouldn't happen, but this is here just in case
-		if (isEmptyOrWhiteSpace($role)) {
-			echo "$role";
-			echo '<script type="text/javascript">
-			document.getElementById("errorMessage").textContent = "Please select a role";
-			</script>';
-			
-			return false;
-		}
-		
-		else if (isEmptyOrWhiteSpace($name)) {
-			echo '<script type="text/javascript">
-			document.getElementById("errorMessage").textContent = "Please fill in the name field";
-			</script>';
-			
-			return false;
-		}
-		
-		else if (isEmptyOrWhiteSpace($email)) {
-			echo '<script type="text/javascript">
-			document.getElementById("errorMessage").textContent = "Please fill in the email field";
-			</script>';
-			
-			return false;
-		}
-		
-		return true;
-	}
 ?>
-
-</body>
-</html>

@@ -1,0 +1,46 @@
+<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="stylesheet" href="style.css">
+<title> Create User </title>
+</head>
+
+<header>
+<a href="index.php"> Home </a>
+<a href="admin-panel.php"> Admin Panel </a>
+</header>
+
+<body>
+<h1> Create new user </h1>
+<p id="message"></p>
+
+<div>
+<form action="admin-create-user.php" method="post">
+
+Role <select name="role">
+
+{% for role in roles %}
+<option value="{{role.id}}"> {{role.name}} </option>
+{% endfor %}
+
+</select>
+<br>
+
+Name <input type="text" name="name">
+<br>
+
+E-mail <input type="text" name="email">
+<br>
+
+<input type="submit" name="user">
+</form>
+
+{% if message %}
+<script type="text/javascript"> document.getElementById("message").textContent = "{{message}}"; </script>
+{% endif %}
+
+</div>
+</body>
+</html>
