@@ -2,7 +2,6 @@
 
 require 'config.php';
 	
-	echo $twig->render('index.html',['user' => $user]);
-	
+	echo $twig->render('index.html',[]);
 	
 ?>

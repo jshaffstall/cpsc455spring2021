@@ -10,7 +10,7 @@ if(isset($_POST['email'])){
 	if(login_user($email, $password) != False){
 		$id = session_regenerate_id(true);
 		$_SESSION['user'] = $email;
-		header("Location: http://localhost/cpsc455spring2021/webapp/www/index.php");
+		header("Location: index.php");
 		exit();
 	}
 	else{
