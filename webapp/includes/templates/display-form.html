@@ -5,10 +5,18 @@
 		<link rel="stylesheet" href ="style.css"
 	</head>
 	<header>
-	
+		<a href = "index.php"> Home Page </a>
+		<a href = "list-forms.php"> Forms </a>
+		{% if user.role == '1' %}
+			<a href = "admin-panel.php"> Admin Panel </a>
+		{% endif %}
 	</header>
 	<body>
 	
+		<h1> {{form.name}} </h1>
+			{% for field in fields %}
+				<li>id: {{field.id}}, type: {{field.type}}, label: {{field.label}}, order: {{field.order}}</li>
+			{% endfor %}
 	
 	</body>
 </html>
