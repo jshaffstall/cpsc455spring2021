@@ -1,30 +1,9 @@
-<DOCTYPE! html>
-<html>
-    <head>
-        <title> Homepage </title>
-        <link rel="stylesheet" href ="style.css"
-     </head>
-	<header>
-		{% if user == False %}
-			<a href = "login.php"> Login Page </a>
-			
-		{% else %}
-			<a href = "logout.php"> Log Out </a>
-			<a href = "list-forms.php"> Forms </a>
-		{% endif %}
-		{% if user.role == '1' %}
-			<a href = "admin-panel.php"> Admin Panel </a>
-		{% endif %}
+{% extends "base.html" %}
 
-	</header>
-    <body>
-
-		<h1> Home Page </h1>
-		
-        <div>
-			
-		</div>
-
-    </body>
-	
-</html>
+{% block title %}Home{% endblock %}
+{% block content %}
+    <h1>Home</h1>
+    <p>
+        Some explanation of the site goes here.
+    </p>
+{% endblock %}

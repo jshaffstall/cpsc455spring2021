@@ -1,18 +1,7 @@
-<html>
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-<link rel="stylesheet" href="style.css">
-<title> Create User </title>
-</head>
-
-<header>
-<a href="index.php"> Home </a>
-<a href="admin-panel.php"> Admin Panel </a>
-</header>
-
-<body>
+{% block title %}Create User{% endblock %}
+{% block content %}
 <h1> Create new user </h1>
 <p id="message"></p>
 
@@ -41,6 +30,6 @@ E-mail <input type="text" name="email">
 <script type="text/javascript"> document.getElementById("message").textContent = "{{message}}"; </script>
 {% endif %}
 
-</div>
-</body>
-</html>
+{% endblock %}
+
+
