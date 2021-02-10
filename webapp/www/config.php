@@ -1,6 +1,7 @@
 <?php
 
 require_once 'vendor/autoload.php';
+require_once '../includes/globals.php';
 
 if (!isset($TEMPLATES))
     $TEMPLATES = '../includes/templates/';
