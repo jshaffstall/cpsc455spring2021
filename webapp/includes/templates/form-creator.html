@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> View Forms </title>
+</head>
+
+{% for form in forms %}
+<a href "form.html?form={{form.name}}"> {{form.name}}</a>
+<br>
+{% endfor %}
+
+<form action="form-creator.php" method="post">
+Form name <input type="text" name="form">
+<input type="submit" name="submit">
+</form>
+</html>

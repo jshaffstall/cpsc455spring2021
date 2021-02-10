@@ -74,9 +74,11 @@
 	
 	function sendEmail($email) {
 		global $twig;
+		global $siteurl;
+		
 		$token = generateAndSetToken($email);
 		
-		$message = $twig->render('password-email.html',['token' => $token]);
+		$message = $twig->render('password-email.html',['token' => $token, 'siteurl' => $siteurl]);
 		$subject = "Password reset";
 		
 		// send email
