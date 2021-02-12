@@ -96,7 +96,7 @@ function set_user_token ($email, $token)
 {
     global $pdo;
 
-    $sql = "UPDATE users SET token=:token WHERE email=:email";
+    $sql = "UPDATE users SET token=:token, token_issued=NOW() WHERE email=:email";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':email', $email);
@@ -109,7 +109,7 @@ function clear_user_token ($email)
 {
     global $pdo;
 
-    $sql = "UPDATE users SET token=NULL WHERE email=:email";
+    $sql = "UPDATE users SET token=NULL, token_issued=NULL WHERE email=:email";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':email', $email);

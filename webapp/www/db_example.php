@@ -9,4 +9,6 @@ $types = get_form_field_types();
 $forms = get_forms();
 $fields = get_form_fields(1);
 
+clear_user_token('admin@muskingum.edu');
+
 echo $twig->render('db_example.html', ['roles' => $roles, 'types' => $types, 'forms' => $forms, 'fields' => $fields]);
