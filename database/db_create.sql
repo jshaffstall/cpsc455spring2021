@@ -107,17 +107,18 @@ CREATE TABLE `users` (
   `name` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `role` int(11) DEFAULT NULL,
-  `token` varchar(255) DEFAULT NULL
+  `token` varchar(255) DEFAULT NULL,
+  `token_issued` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `name`, `password`, `role`, `token`) VALUES
-(1, 'admin@muskingum.edu', 'Test Admin', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 1, NULL),
-(2, 'student@muskingum.edu', 'Test Student', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 2, NULL),
-(3, 'site@muskingum.edu', 'Test Site', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 3, NULL);
+INSERT INTO `users` (`id`, `email`, `name`, `password`, `role`, `token`, `token_issued`) VALUES
+(1, 'admin@muskingum.edu', 'Test Admin', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 1, NULL, NULL),
+(2, 'student@muskingum.edu', 'Test Student', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 2, NULL, NULL),
+(3, 'site@muskingum.edu', 'Test Site', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 3, NULL, NULL);
 
 --
 -- Indexes for dumped tables
