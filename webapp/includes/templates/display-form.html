@@ -15,8 +15,26 @@
 	
 		<h1> {{form.name}} </h1>
 			{% for field in fields %}
-				<li>id: {{field.id}}, type: {{field.type}}, label: {{field.label}}, order: {{field.order}}</li>
+				{% if field.type == 1 %}
+					<h2> Edit Field </h2>
+					<input type="text" id="name" name="Name" value="Name">
+					<label for="name"> {{field.name}}</label><br>
+				{% endif %}
+				{% if field.type == 2 %}
+					<h2> CheckBoxes </h2>
+					<input type="checkbox" id="male" name="gender">
+					<label for="male"> M</label>
+					<input type="checkbox" id="female" name="gender">
+					<label for="female"> F</label><br>
+				{% endif %}
 			{% endfor %}
+			
+		<h2>Form Field Types</h2>
+			{% for type in types %}
+			<li>id: {{type.id}}, name: {{type.name}}</li>
+			{% endfor %}
+			
+			
 	
 	</body>
 </html>

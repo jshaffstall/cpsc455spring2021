@@ -1,11 +1,13 @@
 <?php
 
 require 'config.php';
-	
-$forms = get_forms();
-$fields = get_form_fields(1);
-$types = get_form_field_types();
 
-echo $twig->render('display-form.html',['forms' => $forms, 'fields' => $fields, 'types' => $types]);
+//var_dump($_GET);
+
+$_GET['form'];
+$types = get_form_field_types();
+$fields = get_form_fields($_GET['form']);
+
+echo $twig->render('display-form.html',['fields' => $fields, 'types' => $types]);
 
 ?>
