@@ -9,14 +9,14 @@
     <body>
 	<header>
 		{% if user == False %}
-			<a href = "login.php"> Login Page </a>
+			<a class="toplink" href = "login.php"> Login Page </a>
 			
 		{% else %}
-			<a href = "logout.php"> Log Out </a>
-			<a href = "list-forms.php"> Forms </a>
+			<a class="toplink" href = "logout.php"> Log Out </a>
+			<a class="toplink" href = "list-forms.php"> Forms </a>
 		{% endif %}
 		{% if user.role == '1' %}
-			<a href = "admin-panel.php"> Admin Panel </a>
+			<a class="toplink" href = "admin-panel.php"> Admin Panel </a>
 		{% endif %}
 	</header>
 	

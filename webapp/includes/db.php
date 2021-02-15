@@ -212,6 +212,26 @@ function get_form_fields($form)
     return $stmt;
 }
 
+function get_form_field($formfield)
+{
+    global $pdo;
+
+    $sql = "SELECT * FROM formfields, formfieldtypes WHERE formfields.id=:formfield and formfields.type=formfieldtypes.id";
+    
+	//$sql = "SELECT * FROM formfields WHERE form=:form ORDER BY `order`";
+	
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formfield', $formfield);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 function add_form_field ($form, $type, $label, $default, $order)
 {
     global $pdo;
