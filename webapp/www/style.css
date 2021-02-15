@@ -16,6 +16,11 @@ header {
 	border-width: 0px;
 }
 
+a {
+	font-family: "Verdana";
+	font-size: 1.2em;
+}
+
 a:hover {
 	background-color: #7a7f7d;
 }
