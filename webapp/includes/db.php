@@ -216,7 +216,7 @@ function get_form_field($formfield)
 {
     global $pdo;
 
-    $sql = "SELECT * FROM formfields, formfieldtypes WHERE formfields.id=:formfield and formfields.type=formfieldtypes.id";
+    $sql = "SELECT * FROM formfields WHERE formfields.id=:formfield";
     
 	//$sql = "SELECT * FROM formfields WHERE form=:form ORDER BY `order`";
 	
