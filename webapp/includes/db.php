@@ -199,7 +199,9 @@ function get_form_fields($form)
 {
     global $pdo;
 
-	$sql = "SELECT * FROM formfields WHERE form=:form ORDER BY `order`";
+    $sql = "SELECT * FROM formfields, formfieldtypes WHERE formfields.form=:form and formfields.type=formfieldtypes.id ORDER BY `order`";
+    
+	//$sql = "SELECT * FROM formfields WHERE form=:form ORDER BY `order`";
 	
     $stmt = $pdo->prepare($sql);
     
