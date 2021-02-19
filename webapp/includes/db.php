@@ -232,11 +232,22 @@ function get_form_field($formfield)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function add_form_field ($form, $type, $label, $default, $order)
+function add_form_field ($form, $type, $label, $default, $order, $name)
 {
     global $pdo;
 
-    $sql = "INSERT INTO formfields (form, type, label, `default`, `order`) VALUES (:form, :type, :label, :default, :order)";
+	$sql = "SELECT * FROM formfields where form=:form and name=:name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':form', $form);
+    $stmt->bindValue(':name', $name);
+	
+	$stmt->execute();
+	
+    if ($stmt->rowCount() > 0)
+        return False;	
+	
+    $sql = "INSERT INTO formfields (form, type, label, `default`, `order`, name) VALUES (:form, :type, :label, :default, :order, :name)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
@@ -244,6 +255,7 @@ function add_form_field ($form, $type, $label, $default, $order)
     $stmt->bindValue(':label', $label);
     $stmt->bindValue(':default', $default);
     $stmt->bindValue(':order', $order);
+    $stmt->bindValue(':name', $name);
     
     $stmt->execute();
 }
@@ -260,11 +272,23 @@ function delete_form_field($formfield)
     $stmt->execute();
 }
 
-function update_form_field($formfield, $type, $label, $default, $order)
+function update_form_field($form, $formfield, $type, $label, $default, $order, $name)
 {
     global $pdo;
 
-    $sql = "UPDATE formfields SET type=:type, label=:label, `default`=:default, `order`=:order WHERE id=:formfield";
+	$sql = "SELECT * FROM formfields where form=:form and name=:name and id!=:formfield";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':form', $form);
+    $stmt->bindValue(':name', $name);
+    $stmt->bindValue(':formfield', $formfield);
+	
+	$stmt->execute();
+	
+    if ($stmt->rowCount() > 0)
+        return False;	
+
+    $sql = "UPDATE formfields SET type=:type, label=:label, `default`=:default, `order`=:order, name=:name WHERE id=:formfield";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':formfield', $formfield);
@@ -272,6 +296,7 @@ function update_form_field($formfield, $type, $label, $default, $order)
     $stmt->bindValue(':label', $label);
     $stmt->bindValue(':default', $default);
     $stmt->bindValue(':order', $order);
+    $stmt->bindValue(':name', $name);
     
     $stmt->execute();
 }
