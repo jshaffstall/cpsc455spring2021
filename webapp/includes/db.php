@@ -236,7 +236,7 @@ function add_form_field ($form, $type, $label, $default, $order, $name)
 {
     global $pdo;
 
-	$sql = "SELECT * FROM formfields where form=:form and name=:name";
+	$sql = "SELECT * FROM formfields where form=:form and fieldname=:name";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
@@ -247,7 +247,7 @@ function add_form_field ($form, $type, $label, $default, $order, $name)
     if ($stmt->rowCount() > 0)
         return False;	
 	
-    $sql = "INSERT INTO formfields (form, type, label, `default`, `order`, name) VALUES (:form, :type, :label, :default, :order, :name)";
+    $sql = "INSERT INTO formfields (form, type, label, `default`, `order`, fieldname) VALUES (:form, :type, :label, :default, :order, :name)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
@@ -276,7 +276,7 @@ function update_form_field($form, $formfield, $type, $label, $default, $order, $
 {
     global $pdo;
 
-	$sql = "SELECT * FROM formfields where form=:form and name=:name and id!=:formfield";
+	$sql = "SELECT * FROM formfields where form=:form and fieldname=:name and id!=:formfield";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
@@ -288,7 +288,7 @@ function update_form_field($form, $formfield, $type, $label, $default, $order, $
     if ($stmt->rowCount() > 0)
         return False;	
 
-    $sql = "UPDATE formfields SET type=:type, label=:label, `default`=:default, `order`=:order, name=:name WHERE id=:formfield";
+    $sql = "UPDATE formfields SET type=:type, label=:label, `default`=:default, `order`=:order, fieldname=:name WHERE id=:formfield";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':formfield', $formfield);
