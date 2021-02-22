@@ -6,15 +6,18 @@
 	
 	{% for field in fields %}
 		{% if field.type == 1 %}
-			<h2> Edit Field </h2>
 			<label for="{{field.name}}">{{field.label}}</label>
-			<input type="text" name="{{field.name}}">
+			<input type="text" name="{{field.name}}" size="">
+			{% if field.eol %}
+				<br>
+			{% endif %}
 		{% endif %}
 		{% if field.type == 2 %}
-			<h2> CheckBoxes </h2>
-			<h3> {{field.label}}</h3>
-			<input type="checkbox" name="{{field.name}}">
+			<input type="checkbox" name="{{field.name}}" size="">
 			<label for="{{field.name}}"> {{field.label}} </label>
+			{% if field.eol %}
+				<br>
+			{% endif %}
 		{% endif %}
 	{% endfor %}
 			
