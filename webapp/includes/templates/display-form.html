@@ -1,32 +1,21 @@
-<DOCTYPE! html>
-<html>
-	<head>
-		<title> </title>
-		<link rel="stylesheet" href ="style.css"
-	</head>
-	<header>
-		<a href = "index.php"> Home Page </a>
-		<a href = "list-forms.php"> Forms </a>
-		{% if user.role == '1' %}
-			<a href = "admin-panel.php"> Admin Panel </a>
-		{% endif %}
-	</header>
-	<body>
+{% extends "base.html" %}
 	
-		<h1> {{form.name}} </h1>
-			{% for field in fields %}
-				{% if field.type == 1 %}
-					<h2> Edit Field </h2>
-					<label for="{{field.name}}">{{field.label}}</label>
-					<input type="text" name="{{field.name}}">
-				{% endif %}
-				{% if field.type == 2 %}
-					<h2> CheckBoxes </h2>
-					<h3> {{field.label}}</h3>
-					<input type="checkbox" name="{{field.name}}">
-					<label for="{{field.name}}"> {{field.label}} </label>
-				{% endif %}
-			{% endfor %}
+{% block title %} {{form.name}} {% endblock}
+	
+{% block content %}
+	
+	{% for field in fields %}
+		{% if field.type == 1 %}
+			<h2> Edit Field </h2>
+			<label for="{{field.name}}">{{field.label}}</label>
+			<input type="text" name="{{field.name}}">
+		{% endif %}
+		{% if field.type == 2 %}
+			<h2> CheckBoxes </h2>
+			<h3> {{field.label}}</h3>
+			<input type="checkbox" name="{{field.name}}">
+			<label for="{{field.name}}"> {{field.label}} </label>
+		{% endif %}
+	{% endfor %}
 			
-	</body>
-</html>
+{% endblock %}
