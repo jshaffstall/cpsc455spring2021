@@ -1,11 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Form Creator{% endblock %}
+{% block content %}
+
 <!DOCTYPE html>
 <html>
 <head>
 <title> View Forms </title>
 </head>
 
+<body>
+<h1>Forms</h1>
+
 {% for form in forms %}
-<a href "form.html?form={{form.name}}"> {{form.name}}</a>
+<a href="form-editor.php?form={{form.name}}">{{form.name}}</a>
 <br>
 {% endfor %}
 
@@ -13,4 +21,7 @@
 Form name <input type="text" name="form">
 <input type="submit" name="submit">
 </form>
+</body>
 </html>
+
+{% endblock %}

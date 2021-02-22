@@ -89,11 +89,13 @@
 	}
 	
 	function generateAndSetToken($email) {
-		$token = uniqid();
+		$bytes = random_bytes (7);
+		$token = bin2hex($bytes);
 		
 		// If token already exists, create another
 		while (get_user_by_token ($token) != false) {
-			$token = uniqid();
+			$bytes = random_bytes (7);
+			$token = bin2hex($bytes);
 		}
 		
 		set_user_token ($email, $token);

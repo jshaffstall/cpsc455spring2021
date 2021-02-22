@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Formfield Editor{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title> Edit Formfield </title>
+</head>
+
+<div>
+<h2>Current form field info</h2>
+
+<li>id: {{field.id}}, type: {{field.name}}, label: {{field.label}}, default: {{field.default}}, order: {{field.order}}, name: {{field.fieldname}}, eol:{{field.eol}} </li>
+
+<h2>Edit form field</h2>
+<form action="form-field-editor.php?form={{form.name}}&formfield={{field.id}}" method="post">
+
+Type <select name="type">
+
+{% for type in types %}
+<option value="{{type.id}}"> {{type.name}} </option>
+{% endfor %}
+
+</select>
+
+Label <input type="text" name="label">
+<br>
+
+Default <input type="text" name="default">
+<br>
+
+Order <input type="text" name="order">
+<br>
+
+Name <input type="text" name="name">
+<br>
+
+End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1">
+<br>
+
+<input type="submit" name="submit">
+</form>
+</div>
+	
+{% endblock %}

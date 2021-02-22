@@ -14,17 +14,14 @@
 	
 	if ($submitted) {
 		createForm();
-		
-		/*
-		global $twig;
-		echo $twig->render('form-creator.html',['forms' => $forms]);
-		exit();
-		*/
 	}
 	
 	function createForm() {
-		echo "create form called";
 		$name = $_POST["form"];
 		add_form($name);
+		
+		// refresh page to show new form
+		header("Location: form-creator.php");
+		exit();
 	}
 ?>

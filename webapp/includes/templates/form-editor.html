@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Form Editor{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title> Form Editor</title>
+</head>
+
+<body>
+	<h1>{{form.name}}</h2>
+	<div>
+	<h2>Form fields</h2>
+	{% for field in fields %}
+	<a href="form-field-editor.php?form={{form.name}}&formfield={{field.id}}">id: {{field.id}}, type: {{field.name}}, label: {{field.label}}, default: {{field.default}}, order: {{field.order}}, name: {{field.fieldname}}, end of line: {{field.eol}} </a>
+	<br>
+	{% endfor %}
+	</div>
+	
+	<div>
+	<h2>Create new form field</h2>
+	<form action="form-editor.php?form={{form.name}}" method="post">
+
+	Type <select name="type">
+
+	{% for type in types %}
+	<option value="{{type.id}}"> {{type.name}} </option>
+	{% endfor %}
+
+	</select>
+
+	Label <input type="text" name="label">
+	<br>
+	
+	Default <input type="text" name="default">
+	<br>
+
+	Order <input type="text" name="order">
+	<br>
+	
+	Name <input type="text" name="name">
+	<br>
+	
+	End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1">
+	<br>
+
+	<input type="submit" name="submit">
+	</form>
+	</div>
+</body>
+
+
+</html>
+
+{% endblock %}
