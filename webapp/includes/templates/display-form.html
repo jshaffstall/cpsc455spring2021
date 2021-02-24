@@ -3,7 +3,7 @@
 {% block title %} {{form.name}} {% endblock %}
 	
 {% block content %}
-	
+	<form method ='POST'>
 	{% for field in fields %}
 		{% if field.type == 1 %}
 			<label for="{{field.name}}">{{field.label}}</label>
@@ -20,5 +20,6 @@
 			{% endif %}
 		{% endif %}
 	{% endfor %}
-			
+	<input type="submit" value = "Submit">
+	</form>
 {% endblock %}
