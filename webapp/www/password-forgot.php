@@ -35,9 +35,6 @@
 		
 		// send email
 		mail($email, $subject, $message);
-		
-		echo $message;
-		exit();
 	}
 	
 	function generateAndSetToken($email) {

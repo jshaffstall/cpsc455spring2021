@@ -34,7 +34,7 @@
 		$name = $_POST["name"];
 		$eol = $_POST["eol"];
 		
-		// GET FORM , PUT IN 1ST PARAM
+		
 		update_form_field($form, $formfieldId, $type, $label, $default, $order, $name, $eol);
 		
 		$formName = $form['name'];

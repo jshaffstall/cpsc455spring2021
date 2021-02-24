@@ -25,20 +25,20 @@ Type <select name="type">
 
 </select>
 
-Label <input type="text" name="label">
-<br>
+	Label <input type="text" name="label" value="{{field.label}}">
+	<br>
+	
+	Default <input type="text" name="default" value="{{field.default}}">
+	<br>
 
-Default <input type="text" name="default">
-<br>
-
-Order <input type="text" name="order">
-<br>
-
-Name <input type="text" name="name">
-<br>
-
-End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1">
-<br>
+	Order <input type="text" name="order" value="{{field.order}}">
+	<br>
+	
+	Name <input type="text" name="name" value="{{field.fieldname}}">
+	<br>
+	
+	End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1" {% if field.eol %} checked {% endif %}>
+	<br>
 
 <input type="submit" name="submit">
 </form>

@@ -12,8 +12,12 @@
 	if ($submitted) {	
 		submitForm();
 	}
+	else {
+		displayForm();
+		
+	}
 	
-    displayForm();
+    
 	
 	function displayForm() {
 		global $twig;
@@ -25,7 +29,7 @@
 		global $twig;
 		global $roles;
 		echo $twig->render('admin-create-user-template.html', ['roles' => $roles, 'message' => $message]);
-		exit();
+		//exit();
 	}
 	
 	function submitForm() {
@@ -84,8 +88,7 @@
 		// send email
 		mail($email, $subject, $message);
 		
-		echo $message;
-		exit();
+		//echo $message;
 	}
 	
 	function generateAndSetToken($email) {
