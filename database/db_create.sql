@@ -110,17 +110,18 @@ CREATE TABLE `users` (
   `password` varchar(255) DEFAULT NULL,
   `role` int(11) DEFAULT NULL,
   `token` varchar(255) DEFAULT NULL,
-  `token_issued` datetime DEFAULT NULL
+  `token_issued` datetime DEFAULT NULL,
+  `disabled` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `name`, `password`, `role`, `token`, `token_issued`) VALUES
-(1, 'admin@muskingum.edu', 'Test Admin', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 1, NULL, NULL),
-(2, 'student@muskingum.edu', 'Test Student', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 2, NULL, NULL),
-(3, 'site@muskingum.edu', 'Test Site', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 3, NULL, NULL);
+INSERT INTO `users` (`id`, `email`, `name`, `password`, `role`, `token`, `token_issued`, `disabled`) VALUES
+(1, 'admin@muskingum.edu', 'Test Admin', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 1, NULL, NULL, 0),
+(2, 'student@muskingum.edu', 'Test Student', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 2, NULL, NULL, 0),
+(3, 'site@muskingum.edu', 'Test Site', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 3, NULL, NULL, 0);
 
 --
 -- Indexes for dumped tables
@@ -169,7 +170,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `formfields`
 --
 ALTER TABLE `formfields`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `formfieldtypes`
 --
@@ -179,7 +180,7 @@ ALTER TABLE `formfieldtypes`
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `roles`
 --
@@ -189,7 +190,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- Constraints for dumped tables
 --
