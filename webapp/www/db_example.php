@@ -10,7 +10,6 @@ $forms = get_forms();
 $fields = get_form_fields(1);
 $field = get_form_field(1);
 
-$users = get_users();
-$inactive = get_users(true);
+$types = get_forms_of_type(1);
 
-echo $twig->render('db_example.html', ['roles' => $roles, 'types' => $types, 'forms' => $forms, 'fields' => $fields, 'users' => $users, 'inactive' => $inactive]);
+echo $twig->render('db_example.html', ['roles' => $roles, 'types' => $types, 'forms' => $forms, 'fields' => $fields, 'types' => $types]);

@@ -347,3 +347,92 @@ function update_form_field($form, $formfield, $type, $label, $default, $order, $
     
     $stmt->execute();
 }
+
+function get_form_types()
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM formtypes ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->execute ();
+
+    return $stmt;
+}
+
+function add_form_type($name)
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM formtypes WHERE name=:name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute ();
+
+    if ($stmt->rowCount() > 0)
+        return False;	
+
+    $sql = "INSERT INTO formtypes (name) VALUES (:name)";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute ();
+
+    return True;
+}
+
+function get_forms_of_type($type_id)
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms, formtypemappings WHERE forms.id=formtypemappings.formid and formtypemappings.typeid=:type_id ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':type_id', $type_id);
+    
+    $stmt->execute ();
+
+    return $stmt;
+}
+
+function add_form_of_type($form_id, $type_id)
+{
+    global $pdo;
+    
+	$sql = "SELECT * FROM formtypemappings WHERE formid=:form_id and typeid=:type_id";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':form_id', $form_id);
+    $stmt->bindValue(':type_id', $type_id);
+	
+	$stmt->execute();
+	
+    if ($stmt->rowCount() > 0)
+        return False;	
+    
+    $sql = "INSERT INTO formtypemappings (formid, typeid) VALUES (:form_id, :type_id)";
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindValue(':form_id', $form_id);
+    $stmt->bindValue(':type_id', $type_id);
+
+    $stmt->execute ();
+    
+    return True;
+}
+
+function remove_form_of_type($form_id, $type_id)
+{
+    global $pdo;
+    
+    $sql = "DELETE FROM formtypemappings WHERE formid=:form_id and typeid=:type_id";
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindValue(':form_id', $form_id);
+    $stmt->bindValue(':type_id', $type_id);
+
+    $stmt->execute ();
+}
