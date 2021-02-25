@@ -7,6 +7,20 @@
 
 <p>Templates get stored in includes/templates as .html files.  See db_example.html (this file) for a simple example.</p>
 
+<h2>Active Users</h2>
+<ul>
+{% for u in users %}
+<li>name: {{u.name}}, email: {{u.email}}</li>
+{% endfor %}
+</ul>
+
+<h2>Inactive Users</h2>
+<ul>
+{% for u in inactive%}
+<li>name: {{u.name}}, email: {{u.email}}</li>
+{% endfor %}
+</ul>
+
 <h2>Roles from DB</h2>
 <ul>
 {% for role in roles %}

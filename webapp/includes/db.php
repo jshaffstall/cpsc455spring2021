@@ -48,6 +48,9 @@ function login_user ($email, $password)
     
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    if ($user['disabled'])
+        return False;
+    
     if (password_verify ($password, $user['password']))
         return $user;
     
@@ -128,6 +131,48 @@ function set_user_password ($email, $password)
     $stmt->bindValue(':password', password_hash ($password, PASSWORD_BCRYPT));
     
     $stmt->execute();
+}
+
+function get_users($disabled = false)
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM users WHERE disabled=:disabled ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':disabled', $disabled);
+    
+    $stmt->execute ();
+
+    return $stmt;
+}
+
+function disable_user($id)
+{
+    global $pdo;
+    
+    $sql = "UPDATE users SET disabled=1 WHERE id=:id";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':id', $id);
+    
+    $stmt->execute ();
+
+    return $stmt;
+}
+
+function enable_user($id)
+{
+    global $pdo;
+    
+    $sql = "UPDATE users SET disabled=0 WHERE id=:id";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':id', $id);
+    
+    $stmt->execute ();
+
+    return $stmt;
 }
 
 function get_form_field_types()
