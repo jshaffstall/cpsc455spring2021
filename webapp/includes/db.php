@@ -436,3 +436,19 @@ function remove_form_of_type($form_id, $type_id)
 
     $stmt->execute ();
 }
+
+function submit_form()
+{
+}
+
+function get_form_submissions ()
+{
+}
+
+function get_form_submission()
+{
+}
+
+function search_form_submissions ()
+{
+}

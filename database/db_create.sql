@@ -43,7 +43,9 @@ DROP TABLE IF EXISTS roles;
 CREATE TABLE `fieldsubmissions` (
   `id` int(11) NOT NULL,
   `formsubmissionid` int(11) NOT NULL,
-  `value` mediumtext
+  `value` mediumtext,
+  `type` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -208,7 +210,8 @@ INSERT INTO `users` (`id`, `email`, `name`, `password`, `role`, `token`, `token_
 --
 ALTER TABLE `fieldsubmissions`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `formsubmissionid` (`formsubmissionid`);
+  ADD KEY `formsubmissionid` (`formsubmissionid`),
+  ADD KEY `type` (`type`);
 
 --
 -- Indexes for table `formfields`
@@ -318,7 +321,8 @@ ALTER TABLE `users`
 -- Constraints for table `fieldsubmissions`
 --
 ALTER TABLE `fieldsubmissions`
-  ADD CONSTRAINT `fieldsubmissions_ibfk_1` FOREIGN KEY (`formsubmissionid`) REFERENCES `formsubmissions` (`id`);
+  ADD CONSTRAINT `fieldsubmissions_ibfk_1` FOREIGN KEY (`formsubmissionid`) REFERENCES `formsubmissions` (`id`),
+  ADD CONSTRAINT `fieldsubmissions_ibfk_2` FOREIGN KEY (`type`) REFERENCES `formfieldtypes` (`id`);
 
 --
 -- Constraints for table `formfields`
