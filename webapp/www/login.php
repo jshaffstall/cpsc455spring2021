@@ -8,7 +8,9 @@ if(isset($_POST['email'])){
 	$password = $_POST['password'];
 	
 	if(login_user($email, $password) != False){
-		$id = session_regenerate_id(true);
+        // This is causing a strange problem on the server
+        // with an empty session on future page loads
+		//$id = session_regenerate_id(true);
 		$_SESSION['user'] = $email;
 		header("Location: index.php");
 		exit();
