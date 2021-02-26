@@ -533,12 +533,36 @@ function submit_form($user, $formid, $values)
 
 function get_all_form_submissions ()
 {
-	// return all form submissions
+    global $pdo;
+
+    $sql = "SELECT * FROM formsubmissions ORDER BY when DESC";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt;
 }
 
 function get_form_submissions ($user)
 {
-	// return all form submissions for this user
+    global $pdo;
+
+    $sql = "SELECT * FROM formsubmissions WHERE user=:user ORDER BY when DESC";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':user', $user);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt;
 }
 
 function get_form_submission($user, $formid)
