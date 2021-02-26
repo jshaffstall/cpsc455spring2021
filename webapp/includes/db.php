@@ -277,6 +277,25 @@ function get_form_field($formfield)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function get_form_field_by_name($formid, $name)
+{
+    global $pdo;
+
+    $sql = "SELECT formfields.id, formfields.form, formfields.label, formfields.type, formfields.default, formfields.order, formfieldtypes.name, formfields.fieldname, formfields.eol, formfields.size FROM formfields, formfieldtypes WHERE formfields.formid=:formid and formfields.fieldname=:name";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 function add_form_field ($form, $type, $label, $default, $order, $name, $eol=True, $size=20)
 {
     global $pdo;
@@ -441,16 +460,75 @@ function remove_form_of_type($form_id, $type_id)
 
 function submit_form($user, $formid, $values)
 {
-	// How to know if we're editing a form or submitting a new version of it?
-	
-	// For now assume all forms are edited if they were already submitted
-	
-	// Find an existing submission if one exists, otherwise insert a new formsubmissions row
-	// if we found an existing submission, delete all the field submissions for that form submission
-	
-	// for each value in values
-	// 		look up that form field by form id and fieldname to get the type
-	//      insert a new field submission for that value
+    global $pdo;
+    
+    $submission = get_form_submission($user, $formid);
+    
+    $pdo->beginTransaction();
+    
+    if ($submission)
+    {
+        // Update the submission date for the new submission
+        $sql = "UPDATE formsubmissions SET when=NOW() WHERE id=:id";
+        $stmt = $pdo->prepare($sql);
+        
+        $stmt->bindValue(':id', $submission['id']);
+        
+        $stmt->execute();
+        
+        // delete all existing field submissions for this form submission
+        $sql = "DELETE FROM fieldsubmissions WHERE formsubmissionid=:formsubmissionid";
+        $stmt = $pdo->prepare($sql);
+        
+        $stmt->bindValue(':formsubmissionid', $submission['id']);
+        
+        $stmt->execute();
+    }
+    else
+    {
+        // insert a new form submission
+        $sql = "INSERT INTO formsubmissions (formid, user) VALUES (:formid, :user)";
+        $stmt = $pdo->prepare($sql);
+        
+        $stmt->bindValue(':formid', $formid);
+        $stmt->bindValue(':user', $user);
+        
+        $stmt->execute();
+        
+        $submission = get_form_submission($user, $formid);
+        
+        if (! $submission)
+        {
+            // Something went very wrong!
+            $pdo->rollback();
+            return False;
+        }
+    }
+    
+    foreach ($values as $name => $value)
+    {
+        $formfield = get_form_field_by_name($formid, $name);
+        
+        if (! $formfield)
+        {
+            // Something went very wrong!
+            $pdo->rollback();
+            return False;
+        }
+        
+        $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name) VALUES (:formsubmissionid, :value, :type, :name)";
+        
+        $stmt = $pdo->prepare($sql);
+        
+        $stmt->bindValue(':formsubmissionid', $submission['id']);
+        $stmt->bindValue(':value', $value);
+        $stmt->bindValue(':type', $formfield['type']);
+        $stmt->bindValue(':name', $name);
+        
+        $stmt->execute();
+    }
+    
+    $pdo->commit();
 }
 
 function get_all_form_submissions ()
@@ -463,9 +541,23 @@ function get_form_submissions ($user)
 	// return all form submissions for this user
 }
 
-function get_form_submission($user, formid)
+function get_form_submission($user, $formid)
 {
-	// Get the particular form submission
+    global $pdo;
+
+    $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and user=:user";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    $stmt->bindValue(':user', $user);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 function get_field_submissions($formsubmissionid)
