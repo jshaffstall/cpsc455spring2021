@@ -445,28 +445,39 @@ function submit_form($user, $formid, $values)
 	
 	// For now assume all forms are edited if they were already submitted
 	
-	// Find an existing submission if one exists, otherwise insert a new formsubmissions rowCount
+	// Find an existing submission if one exists, otherwise insert a new formsubmissions row
+	// if we found an existing submission, delete all the field submissions for that form submission
 	
-	// for each values
-	// 		look up that form field by form id and fieldname
-	//      look to see if an existing submission exists
-	//      update the existing submission or insert a new field submission
+	// for each value in values
+	// 		look up that form field by form id and fieldname to get the type
+	//      insert a new field submission for that value
+}
+
+function get_all_form_submissions ()
+{
+	// return all form submissions
 }
 
 function get_form_submissions ($user)
 {
-	// return all submissions for this user
+	// return all form submissions for this user
 }
 
 function get_form_submission($user, formid)
 {
-	// Get the particular submission
-	// How to return both the submission information and the list of field submissions?  
-	// Do we need a separate call for getting field submissions for a form submission?
+	// Get the particular form submission
 }
 
-function search_form_submissions ()
+function get_field_submissions($formsubmissionid)
 {
+	// Return all the field submissions for the given form submission
+}
+
+function search_form_submissions ($searchterms)
+{
+	// searchterms is an associative array with the key being the field name and the value being the search value for that field
 	// Need to allow searching based on the value of specific fields
 	// Allow partial searching for text fields?
+	
+	// Return a list of matching form submissions
 }
