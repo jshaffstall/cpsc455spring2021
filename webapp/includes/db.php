@@ -562,7 +562,20 @@ function get_form_submission($user, $formid)
 
 function get_field_submissions($formsubmissionid)
 {
-	// Return all the field submissions for the given form submission
+    global $pdo;
+
+    $sql = "SELECT * FROM fieldsubmissions WHERE formsubmissionid=:formsubmissionid";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formsubmissionid', $formsubmissionid);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt;
 }
 
 function search_form_submissions ($searchterms)
