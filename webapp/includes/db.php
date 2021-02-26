@@ -439,18 +439,34 @@ function remove_form_of_type($form_id, $type_id)
     $stmt->execute ();
 }
 
-function submit_form($formid, $user, $values)
+function submit_form($user, $formid, $values)
 {
+	// How to know if we're editing a form or submitting a new version of it?
+	
+	// For now assume all forms are edited if they were already submitted
+	
+	// Find an existing submission if one exists, otherwise insert a new formsubmissions rowCount
+	
+	// for each values
+	// 		look up that form field by form id and fieldname
+	//      look to see if an existing submission exists
+	//      update the existing submission or insert a new field submission
 }
 
-function get_form_submissions ()
+function get_form_submissions ($user)
 {
+	// return all submissions for this user
 }
 
-function get_form_submission()
+function get_form_submission($user, formid)
 {
+	// Get the particular submission
+	// How to return both the submission information and the list of field submissions?  
+	// Do we need a separate call for getting field submissions for a form submission?
 }
 
 function search_form_submissions ()
 {
+	// Need to allow searching based on the value of specific fields
+	// Allow partial searching for text fields?
 }
