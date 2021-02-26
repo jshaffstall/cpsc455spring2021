@@ -244,7 +244,7 @@ function get_form_fields($form)
 {
     global $pdo;
 
-    $sql = "SELECT formfields.id, formfields.form, formfields.label, formfields.type, formfields.default, formfields.order, formfieldtypes.name, formfields.fieldname, formfields.eol FROM formfields, formfieldtypes WHERE formfields.form=:form and formfields.type=formfieldtypes.id ORDER BY `order`";
+    $sql = "SELECT formfields.id, formfields.form, formfields.label, formfields.type, formfields.default, formfields.order, formfieldtypes.name, formfields.fieldname, formfields.eol, formfields.size FROM formfields, formfieldtypes WHERE formfields.form=:form and formfields.type=formfieldtypes.id ORDER BY `order`";
     
 	//$sql = "SELECT * FROM formfields WHERE form=:form ORDER BY `order`";
 	
@@ -261,7 +261,7 @@ function get_form_field($formfield)
 {
     global $pdo;
 
-    $sql = "SELECT formfields.id, formfields.form, formfields.label, formfields.type, formfields.default, formfields.order, formfieldtypes.name, formfields.fieldname, formfields.eol FROM formfields, formfieldtypes WHERE formfields.id=:formfield and formfields.type=formfieldtypes.id";
+    $sql = "SELECT formfields.id, formfields.form, formfields.label, formfields.type, formfields.default, formfields.order, formfieldtypes.name, formfields.fieldname, formfields.eol, formfields.size FROM formfields, formfieldtypes WHERE formfields.id=:formfield and formfields.type=formfieldtypes.id";
     
 	//$sql = "SELECT * FROM formfields WHERE form=:form ORDER BY `order`";
 	
@@ -277,7 +277,7 @@ function get_form_field($formfield)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function add_form_field ($form, $type, $label, $default, $order, $name, $eol=True)
+function add_form_field ($form, $type, $label, $default, $order, $name, $eol=True, $size=20)
 {
     global $pdo;
 
@@ -292,7 +292,7 @@ function add_form_field ($form, $type, $label, $default, $order, $name, $eol=Tru
     if ($stmt->rowCount() > 0)
         return False;	
 	
-    $sql = "INSERT INTO formfields (form, type, label, `default`, `order`, fieldname, eol) VALUES (:form, :type, :label, :default, :order, :name, :eol)";
+    $sql = "INSERT INTO formfields (form, type, label, `default`, `order`, fieldname, eol, size) VALUES (:form, :type, :label, :default, :order, :name, :eol, :size)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
@@ -302,6 +302,7 @@ function add_form_field ($form, $type, $label, $default, $order, $name, $eol=Tru
     $stmt->bindValue(':order', $order);
     $stmt->bindValue(':name', $name);
     $stmt->bindValue(':eol', $eol);
+    $stmt->bindValue(':size', $size);
     
     $stmt->execute();
 }
@@ -318,7 +319,7 @@ function delete_form_field($formfield)
     $stmt->execute();
 }
 
-function update_form_field($form, $formfield, $type, $label, $default, $order, $name, $eol=True)
+function update_form_field($form, $formfield, $type, $label, $default, $order, $name, $eol=True, $size=20)
 {
     global $pdo;
 
@@ -334,7 +335,7 @@ function update_form_field($form, $formfield, $type, $label, $default, $order, $
     if ($stmt->rowCount() > 0)
         return False;	
 
-    $sql = "UPDATE formfields SET type=:type, label=:label, `default`=:default, `order`=:order, fieldname=:name, eol=:eol WHERE id=:formfield";
+    $sql = "UPDATE formfields SET type=:type, label=:label, `default`=:default, `order`=:order, fieldname=:name, eol=:eol, size=:size WHERE id=:formfield";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':formfield', $formfield);
@@ -344,6 +345,7 @@ function update_form_field($form, $formfield, $type, $label, $default, $order, $
     $stmt->bindValue(':order', $order);
     $stmt->bindValue(':name', $name);
     $stmt->bindValue(':eol', $eol);
+    $stmt->bindValue(':size', $size);
     
     $stmt->execute();
 }
@@ -437,7 +439,7 @@ function remove_form_of_type($form_id, $type_id)
     $stmt->execute ();
 }
 
-function submit_form()
+function submit_form($formid, $user, $values)
 {
 }
 
