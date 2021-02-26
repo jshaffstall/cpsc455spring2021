@@ -281,7 +281,7 @@ function get_form_field_by_name($formid, $name)
 {
     global $pdo;
 
-    $sql = "SELECT formfields.id, formfields.form, formfields.label, formfields.type, formfields.default, formfields.order, formfieldtypes.name, formfields.fieldname, formfields.eol, formfields.size FROM formfields, formfieldtypes WHERE formfields.formid=:formid and formfields.fieldname=:name";
+    $sql = "SELECT formfields.id, formfields.form, formfields.label, formfields.type, formfields.default, formfields.order, formfieldtypes.name, formfields.fieldname, formfields.eol, formfields.size FROM formfields, formfieldtypes WHERE formfields.form=:formid and formfields.fieldname=:name";
     
     $stmt = $pdo->prepare($sql);
     
@@ -442,7 +442,7 @@ function add_form_of_type($form_id, $type_id)
 
     $stmt->execute ();
     
-    return True;
+    return $pdo->lastInsertId();
 }
 
 function remove_form_of_type($form_id, $type_id)
