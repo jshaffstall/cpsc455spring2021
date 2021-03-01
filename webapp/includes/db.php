@@ -658,7 +658,7 @@ function get_field_submissions($formsubmissionid)
 
 function search_form_submissions ($formid, $searchterms)
 {
-	$sql = "SELECT * FROM formsubmissions, fieldsubmissions WHERE formsubmissions.formid=:formid and formsubmissions.id=fieldsubmissions.formsubmissionid ";
+	$sql = "SELECT DISTINCT formsubmissions.id, formsubmissions.formid, formsubmissions.when, formsubmissions.user FROM formsubmissions, fieldsubmissions WHERE formsubmissions.formid=:formid and formsubmissions.id=fieldsubmissions.formsubmissionid ";
 	$searches = "";
 	
 	foreach ($searchterms as $name => $value)
@@ -674,6 +674,7 @@ function search_form_submissions ($formid, $searchterms)
 		if ($formfield['type'] == 1)
 		{
 			// Edit field, allow partial searches
+			$searches = " AND name=:".$name." AND value LIKE :".$name."_value ";
 		}
 		
 		if ($formfield['type'] == 2)
@@ -684,10 +685,19 @@ function search_form_submissions ($formid, $searchterms)
  	}
 	
 	$sql .= $searches;
+
+    $stmt = $pdo->prepare($sql);
+    
+	foreach ($searchterms as $name => $value)
+	{
+		$stmt->bindValue(':'.$name, $name);
+		$stmt->bindValue(':'.$name."_value", $value);
+	}
+    
+    $stmt->execute();
+
+    if ($stmt->rowCount() == 0)
+        return False;
 	
-	// searchterms is an associative array with the key being the field name and the value being the search value for that field
-	// Need to allow searching based on the value of specific fields
-	// Allow partial searching for text fields?
-	
-	// Return a list of matching form submissions
+	return $stmt;
 }
