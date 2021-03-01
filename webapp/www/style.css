@@ -25,11 +25,9 @@ a:hover {
 	background-color: #7a7f7d;
 }
 
-h1 {
+h1, h2 {
 	font-family: "Verdana";
 }
-
-
 
 button {
 	color: white;
@@ -47,13 +45,29 @@ div {
 	padding: 20px;
 }
 
+.section {
+	border: 5px outset black;
+	
+	background-color: #e3e3e3;
+	/* 		I like this one too:	#c2c0c0		*/
+	
+  	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-right: 50px;
+	margin-left: 50px;
+}
+
 p {
+	font-size: 1.2em;
+	font-family: "Verdana";
+}
+
+.error p {
 	color: red;
 	font-size: 1.2em;
 	font-family: "Verdana";
 }
 
-/*
 form {
 	font-family: "Verdana";
 	font-size: 1.2em;
@@ -86,9 +100,9 @@ input[type=submit] {
 input[type=submit]:hover {
 	background-color: #6045e6;
 }
-*/
+
 /* Site forms */
-/*
+
 .siteForm form {
 	font-family: "Verdana";
 	font-size: 1.2em;
@@ -117,7 +131,7 @@ input[type=submit]:hover {
 	margin: 60px 0;
 	border-radius: 4px;
 }
-*/
+
 /* Generated forms */
 .generatedForm form {
 	font-family: "Verdana";
@@ -130,11 +144,16 @@ input[type=submit]:hover {
 
 .generatedForm input[type=text], select {
 	font-size: 1em;
+	width: 250px;
 	margin: 8px 0;
 	border-radius: 2px;
 }
 
 .generatedForm input[type=submit] {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-right: 50px;
+	margin-left: 50px;
 	font-size: 1em;
 	padding: 5px 10px;
 	border-radius: 4px;
@@ -143,7 +162,6 @@ input[type=submit]:hover {
 	background-color: black;
 	color: white;
 	width: 30%;
-	margin-top: 80px;
 }
 
 .generatedForm input[type=submit]:hover {
@@ -153,6 +171,14 @@ input[type=submit]:hover {
 .generatedForm input[type=checkbox] {
 	transform: scale(1.5);
 	margin-left: 80px;
+}
+
+input[type=checkbox] {
+	transform: scale(2.5);
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-right: 50px;
+	margin-left: 50px;
 }
 
 .generatedForm label {

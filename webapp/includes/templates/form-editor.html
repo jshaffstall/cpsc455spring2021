@@ -10,25 +10,43 @@
 
 <body>
 	<h1>{{form.name}}</h2>
-	<div>
+	
+	<div class="section">
+	<h2> Edit form </h2>
+	<form action="form-editor.php?form={{form.name}}" method="post">
+	Name <input type="text" value="{{form.name}}" name="formName">
+	Type <br> <select name="type" value="{{currentType}}">
+	{% for type in formTypes %}
+	<option value="{{type.id}}"> {{type.name}} </option>
+	{% endfor %}
+	</select>
+	<input type="submit" name="submitForm">
+	</form>
+	</div>
+	
+	<div class="section">
 	<h2>Form fields</h2>
 	{% for field in fields %}
-	<a href="form-field-editor.php?form={{form.name}}&formfield={{field.id}}">id: {{field.id}}, type: {{field.name}}, label: {{field.label}}, default: {{field.default}}, order: {{field.order}}, name: {{field.fieldname}}, end of line: {{field.eol}} </a>
-	<br>
+		<a href="form-field-editor.php?form={{form.name}}&formfield={{field.id}}">id: {{field.id}}, type: {{field.name}}, label: {{field.label}}, default: {{field.default}}, 
+		order: {{field.order}}, name: {{field.fieldname}}, end of line: {{field.eol}}, size: {{field.size}} </a>
+		<br>
+	{% else %}
+		<p> No form fields found. </p>
 	{% endfor %}
 	</div>
 	
-	<div>
+	<div class="section">
 	<h2>Create new form field</h2>
 	<form action="form-editor.php?form={{form.name}}" method="post">
 
-	Type <select name="type">
+	Type <br> <select name="type">
 
 	{% for type in types %}
 	<option value="{{type.id}}"> {{type.name}} </option>
 	{% endfor %}
 
 	</select>
+	<br>
 
 	Label <input type="text" name="label" >
 	<br>
@@ -44,8 +62,11 @@
 	
 	End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1">
 	<br>
+	
+	Size <input type="text" name="size">
+	<br>
 
-	<input type="submit" name="submit">
+	<input type="submit" name="submitField">
 	</form>
 	</div>
 </body>

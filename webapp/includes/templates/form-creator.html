@@ -12,13 +12,24 @@
 <body>
 <h1>Forms</h1>
 
+<div class="section">
+<h2> All forms </h2>
 {% for form in forms %}
-<a href="form-editor.php?form={{form.name}}">{{form.name}}</a>
-<br>
+	<a href="form-editor.php?form={{form.name}}">{{form.name}}</a>
+	<br>
 {% endfor %}
+</div>
 
+<div class="section">
+<h2> Create new form </h2>
 <form action="form-creator.php" method="post">
 Form name <input type="text" name="form">
+Form type <select name="type">
+
+{% for type in formTypes %}
+<option value="{{type.id}}"> {{type.name}} </option>
+{% endfor %}
+
 <input type="submit" name="submit">
 </form>
 </body>
