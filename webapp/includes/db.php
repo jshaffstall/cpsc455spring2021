@@ -405,7 +405,7 @@ function add_form_type($name)
     return True;
 }
 
-function get_form_type($formid)
+function get_type_of_form($formid)
 {
     global $pdo;
     
@@ -422,7 +422,7 @@ function get_form_type($formid)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function get_form_types($formid)
+function get_types_of_form($formid)
 {
     global $pdo;
     
@@ -683,7 +683,7 @@ function search_form_submissions ($formid, $searchterms)
 		}
  	}
 	
-	$sql .= $
+	$sql .= $searches;
 	
 	// searchterms is an associative array with the key being the field name and the value being the search value for that field
 	// Need to allow searching based on the value of specific fields
