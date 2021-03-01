@@ -422,6 +422,23 @@ function get_form_of_type($type_id)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function get_forms_of_type($type_id)
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms, formtypemappings WHERE forms.id=formtypemappings.formid and formtypemappings.typeid=:type_id ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':type_id', $type_id);
+    
+    $stmt->execute ();
+	
+    if ($stmt->rowCount() == 0)
+        return False;		
+
+    return $stmt;
+}
+
 function add_form_of_type($form_id, $type_id)
 {
     global $pdo;
