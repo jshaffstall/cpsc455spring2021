@@ -405,7 +405,7 @@ function add_form_type($name)
     return True;
 }
 
-function get_forms_of_type($type_id)
+function get_form_of_type($type_id)
 {
     global $pdo;
     
@@ -419,7 +419,7 @@ function get_forms_of_type($type_id)
     if ($stmt->rowCount() == 0)
         return False;		
 
-    return $stmt;
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 function add_form_of_type($form_id, $type_id)
