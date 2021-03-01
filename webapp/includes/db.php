@@ -405,6 +405,40 @@ function add_form_type($name)
     return True;
 }
 
+function get_form_type($formid)
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms, formtypemappings WHERE forms.id=:formid and forms.id=formtypemappings.formid";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    
+    $stmt->execute ();
+	
+    if ($stmt->rowCount() == 0)
+        return False;		
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function get_form_types($formid)
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms, formtypemappings WHERE forms.id=:formid and forms.id=formtypemappings.formid";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    
+    $stmt->execute ();
+	
+    if ($stmt->rowCount() == 0)
+        return False;		
+
+    return $stmt;
+}
+
 function get_form_of_type($type_id)
 {
     global $pdo;
@@ -622,8 +656,35 @@ function get_field_submissions($formsubmissionid)
 	return $stmt;
 }
 
-function search_form_submissions ($searchterms)
+function search_form_submissions ($formid, $searchterms)
 {
+	$sql = "SELECT * FROM formsubmissions, fieldsubmissions WHERE formsubmissions.formid=:formid and formsubmissions.id=fieldsubmissions.formsubmissionid ";
+	$searches = "";
+	
+	foreach ($searchterms as $name => $value)
+	{
+        $formfield = get_form_field_by_name($formid, $name);
+        
+        if (! $formfield)
+        {
+            // Something went very wrong!
+            return False;
+        }
+		
+		if ($formfield['type'] == 1)
+		{
+			// Edit field, allow partial searches
+		}
+		
+		if ($formfield['type'] == 2)
+		{
+			// Checkbox, exact searches only
+			$searches = " AND name=:".$name." AND value=:".$name."_value ";
+		}
+ 	}
+	
+	$sql .= $
+	
 	// searchterms is an associative array with the key being the field name and the value being the search value for that field
 	// Need to allow searching based on the value of specific fields
 	// Allow partial searching for text fields?
