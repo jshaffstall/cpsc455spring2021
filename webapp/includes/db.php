@@ -415,6 +415,9 @@ function get_forms_of_type($type_id)
     $stmt->bindValue(':type_id', $type_id);
     
     $stmt->execute ();
+	
+    if ($stmt->rowCount() == 0)
+        return False;		
 
     return $stmt;
 }
