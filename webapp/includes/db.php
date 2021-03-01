@@ -565,9 +565,8 @@ function submit_form($user, $formid, $values)
         
         if (! $formfield)
         {
-            // Something went very wrong!
-            $pdo->rollback();
-            return False;
+            // Skip this one, it's probably extra info that isn't in the form
+			continue;
         }
         
         $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name) VALUES (:formsubmissionid, :value, :type, :name)";
