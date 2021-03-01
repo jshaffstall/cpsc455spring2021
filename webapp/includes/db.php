@@ -409,7 +409,7 @@ function get_type_of_form($formid)
 {
     global $pdo;
     
-    $sql = "SELECT * FROM forms, formtypemappings WHERE forms.id=:formid and forms.id=formtypemappings.formid";
+    $sql = "SELECT * FROM formtypes, formtypemappings WHERE formtypemappings.formid=:formid and formtypemappings.typeid=formtypes.id";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':formid', $formid);
@@ -426,7 +426,7 @@ function get_types_of_form($formid)
 {
     global $pdo;
     
-    $sql = "SELECT * FROM forms, formtypemappings WHERE forms.id=:formid and forms.id=formtypemappings.formid";
+    $sql = "SELECT * FROM formtypes, formtypemappings WHERE formtypemappings.formid=:formid and formtypemappings.typeid=formtypes.id";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':formid', $formid);
