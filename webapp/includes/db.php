@@ -338,6 +338,30 @@ function delete_form_field($formfield)
     $stmt->execute();
 }
 
+function update_form($form, $name)
+{
+    global $pdo;
+
+	$sql = "SELECT * FROM forms where id!=:form and name=:name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':form', $form);
+    $stmt->bindValue(':name', $name);
+	
+	$stmt->execute();
+	
+    if ($stmt->rowCount() > 0)
+        return False;	
+
+    $sql = "UPDATE forms SET name=:name WHERE id=:form";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':form', $form);
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute();
+}
+
 function update_form_field($form, $formfield, $type, $label, $default, $order, $name, $eol=True, $size=20)
 {
     global $pdo;
