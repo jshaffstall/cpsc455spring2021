@@ -311,6 +311,9 @@ function add_form_field ($form, $type, $label, $default, $order, $name, $eol=Tru
     if ($stmt->rowCount() > 0)
         return False;	
 	
+	if (empty($size))
+		$size = 20;
+	
     $sql = "INSERT INTO formfields (form, type, label, `default`, `order`, fieldname, eol, size) VALUES (:form, :type, :label, :default, :order, :name, :eol, :size)";
     $stmt = $pdo->prepare($sql);
     
