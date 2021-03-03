@@ -25,6 +25,49 @@ a:hover {
 	background-color: #7a7f7d;
 }
 
+h1, h2 {
+	font-family: "Verdana";
+}
+
+button {
+	color: white;
+	background-color: black;
+	cursor: pointer;
+	font-size: 1em;
+	width: 10%;
+	padding: 12px 20px;
+	border-color: black;
+}
+
+div {
+	border-radius: 5px;
+	background-color: #F0F0F0;
+	padding: 20px;
+}
+
+.section {
+	border: 5px outset black;
+	
+	background-color: #e3e3e3;
+	/* 		I like this one too:	#c2c0c0		*/
+	
+  	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-right: 50px;
+	margin-left: 50px;
+}
+
+p {
+	font-size: 1.2em;
+	font-family: "Verdana";
+}
+
+.error p {
+	color: red;
+	font-size: 1.2em;
+	font-family: "Verdana";
+}
+
 form {
 	font-family: "Verdana";
 	font-size: 1.2em;
@@ -32,10 +75,6 @@ form {
 	margin-bottom: 50px;
 	margin-right: 50px;
 	margin-left: 50px;
-}
-
-h1 {
-	font-family: "Verdana";
 }
 
 input[type=text], select {
@@ -62,26 +101,93 @@ input[type=submit]:hover {
 	background-color: #6045e6;
 }
 
-button {
-	color: white;
-	background-color: black;
-	cursor: pointer;
-	font-size: 1em;
-	width: 10%;
-	padding: 12px 20px;
-	border-color: black;
-	
-}
+/* Site forms */
 
-div {
-	border-radius: 5px;
-	background-color: #F0F0F0;
-	padding: 20px;
-}
-
-p {
-	color: red;
-	font-color: red;
-	font-size: 1.2em;
+.siteForm form {
 	font-family: "Verdana";
+	font-size: 1.2em;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-right: 50px;
+	margin-left: 50px;
 }
+
+.siteForm input[type=text], select {
+	font-size: 1em;
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	border-radius: 8px;
+}
+
+.siteForm input[type=submit] {
+	font-family: "Verdana";
+	font-size: 1em;
+	cursor: pointer;
+	width: 100%;
+	background-color: #608ee5;
+	color: white;
+	padding: 14px 20px;
+	margin: 60px 0;
+	border-radius: 4px;
+}
+
+/* Generated forms */
+.generatedForm form {
+	font-family: "Verdana";
+	font-size: 1.2em;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-right: 50px;
+	margin-left: 50px;
+}
+
+.generatedForm input[type=text], select {
+	font-size: 1em;
+	width: 250px;
+	margin: 8px 0;
+	border-radius: 2px;
+}
+
+.generatedForm input[type=submit] {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-right: 50px;
+	margin-left: 50px;
+	font-size: 1em;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-family: "Verdana";
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	width: 30%;
+}
+
+.generatedForm input[type=submit]:hover {
+	background-color: #7a7f7d;
+}
+
+.generatedForm input[type=checkbox] {
+	transform: scale(1.5);
+	margin-left: 80px;
+}
+
+input[type=checkbox] {
+	transform: scale(2.5);
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-right: 50px;
+	margin-left: 50px;
+}
+
+.generatedForm label {
+	font-family: "Verdana";
+	font-size: 1.2em;
+	padding: 12px 20px;
+	border-radius: 8px;
+}
+
+
+
+

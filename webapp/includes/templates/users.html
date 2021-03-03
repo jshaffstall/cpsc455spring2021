@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title> Users </title>
+</head>
+
+<body>
+<h1> Enabled users </h1>
+{% for user in enabledUsers %}
+<a href="user.php"> {{user.name}} </a>
+<br>
+{% endfor %}
+
+<h1> Disabled users </h1>
+{% for user in disabledUsers %}
+<a href="user.php"> {{user.name}} </a>
+<br>
+{% endfor %}
+</body>
+
+{% endblock %}

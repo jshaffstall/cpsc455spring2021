@@ -1,19 +1,20 @@
-<form method ='POST'>
+<form class="generatedForm" method ='POST'>
 	{% for field in fields %}
 		{% if field.type == 1 %}
-			<label for="{{field.name}}">{{field.label}}</label>
-			<input type="text" name="{{field.name}}" size="">
+			<label class="generatedForm" for="{{field.name}}">{{field.label}}</label>
+			<input class="generatedForm" type="text" name="{{field.name}}" size="">
 			{% if field.eol %}
 				<br>
 			{% endif %}
 		{% endif %}
 		{% if field.type == 2 %}
-			<input type="checkbox" name="{{field.name}}" size="">
-			<label for="{{field.name}}"> {{field.label}} </label>
+			<input class="generatedForm" type="checkbox" name="{{field.name}}" size="">
+			<label class="generatedForm" for="{{field.name}}"> {{field.label}} </label>
 			{% if field.eol %}
 				<br>
 			{% endif %}
 		{% endif %}
 	{% endfor %}
-	<input type="submit" value = "Submit">
+	<br>
+	<input class="generatedForm"  type="submit" value = "Submit">
 	</form>

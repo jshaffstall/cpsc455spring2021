@@ -12,33 +12,38 @@
 <div>
 <h2>Current form field info</h2>
 
-<li>id: {{field.id}}, type: {{field.name}}, label: {{field.label}}, default: {{field.default}}, order: {{field.order}}, name: {{field.fieldname}}, eol:{{field.eol}} </li>
+<li>id: {{field.id}}, type: {{field.name}}, label: {{field.label}}, default: {{field.default}}, 
+order: {{field.order}}, name: {{field.fieldname}}, eol:{{field.eol}}, size: {{field.size}} </li>
 
 <h2>Edit form field</h2>
+<div class="section">
 <form action="form-field-editor.php?form={{form.name}}&formfield={{field.id}}" method="post">
 
-Type <select name="type">
+Type <br> <select name="type">
 
 {% for type in types %}
-<option value="{{type.id}}"> {{type.name}} </option>
+	<option value="{{type.id}}"> {{type.name}} </option>
 {% endfor %}
 
 </select>
+<br>
+Label <input type="text" name="label" value="{{field.label}}">
+<br>
 
-	Label <input type="text" name="label" value="{{field.label}}">
-	<br>
-	
-	Default <input type="text" name="default" value="{{field.default}}">
-	<br>
+Default <input type="text" name="default" value="{{field.default}}">
+<br>
 
-	Order <input type="text" name="order" value="{{field.order}}">
-	<br>
-	
-	Name <input type="text" name="name" value="{{field.fieldname}}">
-	<br>
-	
-	End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1" {% if field.eol %} checked {% endif %}>
-	<br>
+Order <input type="text" name="order" value="{{field.order}}">
+<br>
+
+Name <input type="text" name="name" value="{{field.fieldname}}">
+<br>
+
+End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1" {% if field.eol %} checked {% endif %}>
+<br>
+
+Size <input type="text" name="size" value="{{field.size}}">
+<br>
 
 <input type="submit" name="submit">
 </form>

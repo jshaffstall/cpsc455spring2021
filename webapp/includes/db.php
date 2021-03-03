@@ -277,6 +277,25 @@ function get_form_field($formfield)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function get_form_field_by_name($formid, $name)
+{
+    global $pdo;
+
+    $sql = "SELECT formfields.id, formfields.form, formfields.label, formfields.type, formfields.default, formfields.order, formfieldtypes.name, formfields.fieldname, formfields.eol, formfields.size FROM formfields, formfieldtypes WHERE formfields.form=:formid and formfields.fieldname=:name";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 function add_form_field ($form, $type, $label, $default, $order, $name, $eol=True, $size=20)
 {
     global $pdo;
@@ -386,6 +405,57 @@ function add_form_type($name)
     return True;
 }
 
+function get_type_of_form($formid)
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM formtypes, formtypemappings WHERE formtypemappings.formid=:formid and formtypemappings.typeid=formtypes.id";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    
+    $stmt->execute ();
+	
+    if ($stmt->rowCount() == 0)
+        return False;		
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function get_types_of_form($formid)
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM formtypes, formtypemappings WHERE formtypemappings.formid=:formid and formtypemappings.typeid=formtypes.id";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    
+    $stmt->execute ();
+	
+    if ($stmt->rowCount() == 0)
+        return False;		
+
+    return $stmt;
+}
+
+function get_form_of_type($type_id)
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms, formtypemappings WHERE forms.id=formtypemappings.formid and formtypemappings.typeid=:type_id ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':type_id', $type_id);
+    
+    $stmt->execute ();
+	
+    if ($stmt->rowCount() == 0)
+        return False;		
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 function get_forms_of_type($type_id)
 {
     global $pdo;
@@ -396,6 +466,9 @@ function get_forms_of_type($type_id)
     $stmt->bindValue(':type_id', $type_id);
     
     $stmt->execute ();
+	
+    if ($stmt->rowCount() == 0)
+        return False;		
 
     return $stmt;
 }
@@ -423,7 +496,7 @@ function add_form_of_type($form_id, $type_id)
 
     $stmt->execute ();
     
-    return True;
+    return $pdo->lastInsertId();
 }
 
 function remove_form_of_type($form_id, $type_id)
@@ -441,32 +514,189 @@ function remove_form_of_type($form_id, $type_id)
 
 function submit_form($user, $formid, $values)
 {
-	// How to know if we're editing a form or submitting a new version of it?
+    global $pdo;
+    
+    $submission = get_form_submission($user, $formid);
+    
+    $pdo->beginTransaction();
+    
+    if ($submission)
+    {
+        // Update the submission date for the new submission
+        $sql = "UPDATE formsubmissions SET when=NOW() WHERE id=:id";
+        $stmt = $pdo->prepare($sql);
+        
+        $stmt->bindValue(':id', $submission['id']);
+        
+        $stmt->execute();
+        
+        // delete all existing field submissions for this form submission
+        $sql = "DELETE FROM fieldsubmissions WHERE formsubmissionid=:formsubmissionid";
+        $stmt = $pdo->prepare($sql);
+        
+        $stmt->bindValue(':formsubmissionid', $submission['id']);
+        
+        $stmt->execute();
+    }
+    else
+    {
+        // insert a new form submission
+        $sql = "INSERT INTO formsubmissions (formid, user) VALUES (:formid, :user)";
+        $stmt = $pdo->prepare($sql);
+        
+        $stmt->bindValue(':formid', $formid);
+        $stmt->bindValue(':user', $user);
+        
+        $stmt->execute();
+        
+        $submission = get_form_submission($user, $formid);
+        
+        if (! $submission)
+        {
+            // Something went very wrong!
+            $pdo->rollback();
+            return False;
+        }
+    }
+    
+    foreach ($values as $name => $value)
+    {
+        $formfield = get_form_field_by_name($formid, $name);
+        
+        if (! $formfield)
+        {
+            // Skip this one, it's probably extra info that isn't in the form
+			continue;
+        }
+        
+        $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name) VALUES (:formsubmissionid, :value, :type, :name)";
+        
+        $stmt = $pdo->prepare($sql);
+        
+        $stmt->bindValue(':formsubmissionid', $submission['id']);
+        $stmt->bindValue(':value', $value);
+        $stmt->bindValue(':type', $formfield['type']);
+        $stmt->bindValue(':name', $name);
+        
+        $stmt->execute();
+    }
+    
+    $pdo->commit();
+}
+
+function get_all_form_submissions ()
+{
+    global $pdo;
+
+    $sql = "SELECT * FROM formsubmissions ORDER BY when DESC";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->execute();
 	
-	// For now assume all forms are edited if they were already submitted
+    if ($stmt->rowCount() == 0)
+        return False;
 	
-	// Find an existing submission if one exists, otherwise insert a new formsubmissions rowCount
-	
-	// for each values
-	// 		look up that form field by form id and fieldname
-	//      look to see if an existing submission exists
-	//      update the existing submission or insert a new field submission
+	return $stmt;
 }
 
 function get_form_submissions ($user)
 {
-	// return all submissions for this user
+    global $pdo;
+
+    $sql = "SELECT * FROM formsubmissions WHERE user=:user ORDER BY when DESC";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':user', $user);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt;
 }
 
-function get_form_submission($user, formid)
+function get_form_submission($user, $formid)
 {
-	// Get the particular submission
-	// How to return both the submission information and the list of field submissions?  
-	// Do we need a separate call for getting field submissions for a form submission?
+    global $pdo;
+
+    $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and user=:user";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    $stmt->bindValue(':user', $user);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function search_form_submissions ()
+function get_field_submissions($formsubmissionid)
 {
-	// Need to allow searching based on the value of specific fields
-	// Allow partial searching for text fields?
+    global $pdo;
+
+    $sql = "SELECT * FROM fieldsubmissions WHERE formsubmissionid=:formsubmissionid";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formsubmissionid', $formsubmissionid);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt;
+}
+
+function search_form_submissions ($formid, $searchterms)
+{
+	$sql = "SELECT DISTINCT formsubmissions.id, formsubmissions.formid, formsubmissions.when, formsubmissions.user FROM formsubmissions, fieldsubmissions WHERE formsubmissions.formid=:formid and formsubmissions.id=fieldsubmissions.formsubmissionid ";
+	$searches = "";
+	
+	foreach ($searchterms as $name => $value)
+	{
+        $formfield = get_form_field_by_name($formid, $name);
+        
+        if (! $formfield)
+        {
+            // Something went very wrong!
+            return False;
+        }
+		
+		if ($formfield['type'] == 1)
+		{
+			// Edit field, allow partial searches
+			$searches = " AND name=:".$name." AND value LIKE :".$name."_value ";
+		}
+		
+		if ($formfield['type'] == 2)
+		{
+			// Checkbox, exact searches only
+			$searches = " AND name=:".$name." AND value=:".$name."_value ";
+		}
+ 	}
+	
+	$sql .= $searches;
+
+    $stmt = $pdo->prepare($sql);
+    
+	foreach ($searchterms as $name => $value)
+	{
+		$stmt->bindValue(':'.$name, $name);
+		$stmt->bindValue(':'.$name."_value", $value);
+	}
+    
+    $stmt->execute();
+
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt;
 }

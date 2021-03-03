@@ -13,11 +13,8 @@
 		submitForm();
 	}
 	else {
-		displayForm();
-		
+		displayForm();	
 	}
-	
-    
 	
 	function displayForm() {
 		global $twig;
