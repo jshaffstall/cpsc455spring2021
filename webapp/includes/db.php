@@ -550,7 +550,7 @@ function submit_form($user, $formid, $values)
     if ($submission)
     {
         // Update the submission date for the new submission
-        $sql = "UPDATE formsubmissions SET when=NOW() WHERE id=:id";
+        $sql = "UPDATE formsubmissions SET `when`=NOW() WHERE id=:id";
         $stmt = $pdo->prepare($sql);
         
         $stmt->bindValue(':id', $submission['id']);
