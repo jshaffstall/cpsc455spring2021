@@ -32,7 +32,6 @@ DROP TABLE IF EXISTS formsubmissions;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS formfields;
 DROP TABLE IF EXISTS formtypemappings;
-DROP TABLE IF EXISTS formrolemappings;
 DROP TABLE IF EXISTS formtypes;
 DROP TABLE IF EXISTS forms;
 DROP TABLE IF EXISTS formfieldtypes;
@@ -104,23 +103,14 @@ INSERT INTO `formfieldtypes` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `formrolemappings`
---
-
-CREATE TABLE `formrolemappings` (
-  `formid` int(11) NOT NULL DEFAULT '0',
-  `roleid` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `forms`
 --
 
 CREATE TABLE `forms` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL
+  `name` varchar(255) DEFAULT NULL,
+  `roleid` int(11) NOT NULL,
+  `student` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -258,17 +248,11 @@ ALTER TABLE `formfieldtypes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `formrolemappings`
---
-ALTER TABLE `formrolemappings`
-  ADD KEY `formrolemappings_ibfk_1` (`formid`),
-  ADD KEY `formrolemappings_ibfk_2` (`roleid`);
-
---
 -- Indexes for table `forms`
 --
 ALTER TABLE `forms`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `forms_ibfk_1` (`roleid`);
 
 --
 -- Indexes for table `formsubmissions`
@@ -382,11 +366,10 @@ ALTER TABLE `formfields`
   ADD CONSTRAINT `formfields_ibfk_2` FOREIGN KEY (`form`) REFERENCES `forms` (`id`);
 
 --
--- Constraints for table `formrolemappings`
+-- Constraints for table `forms`
 --
-ALTER TABLE `formrolemappings`
-  ADD CONSTRAINT `formrolemappings_ibfk_1` FOREIGN KEY (`formid`) REFERENCES `forms` (`id`),
-  ADD CONSTRAINT `formrolemappings_ibfk_2` FOREIGN KEY (`roleid`) REFERENCES `roles` (`id`);
+ALTER TABLE `forms`
+  ADD CONSTRAINT `forms_ibfk_1` FOREIGN KEY (`roleid`) REFERENCES `roles` (`id`);
 
 --
 -- Constraints for table `formsubmissions`
