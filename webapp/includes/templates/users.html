@@ -10,18 +10,35 @@
 </head>
 
 <body>
-<h1> Enabled users </h1>
+
+<div class="section">
+<h2> Enabled users </h2>
+<form action="users.php" method="post">
 {% for user in enabledUsers %}
+	<input type="hidden" value="0"> <input type ="checkbox" name="usersToDisable[]" value="{{user.id}}">
 	<a href="user.php"> {{user.name}} </a>
-	<input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1">
 	<br>
+{% else %}
+	<p> No enabled users found. </p>
 {% endfor %}
 
-<h1> Disabled users </h1>
+<input type="submit" value="Disable Selected Users" name="submitDisableUsers">
+</form>
+</div>
+
+<div class="section">
+<h2> Disabled users </h2>
+<form action="users.php" method="post">
 {% for user in disabledUsers %}
+	<input type="hidden" value="0"> <input type ="checkbox" name="usersToEnable[]" value="{{user.id}}">
 	<a href="user.php"> {{user.name}} </a>
 	<br>
+{% else %}
+	<p> No disabled users found. </p>
 {% endfor %}
+<input type="submit" value="Enable Selected Users" name="submitEnableUsers">
+</form>
+</div>
 </body>
 
 {% endblock %}
