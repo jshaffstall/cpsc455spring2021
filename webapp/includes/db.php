@@ -214,7 +214,7 @@ function get_form($name)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function add_form ($name)
+function add_form ($name, $roleid, $forstudent)
 {
     global $pdo;
 
@@ -231,10 +231,13 @@ function add_form ($name)
     if ($stmt->rowCount() > 0)
         return False;
 
-    $sql = "INSERT INTO forms (name) VALUES (:name)";
+    $sql = "INSERT INTO forms (name, roleid, student) VALUES (:name, :roleid, :forstudent)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':name', $name);
+    $stmt->bindValue(':roleid', $roleid);
+    $stmt->bindValue(':forstudent', $forstudent);
+    
     $stmt->execute();
 	
 	return get_form($name);
@@ -341,7 +344,7 @@ function delete_form_field($formfield)
     $stmt->execute();
 }
 
-function update_form($form, $name)
+function update_form($form, $name, $roleid, $forstudent)
 {
     global $pdo;
 
@@ -356,11 +359,13 @@ function update_form($form, $name)
     if ($stmt->rowCount() > 0)
         return False;	
 
-    $sql = "UPDATE forms SET name=:name WHERE id=:form";
+    $sql = "UPDATE forms SET name=:name, roleid=:roleid, student=:forstudent WHERE id=:form";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
     $stmt->bindValue(':name', $name);
+    $stmt->bindValue(':roleid', $roleid);
+    $stmt->bindValue(':forstudent', $forstudent);
     
     $stmt->execute();
 }
@@ -539,11 +544,11 @@ function remove_form_of_type($form_id, $type_id)
     $stmt->execute ();
 }
 
-function submit_form($user, $formid, $values)
+function submit_form($user, $formid, $values, $siteid=null)
 {
     global $pdo;
     
-    $submission = get_form_submission($user, $formid);
+    $submission = get_form_submission($user, $formid, $siteid);
     
     $pdo->beginTransaction();
     
@@ -568,15 +573,16 @@ function submit_form($user, $formid, $values)
     else
     {
         // insert a new form submission
-        $sql = "INSERT INTO formsubmissions (formid, user) VALUES (:formid, :user)";
+        $sql = "INSERT INTO formsubmissions (formid, user, siteid) VALUES (:formid, :user, :siteid)";
         $stmt = $pdo->prepare($sql);
         
         $stmt->bindValue(':formid', $formid);
         $stmt->bindValue(':user', $user);
+        $stmt->bindValue(':siteid', $siteid);
         
         $stmt->execute();
         
-        $submission = get_form_submission($user, $formid);
+        $submission = get_form_submission($user, $formid, $siteid);
         
         if (! $submission)
         {
@@ -645,16 +651,17 @@ function get_form_submissions ($user)
 	return $stmt;
 }
 
-function get_form_submission($user, $formid)
+function get_form_submission($user, $formid, $siteid)
 {
     global $pdo;
 
-    $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and user=:user";
+    $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and user=:user and siteid=:siteid";
     
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':formid', $formid);
     $stmt->bindValue(':user', $user);
+    $stmt->bindValue(':siteid', $siteid);
     
     $stmt->execute();
 	
@@ -726,4 +733,126 @@ function search_form_submissions ($formid, $searchterms)
         return False;
 	
 	return $stmt;
+}
+
+function add_site ($name)
+{
+    global $pdo;
+
+	// Returns False if the name is already used by another site
+	// Returns the site object if creation is successful
+	
+    $sql = "SELECT * FROM fieldworksites where name=:name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0)
+        return False;
+
+    $sql = "INSERT INTO fieldworksites (name) VALUES (:name)";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute();
+	
+	return get_site($name);
+}
+
+function get_site($name)
+{
+    global $pdo;
+	
+    $sql = "SELECT * FROM fieldworksites where name=:name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function update_site($site, $name)
+{
+    global $pdo;
+
+	$sql = "SELECT * FROM fieldworksites where id!=:site and name=:name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':site', $site);
+    $stmt->bindValue(':name', $name);
+	
+	$stmt->execute();
+	
+    if ($stmt->rowCount() > 0)
+        return False;	
+
+    $sql = "UPDATE fieldworksites SET name=:name WHERE id=:site";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':site', $site);
+    $stmt->bindValue(':name', $name);
+    
+    $stmt->execute();
+}
+
+function remove_site($site)
+{
+    global $pdo;
+
+    $sql = "DELETE FROM fieldworksites WHERE id=:site";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':site', $site);
+    
+    $stmt->execute();
+}
+
+function assign_user_to_site ($userid, $siteid)
+{
+    global $pdo;
+
+	// Returns False if the user is already assigned to the site
+	// Returns True if creation is successful
+	
+    $sql = "SELECT * FROM usersitemappings WHERE userid=:userid AND siteid=:siteid";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':userid', $userid);
+    $stmt->bindValue(':siteid', $siteid);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0)
+        return False;
+
+    $sql = "INSERT INTO usersitemappings (userid, siteid) VALUES (:userid, :siteid)";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':userid', $userid);
+    $stmt->bindValue(':siteid', $siteid);
+    
+    $stmt->execute();
+	
+	return True;
+}
+
+function remove_user_from_site($userid, $siteid)
+{
+    global $pdo;
+
+    $sql = "DELETE FROM usersitemappings WHERE userid=:userid AND siteid=:siteid";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':userid', $userid);
+    $stmt->bindValue(':siteid', $siteid);
+    
+    $stmt->execute();
 }
