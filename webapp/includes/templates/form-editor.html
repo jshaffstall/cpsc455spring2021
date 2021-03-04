@@ -15,7 +15,7 @@
 	<h2> Edit form </h2>
 	<form action="form-editor.php?form={{form.name}}" method="post">
 	Name <input type="text" value="{{form.name}}" name="formName">
-	Type <br> <select name="type" value="{{currentType}}">
+	Type <br> <select name="formType" value="{{currentType}}">
 	{% for type in formTypes %}
 	<option value="{{type.id}}"> {{type.name}} </option>
 	{% endfor %}
@@ -48,7 +48,7 @@
 	</select>
 	<br>
 
-	Label <input type="text" name="label" >
+	Label <input type="text" name="label">
 	<br>
 	
 	Default <input type="text" name="default">

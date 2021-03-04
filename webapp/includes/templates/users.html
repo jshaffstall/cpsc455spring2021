@@ -12,14 +12,15 @@
 <body>
 <h1> Enabled users </h1>
 {% for user in enabledUsers %}
-<a href="user.php"> {{user.name}} </a>
-<br>
+	<a href="user.php"> {{user.name}} </a>
+	<input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1">
+	<br>
 {% endfor %}
 
 <h1> Disabled users </h1>
 {% for user in disabledUsers %}
-<a href="user.php"> {{user.name}} </a>
-<br>
+	<a href="user.php"> {{user.name}} </a>
+	<br>
 {% endfor %}
 </body>
 
