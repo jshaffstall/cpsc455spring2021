@@ -173,12 +173,16 @@ input[type=submit]:hover {
 	margin-left: 80px;
 }
 
-input[type=checkbox] {
+.siteForm input[type=checkbox] {
 	transform: scale(2.5);
 	margin-top: 50px;
 	margin-bottom: 50px;
 	margin-right: 50px;
 	margin-left: 50px;
+}
+
+input[type=checkbox] {
+	transform: scale(1.5);
 }
 
 .generatedForm label {

@@ -32,7 +32,14 @@
 		$formName = $_POST["formName"];
 		$formType = $_POST["formType"];
 		
-		// is there a way in the db to edit forms?
+		var_dump($formName);
+		var_dump($formType);
+		// return false if form of same name
+		update_form($form["id"], $formName);
+		
+		remove_form_of_type($form["id"], $formType);
+		add_form_of_type($form["id"], $formType);
+		header("Location: form-editor.php?form=$formName");
 	}
 	
 	function addFormField() {

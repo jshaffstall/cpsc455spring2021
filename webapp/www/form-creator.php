@@ -20,10 +20,8 @@
 	function createForm() {
 		$name = $_POST["form"];
 		$type = $_POST["type"];
-		add_form($name);
-		add_form_of_type($name, $type);
-		// refresh page to show new form
-		// TODO not working properly?
+		$form = add_form($name);
+		add_form_of_type($form['id'], $type);
 		header("Location: form-creator.php");
 	}
 ?>
