@@ -21,7 +21,7 @@
 		// TODO echo webpage with error
 		echo "Form does not exist";
 	}
-				
+	
 	if (isset($_POST['submitForm'])) {
 		editForm();
 	} else if (isset($_POST['submitField'])){
@@ -29,16 +29,19 @@
 	}
 	
 	function editForm() {
-		$formName = $_POST["formName"];
-		$formType = $_POST["formType"];
+		global $form;
+		echo "Edit form";
 		
-		var_dump($formName);
-		var_dump($formType);
+		$formName = $_POST["formName"];
+		$newFormType = $_POST["formType"];
+		
+		$oldFormType = get_type_of_form($form["id"]);
+		
 		// return false if form of same name
 		update_form($form["id"], $formName);
 		
-		remove_form_of_type($form["id"], $formType);
-		add_form_of_type($form["id"], $formType);
+		remove_form_of_type($form["id"], $oldFormType['id']);
+		add_form_of_type($form["id"], $newFormType);
 		header("Location: form-editor.php?form=$formName");
 	}
 	
