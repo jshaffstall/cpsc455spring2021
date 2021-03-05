@@ -214,7 +214,7 @@ function get_form($name)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function add_form ($name, $roleid, $forstudent)
+function add_form($name, $roleid, $forstudent)
 {
     global $pdo;
 
@@ -621,7 +621,7 @@ function get_all_form_submissions ()
 {
     global $pdo;
 
-    $sql = "SELECT * FROM formsubmissions ORDER BY when DESC";
+    $sql = "SELECT * FROM formsubmissions ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
     
@@ -637,7 +637,7 @@ function get_form_submissions ($user)
 {
     global $pdo;
 
-    $sql = "SELECT * FROM formsubmissions WHERE user=:user ORDER BY when DESC";
+    $sql = "SELECT * FROM formsubmissions WHERE user=:user ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
     
