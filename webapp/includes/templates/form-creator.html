@@ -24,11 +24,14 @@
 <h2> Create new form </h2>
 <form action="form-creator.php" method="post">
 Form name <input type="text" name="form">
-Form type <select name="type">
+Role <select name="role">
 
-{% for type in formTypes %}
-<option value="{{type.id}}"> {{type.name}} </option>
+{% for role in roles %}
+<option value="{{role.id}}"> {{role.name}} </option>
 {% endfor %}
+</select>
+<br>
+For students? <input type="hidden" name="forStudent" value="0"> <input type ="checkbox" name="forStudent" value="1">
 
 <input type="submit" name="submit">
 </form>

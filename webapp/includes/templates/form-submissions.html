@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Form Submissions{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head> <title> Form Submissions </title> </head>
+
+<body>
+<div class="section">
+<h2> All form submissions </h2>
+{% for submission in formSubmissions %}
+	id: {{submission.id}} | form id: {{submission.formid}} | when: {{submission.when}} | user: {{submission.user}}
+	<br>
+{% else %}
+	<p> No form submissions found. </p>
+{% endfor %}
+</div>
+</body>
+
+{% endblock %}
