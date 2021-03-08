@@ -31,7 +31,6 @@ if (isset($_POST['submitForm'])) {
 
 function editForm() {
 	global $form;
-	echo "Edit form";
 	
 	$formName = $_POST["formName"];
 	$role = $_POST["formRole"];

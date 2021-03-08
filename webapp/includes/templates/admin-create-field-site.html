@@ -3,17 +3,7 @@
 {% block content %}
 
 <!DOCTYPE html>
-<h1>Field Sites</h1>
-
-<div class="section">
-<h2> All field sites </h2>
-TODO need db function to get all field sites
-{% for site in sites %}
-	<a href="form-editor.php?form={{site.name}}">{{site.name}}</a>
-	<br>
-{% endfor %}
-</div>
-
+<h1> Field sites </h1>
 <div class="section">
 <h2> Create new field site </h2>
 <form action="admin-create-field-site.php" method="post">
@@ -23,4 +13,16 @@ Name <input type="text" name="siteName">
 
 <input type="submit" name="submitSite">
 </form>
+</div>
+
+<div class="section">
+<h2> Edit field site </h2>
+{% for site in sites %}
+	<a href="site-editor.php?site={{site.name}}">{{site.name}}</a>
+	<br>
+{% else %}
+	No field sites found.
+{% endfor %}
+</div>
+
 {% endblock %}

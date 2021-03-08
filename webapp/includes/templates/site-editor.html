@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Form Editor{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title> Form Editor</title>
+</head>
+
+<body>
+<h1>{{site.name}}</h2>
+
+<div class="section">
+<h2> Edit site </h2>
+
+<form action="site-editor.php?site={{site.name}}" method="post">
+Name <input type="text" value="{{site.name}}" name="siteName">
+
+<input type="submit" name="submitSite" method="post">
+</div>
+</body>
+</html>
+
+{% endblock %}
