@@ -1,15 +1,30 @@
 <form class="generatedForm" method ='POST'>
 	{% for field in fields %}
 		{% if field.type == 1 %}
-			<label class="generatedForm" for="{{field.name}}">{{field.label}}</label>
-			<input class="generatedForm" type="text" name="{{field.name}}" size="">
+			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
+			<input class="generatedForm" type="{{field.name}}" name="{{field.fieldname}}" size="">
 			{% if field.eol %}
 				<br>
 			{% endif %}
 		{% endif %}
 		{% if field.type == 2 %}
-			<input class="generatedForm" type="checkbox" name="{{field.name}}" size="">
-			<label class="generatedForm" for="{{field.name}}"> {{field.label}} </label>
+			<input type="hidden" name="{{field.fieldname}}" value="0">
+			<input type="{{field.name}}" name="{{field.fieldname}}" value="1">
+			<label class="generatedForm" for="{{field.fieldname}}"> {{field.label}} </label>
+			{% if field.eol %}
+				<br>
+			{% endif %}
+		{% endif %}
+		{% if field.type == 3 %}
+			<input class="generatedForm" type="{{field.name}}" name="{{field.fieldname}}" size="">
+			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
+			{% if field.eol %}
+				<br>
+			{% endif %}
+		{% endif %}
+		{% if field.type == 4 %}
+			<input class="generatedForm" type="{{field.name}}" name="{{filed.fieldname}}" size="">
+			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
 			{% if field.eol %}
 				<br>
 			{% endif %}

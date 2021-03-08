@@ -5,9 +5,9 @@ require 'config.php';
 //var_dump($_GET);
 
 
-
 if(isset($_POST['formid'])){
-	submit_form($user['id'], $_POST['formid'], $_POST);
+	$submit = submit_form($user['id'], $_POST['formid'], $_POST);
+	//header("Location: list-forms.php");
 }
 else{
 	$_GET['form'];
