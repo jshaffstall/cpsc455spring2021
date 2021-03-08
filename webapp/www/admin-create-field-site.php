@@ -1,6 +1,6 @@
 <?php
 require 'config.php';
-//$sites = 
+$sites = get_sites();
 echo $twig->render('admin-create-field-site.html', ["sites" => $sites]);
 
 if (isset($_POST["submitSite"])) {

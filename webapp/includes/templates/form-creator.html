@@ -13,14 +13,6 @@
 <h1>Forms</h1>
 
 <div class="section">
-<h2> All forms </h2>
-{% for form in forms %}
-	<a href="form-editor.php?form={{form.name}}">{{form.name}}</a>
-	<br>
-{% endfor %}
-</div>
-
-<div class="section">
 <h2> Create new form </h2>
 <form action="form-creator.php" method="post">
 Form name <input type="text" name="form">
@@ -35,6 +27,16 @@ For students? <input type="hidden" name="forStudent" value="0"> <input type ="ch
 
 <input type="submit" name="submit">
 </form>
+</div>
+
+<div class="section">
+<h2> Edit forms </h2>
+{% for form in forms %}
+	<a href="form-editor.php?form={{form.name}}">{{form.name}}</a>
+	<br>
+{% endfor %}
+</div>
+
 </body>
 </html>
 
