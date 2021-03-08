@@ -669,13 +669,18 @@ function get_form_submission($user, $formid, $siteid=null)
 {
     global $pdo;
 
-    $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and user=:user and siteid=:siteid";
+    if (is_null($siteid))
+        $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and user=:user and siteid IS NULL";
+    else
+        $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and user=:user and siteid=:siteid";
     
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':formid', $formid);
     $stmt->bindValue(':user', $user);
-    $stmt->bindValue(':siteid', $siteid, PDO::PARAM_INT);
+    
+    if (! is_null($siteid))
+        $stmt->bindValue(':siteid', $siteid);
     
     $stmt->execute();
 	
