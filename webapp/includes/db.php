@@ -578,7 +578,7 @@ function submit_form($user, $formid, $values, $siteid=null)
         
         $stmt->bindValue(':formid', $formid);
         $stmt->bindValue(':user', $user);
-        $stmt->bindValue(':siteid', $siteid);
+        $stmt->bindValue(':siteid', $siteid, PDO::PARAM_INT);
         
         $stmt->execute();
         
@@ -651,7 +651,7 @@ function get_form_submissions ($user)
 	return $stmt;
 }
 
-function get_form_submission($user, $formid, $siteid)
+function get_form_submission($user, $formid, $siteid=null)
 {
     global $pdo;
 
@@ -661,7 +661,7 @@ function get_form_submission($user, $formid, $siteid)
     
     $stmt->bindValue(':formid', $formid);
     $stmt->bindValue(':user', $user);
-    $stmt->bindValue(':siteid', $siteid);
+    $stmt->bindValue(':siteid', $siteid, PDO::PARAM_INT);
     
     $stmt->execute();
 	
