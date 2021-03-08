@@ -2,28 +2,28 @@
 	{% for field in fields %}
 		{% if field.type == 1 %}
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
-			<input class="generatedForm" type="{{field.name}}" name="{{field.fieldname}}" size="">
+			<input class="generatedForm" type="text" name="{{field.fieldname}}" size="">
 			{% if field.eol %}
 				<br>
 			{% endif %}
 		{% endif %}
 		{% if field.type == 2 %}
 			<input type="hidden" name="{{field.fieldname}}" value="0">
-			<input type="{{field.name}}" name="{{field.fieldname}}" value="1">
+			<input type="checkbox" name="{{field.fieldname}}" value="1">
 			<label class="generatedForm" for="{{field.fieldname}}"> {{field.label}} </label>
 			{% if field.eol %}
 				<br>
 			{% endif %}
 		{% endif %}
 		{% if field.type == 3 %}
-			<input class="generatedForm" type="{{field.name}}" name="{{field.fieldname}}" size="">
+			<input class="generatedForm" type="date" name="{{field.fieldname}}" size="">
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
 			{% if field.eol %}
 				<br>
 			{% endif %}
 		{% endif %}
 		{% if field.type == 4 %}
-			<input class="generatedForm" type="{{field.name}}" name="{{filed.fieldname}}" size="">
+			<input class="generatedForm" type="file" name="{{filed.fieldname}}" size="">
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
 			{% if field.eol %}
 				<br>
