@@ -779,6 +779,21 @@ function get_site($name)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function get_sites()
+{
+    global $pdo;
+	
+    $sql = "SELECT * FROM fieldworksites ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt;
+}
+
 function update_site($site, $name)
 {
     global $pdo;
