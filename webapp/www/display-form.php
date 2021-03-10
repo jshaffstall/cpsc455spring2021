@@ -9,21 +9,18 @@ if(isset($_POST['formid'])){
 	//header("Location: list-forms.php");
 }
 
-$submitted = get_form_submission($user['id'], 4, null);
+$submitted = get_form_submission($user['id'], $_GET['form'], null);
 
 $submissions = array();
 
 if ($submitted)
 {
-	/*
-	$submissions = get_field_submissions(1);
-	$temp = array();
-	for ($submissions){
-		$temp[$submissions['name']] = $submissions;
+	$temp = get_field_submissions($submitted['id']);
+	
+	foreach ($temp as $field)
+	{
+		$submissions[$field['name']] = $field;
 	}
-	var_dump($temp);
-	exit();
-	*/
 }
 
 $types = get_form_field_types();
