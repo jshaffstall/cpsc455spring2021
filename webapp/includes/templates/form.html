@@ -23,7 +23,7 @@
 		{% endif %}
 		{% if field.type == 3 %}
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
-			<input class="generatedForm" type="date" name="{{field.fieldname}}" value="{{value|date("Y-m-d")}}>
+			<input class="generatedForm" type="date" name="{{field.fieldname}}" value="{% if value %}{{value|date('Y-m-d')}}{% endif %}">
 			{% if field.eol %}
 				<br>
 			{% endif %}
