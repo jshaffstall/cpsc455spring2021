@@ -22,15 +22,15 @@
 			{% endif %}
 		{% endif %}
 		{% if field.type == 3 %}
-			<input class="generatedForm" type="date" name="{{field.fieldname}}" size=""  value="{{value}}>
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
+			<input class="generatedForm" type="date" name="{{field.fieldname}}" value="{{value|date("Y-m-d")}}>
 			{% if field.eol %}
 				<br>
 			{% endif %}
 		{% endif %}
 		{% if field.type == 4 %}
-			<input class="generatedForm" type="file" name="{{filed.fieldname}}" size="">
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
+			<input class="generatedForm" type="file" name="{{filed.fieldname}}">
 			{% if field.eol %}
 				<br>
 			{% endif %}
