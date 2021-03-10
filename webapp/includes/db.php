@@ -133,14 +133,15 @@ function set_user_password ($email, $password)
     $stmt->execute();
 }
 
-function get_users_by_role($roleid)
+function get_users_by_role($roleid, $disabled = false)
 {
     global $pdo;
     
-    $sql = "SELECT * FROM users WHERE role=:roleid ORDER BY name";
+    $sql = "SELECT * FROM users WHERE role=:roleid and disabled=:disabled ORDER BY name";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':roleid', $roleid);
+    $stmt->bindValue(':disabled', $disabled);
     
     $stmt->execute ();
 
