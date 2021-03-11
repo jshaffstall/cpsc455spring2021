@@ -31,8 +31,6 @@ DROP TABLE IF EXISTS fieldsubmissions;
 DROP TABLE IF EXISTS formsubmissions;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS formfields;
-DROP TABLE IF EXISTS formtypemappings;
-DROP TABLE IF EXISTS formtypes;
 DROP TABLE IF EXISTS forms;
 DROP TABLE IF EXISTS formfieldtypes;
 DROP TABLE IF EXISTS roles;
@@ -47,7 +45,8 @@ CREATE TABLE `fieldsubmissions` (
   `formsubmissionid` int(11) NOT NULL,
   `value` mediumtext,
   `type` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
+  `name` varchar(255) NOT NULL,
+  `file` longblob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -126,37 +125,6 @@ CREATE TABLE `formsubmissions` (
   `user` int(11) NOT NULL,
   `siteid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `formtypemappings`
---
-
-CREATE TABLE `formtypemappings` (
-  `formid` int(11) NOT NULL DEFAULT '0',
-  `typeid` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `formtypes`
---
-
-CREATE TABLE `formtypes` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `formtypes`
---
-
-INSERT INTO `formtypes` (`id`, `name`) VALUES
-(1, 'Student Profile'),
-(2, 'Fieldwork Site Profile'),
-(3, 'Test Type');
 
 -- --------------------------------------------------------
 
@@ -264,19 +232,6 @@ ALTER TABLE `formsubmissions`
   ADD KEY `formsubmissions_ibfk_3` (`siteid`);
 
 --
--- Indexes for table `formtypemappings`
---
-ALTER TABLE `formtypemappings`
-  ADD PRIMARY KEY (`formid`,`typeid`),
-  ADD KEY `typeid` (`typeid`);
-
---
--- Indexes for table `formtypes`
---
-ALTER TABLE `formtypes`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
@@ -306,17 +261,17 @@ ALTER TABLE `usersitemappings`
 -- AUTO_INCREMENT for table `fieldsubmissions`
 --
 ALTER TABLE `fieldsubmissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `fieldworksites`
 --
 ALTER TABLE `fieldworksites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `formfields`
 --
 ALTER TABLE `formfields`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `formfieldtypes`
 --
@@ -326,16 +281,11 @@ ALTER TABLE `formfieldtypes`
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `formsubmissions`
 --
 ALTER TABLE `formsubmissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `formtypes`
---
-ALTER TABLE `formtypes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `roles`
@@ -378,13 +328,6 @@ ALTER TABLE `formsubmissions`
   ADD CONSTRAINT `formsubmissions_ibfk_1` FOREIGN KEY (`formid`) REFERENCES `forms` (`id`),
   ADD CONSTRAINT `formsubmissions_ibfk_2` FOREIGN KEY (`user`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `formsubmissions_ibfk_3` FOREIGN KEY (`siteid`) REFERENCES `fieldworksites` (`id`);
-
---
--- Constraints for table `formtypemappings`
---
-ALTER TABLE `formtypemappings`
-  ADD CONSTRAINT `formtypemappings_ibfk_1` FOREIGN KEY (`formid`) REFERENCES `forms` (`id`),
-  ADD CONSTRAINT `formtypemappings_ibfk_2` FOREIGN KEY (`typeid`) REFERENCES `formtypes` (`id`);
 
 --
 -- Constraints for table `users`
