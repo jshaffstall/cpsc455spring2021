@@ -625,6 +625,17 @@ function submit_form($user, $formid, $values, $siteid=null)
         {
             // File upload, need to pull info from the $_FILES array
             // It's possible the user did not select a file.
+            if (array_key_exists($formfield['fieldname'], $_FILES))
+            {
+                // TODO: if this field is required, rollback and reject
+                // the submission
+            }
+        }
+        else
+        {
+            // TODO: if this field is required, rollback and reject
+            // the submission.  Need to work out how an empty field
+            // presents for each field type
         }
         
         $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name, file) VALUES (:formsubmissionid, :value, :type, :name, :file_contents)";

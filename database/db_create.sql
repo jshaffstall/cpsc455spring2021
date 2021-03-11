@@ -46,7 +46,8 @@ CREATE TABLE `fieldsubmissions` (
   `value` mediumtext,
   `type` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `file` longblob
+  `file` longblob,
+  `content_type` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
