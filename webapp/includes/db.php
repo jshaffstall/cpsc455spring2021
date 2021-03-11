@@ -569,6 +569,8 @@ function submit_form($user, $formid, $values, $siteid=null)
     
     $pdo->beginTransaction();
     
+    $errors = [];
+    
     if ($submission)
     {
         // Update the submission date for the new submission
@@ -605,10 +607,11 @@ function submit_form($user, $formid, $values, $siteid=null)
         {
             // Something went very wrong!
             $pdo->rollback();
-            return False;
+            $errors[] = "Unable to fetch newly inserted submission";
+            return $errors;
         }
     }
-    
+
     foreach ($values as $name => $value)
     {
         $formfield = get_form_field_by_name($formid, $name);
@@ -620,12 +623,30 @@ function submit_form($user, $formid, $values, $siteid=null)
         }
         
         $file_contents = null;
-        
+        $content_type = null;
+
         if ($formfield['type'] == 4)
         {
+        
             // File upload, need to pull info from the $_FILES array
             // It's possible the user did not select a file.
             if (array_key_exists($formfield['fieldname'], $_FILES))
+            {
+                if (is_uploaded_file($_FILES[$formfield['fieldname']]['tmp_name']))
+                {
+                    $value = $_FILES[$formfield['fieldname']]['name'];
+                    $file_contents = file_get_contents($_FILES[$formfield['fieldname']]['tmp_name']);
+                    
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $content_type = finfo_file($finfo, $_FILES[$formfield['fieldname']]['tmp_name']);
+                    finfo_close($finfo);
+                }
+                else
+                {
+                    $errors[] = "Problem accessing uploaded file";
+                }
+            }
+            else
             {
                 // TODO: if this field is required, rollback and reject
                 // the submission
@@ -638,7 +659,7 @@ function submit_form($user, $formid, $values, $siteid=null)
             // presents for each field type
         }
         
-        $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name, file) VALUES (:formsubmissionid, :value, :type, :name, :file_contents)";
+        $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name, file, content_type) VALUES (:formsubmissionid, :value, :type, :name, :file_contents, :content_type)";
         
         $stmt = $pdo->prepare($sql);
         
@@ -647,11 +668,19 @@ function submit_form($user, $formid, $values, $siteid=null)
         $stmt->bindValue(':type', $formfield['type']);
         $stmt->bindValue(':name', $name);
         $stmt->bindValue(':file_contents', $file_contents);
+        $stmt->bindValue(':content_type', $content_type);
         
         $stmt->execute();
     }
     
-    $pdo->commit();
+    if (empty($errors))
+    {
+        $pdo->commit();
+        return False;
+    }
+    
+    $pdo->rollback();
+    return $errors;
 }
 
 function get_all_form_submissions ()

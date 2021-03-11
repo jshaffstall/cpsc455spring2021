@@ -1,4 +1,4 @@
-<form class="generatedForm" method ='POST'>
+<form class="generatedForm" enctype="multipart/form-data" method ='POST'>
 	{% for field in fields %}
 		{% if submissions[ field.fieldname ] is defined %}
 			{% set value = submissions[ field.fieldname ].value %}
@@ -29,8 +29,9 @@
 			{% endif %}
 		{% endif %}
 		{% if field.type == 4 %}
+            <input type="hidden" name="{{field.fieldname}}" value="1">
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
-			<input class="generatedForm" type="file" name="{{filed.fieldname}}">
+			<input class="generatedForm" type="file" name="{{field.fieldname}}">
 			{% if field.eol %}
 				<br>
 			{% endif %}
