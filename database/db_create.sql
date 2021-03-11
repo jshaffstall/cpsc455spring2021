@@ -75,7 +75,8 @@ CREATE TABLE `formfields` (
   `order` int(11) DEFAULT NULL,
   `fieldname` varchar(255) NOT NULL,
   `eol` tinyint(1) NOT NULL DEFAULT '1',
-  `size` int(11) NOT NULL DEFAULT '20'
+  `size` int(11) NOT NULL DEFAULT '20',
+  `required` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

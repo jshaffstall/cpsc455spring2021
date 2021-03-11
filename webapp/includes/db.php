@@ -617,7 +617,14 @@ function submit_form($user, $formid, $values, $siteid=null)
 			continue;
         }
         
-        $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name) VALUES (:formsubmissionid, :value, :type, :name)";
+        $file_contents = null;
+        
+        if ($formfield['type'] == 4)
+        {
+            
+        }
+        
+        $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name, file) VALUES (:formsubmissionid, :value, :type, :name, :file_contents)";
         
         $stmt = $pdo->prepare($sql);
         
@@ -625,6 +632,7 @@ function submit_form($user, $formid, $values, $siteid=null)
         $stmt->bindValue(':value', $value);
         $stmt->bindValue(':type', $formfield['type']);
         $stmt->bindValue(':name', $name);
+        $stmt->bindValue(':file_contents', $file_contents);
         
         $stmt->execute();
     }
