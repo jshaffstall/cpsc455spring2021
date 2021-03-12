@@ -76,6 +76,25 @@ function get_user ($email)
     return $user;
 }
 
+function get_user_by_id ($userid)
+{
+    global $pdo;
+
+    $sql = "SELECT * FROM users where id=:userid";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':userid', $userid);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() == 0)
+        return False;
+    
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    return $user;
+}
+
 function get_user_by_token ($token)
 {
     global $pdo;
