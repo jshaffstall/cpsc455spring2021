@@ -870,3 +870,18 @@ function get_users_for_site($siteid, $roleid)
 	
 	return $stmt;
 }
+
+function get_sites_for_user($userid)
+{
+    $sql = "SELECT * FROM usersitemappings,fieldworksites WHERE userid=:userid AND siteid=fieldworksites.id";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':userid', $userid);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0)
+        return False;
+	
+	return $stmt;
+}
