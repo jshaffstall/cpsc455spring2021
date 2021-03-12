@@ -624,7 +624,8 @@ function submit_form($user, $formid, $values, $siteid=null)
         
         $file_contents = null;
         $content_type = null;
-
+		$size = null;
+		
         if ($formfield['type'] == 4)
         {
         
@@ -640,6 +641,8 @@ function submit_form($user, $formid, $values, $siteid=null)
                     $finfo = finfo_open(FILEINFO_MIME_TYPE);
                     $content_type = finfo_file($finfo, $_FILES[$formfield['fieldname']]['tmp_name']);
                     finfo_close($finfo);
+					
+					$size = filesize($_FILES[$formfield['fieldname']]['tmp_name']);
                 }
                 else
                 {
@@ -659,7 +662,7 @@ function submit_form($user, $formid, $values, $siteid=null)
             // presents for each field type
         }
         
-        $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name, file, content_type) VALUES (:formsubmissionid, :value, :type, :name, :file_contents, :content_type)";
+        $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name, file, content_type, size) VALUES (:formsubmissionid, :value, :type, :name, :file_contents, :content_type, :size)";
         
         $stmt = $pdo->prepare($sql);
         
@@ -669,6 +672,7 @@ function submit_form($user, $formid, $values, $siteid=null)
         $stmt->bindValue(':name', $name);
         $stmt->bindValue(':file_contents', $file_contents);
         $stmt->bindValue(':content_type', $content_type);
+		$stmt->bindValue(':size', $size);
         
         $stmt->execute();
     }
@@ -758,6 +762,24 @@ function get_field_submissions($formsubmissionid)
         return False;
 	
 	return $stmt;
+}
+
+function get_field_submission($fieldsubmissionid)
+{
+    global $pdo;
+
+    $sql = "SELECT * FROM fieldsubmissions WHERE id=:id";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':id', $fieldsubmissionid);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 function search_form_submissions ($formid, $searchterms)

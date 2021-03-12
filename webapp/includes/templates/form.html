@@ -32,6 +32,9 @@
             <input type="hidden" name="{{field.fieldname}}" value="1">
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
 			<input class="generatedForm" type="file" name="{{field.fieldname}}">
+			{% if value %}
+			Submitted File: <a href="download.php?id={{submissions[ field.fieldname ].id}}">{{value}}</a>
+			{% endif %}
 			{% if field.eol %}
 				<br>
 			{% endif %}
