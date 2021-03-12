@@ -314,7 +314,7 @@ function get_form_field_by_name($formid, $name)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function add_form_field ($form, $type, $label, $default, $order, $name, $eol=True, $size=20, $required=False)
+function add_form_field ($form, $type, $label, $default, $order, $name, $eol=True, $size=20, $required=0)
 {
     global $pdo;
 
@@ -386,7 +386,7 @@ function update_form($form, $name, $roleid, $forstudent)
     $stmt->execute();
 }
 
-function update_form_field($form, $formfield, $type, $label, $default, $order, $name, $eol=True, $size=20, $required=False)
+function update_form_field($form, $formfield, $type, $label, $default, $order, $name, $eol=True, $size=20, $required=0)
 {
     global $pdo;
 
