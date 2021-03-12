@@ -212,6 +212,39 @@ function get_forms()
     return $stmt;
 }
 
+function get_student_forms()
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms WHERE roleid=2 ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute ();
+
+    return $stmt;
+}
+
+function get_site_forms()
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=0 ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute ();
+
+    return $stmt;
+}
+
+function get_site_forms_for_students()
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=1 ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute ();
+
+    return $stmt;
+}
+
 function get_form($name)
 {
     global $pdo;
