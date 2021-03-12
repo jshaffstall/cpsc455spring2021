@@ -821,3 +821,19 @@ function remove_user_from_site($userid, $siteid)
     
     $stmt->execute();
 }
+
+function get_users_for_site($siteid, $roleid)
+{
+    $sql = "SELECT * FROM usersitemappings, users WHERE siteid=:siteid AND userid=users.id AND users.roleid=:roleid";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':roleid', $roleid);
+    $stmt->bindValue(':siteid', $siteid);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0)
+        return False;
+	
+	return $stmt;
+}
