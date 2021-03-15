@@ -281,6 +281,23 @@ function get_form($name)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function get_form_by_id($formid)
+{
+    global $pdo;
+	
+    $sql = "SELECT * FROM forms where id=:formid";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 function add_form($name, $roleid, $forstudent)
 {
     global $pdo;
