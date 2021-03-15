@@ -29,13 +29,16 @@ if ($submitted) {
 	
 	$type = $_POST["type"];
 	$label = $_POST["label"];
+	
 	$default = $_POST["default"];
+	$required = $_POST["required"];
+	
 	$order = $_POST["order"];
 	$name = $_POST["name"];
 	$eol = $_POST["eol"];
 	$size = $_POST["size"];
 	
-	update_form_field($form, $formfieldId, $type, $label, $default, $order, $name, $eol, $size);
+	update_form_field($form, $formfieldId, $type, $label, $default, $order, $name, $eol, $size, $required);
 	
 	$formName = $form['name'];
 	header("Location: form-field-editor.php?form=$formName&formfield=$formfieldId");

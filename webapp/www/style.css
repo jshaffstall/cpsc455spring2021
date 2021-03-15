@@ -55,6 +55,7 @@ div {
 	margin-bottom: 50px;
 	margin-right: 50px;
 	margin-left: 50px;
+	overflow: auto;
 }
 
 p {
@@ -190,6 +191,19 @@ input[type=checkbox] {
 	font-size: 1.2em;
 	padding: 12px 20px;
 	border-radius: 8px;
+}
+
+.userDiv {
+	float: left; 
+	width: 30%;
+	background-color: #e3e3e3;
+	overflow: hidden;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 

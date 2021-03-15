@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Disable Users{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title> Disable Users </title>
+</head>
+
+<body>
+
+<div class="section">
+<a href="users-enable.php" style="float: right;"> Enable users > </a>
+<h2> Enabled users </h2>
+<form action="users-active.php" method="post">
+{% for user in enabledUsers %}
+	<input type="hidden" value="0"> <input type ="checkbox" name="usersToDisable[]" value="{{user.id}}">
+	<a href="user.php"> {{user.name}} </a>
+	<br>
+{% else %}
+	<p> No enabled users found. </p>
+{% endfor %}
+
+<input type="submit" value="Disable Selected Users" name="submitDisableUsers">
+</form>
+</div>
+</body>
+
+{% endblock %}

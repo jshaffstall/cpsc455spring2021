@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}User{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title> User </title>
+</head>
+
+<body>
+
+<div class="section">
+	<h2> User info </h2>
+	<br>
+	<p> Email: {{user.email}} </p>
+	<br>
+	<p> Name: {{user.name}} </p>
+	<br>
+	<p> Role: 
+	{% if user.role == 1 %}
+	Admin
+	{% endif %}
+	{% if user.role == 2 %}
+	Student
+	{% endif %}
+	{% if user.role == 3 %}
+	Field site
+	{% endif %}
+	</p>
+</div>
+</body>
+
+{% endblock %}

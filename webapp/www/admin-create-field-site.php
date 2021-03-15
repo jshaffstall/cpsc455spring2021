@@ -6,4 +6,5 @@ echo $twig->render('admin-create-field-site.html', ["sites" => $sites]);
 if (isset($_POST["submitSite"])) {
 	$siteName = $_POST["siteName"];
 	add_site($siteName);
+	header("Location: admin-create-field-site.php");
 }

@@ -42,6 +42,9 @@ Name <input type="text" name="name" value="{{field.fieldname}}">
 End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1" {% if field.eol %} checked {% endif %}>
 <br>
 
+Required? <input type="hidden" name="required" value="0"> <input type ="checkbox" name="required" value="1" {% if field.required %} checked {% endif %}>
+<br>
+
 Size <input type="text" name="size" value="{{field.size}}">
 <br>
 

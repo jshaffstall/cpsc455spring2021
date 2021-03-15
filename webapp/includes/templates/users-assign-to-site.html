@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Assign User To Site{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title> Assign User To Site </title>
+</head>
+
+<body>
+
+
+<center>
+<div class="section">
+<a href="users-remove-from-site.php" style="float: right;"> Remove user from site > </a>
+<br>
+<h2> Assign users to site </h2>
+<form action="users-assign-to-site.php" method="post">
+	
+	<div class="userDiv">
+	<h3> Students </h3>
+	
+	{% for student in students %}
+		<input type="hidden" value="0"> <input type ="checkbox" name="usersSelected[]" value="{{student.id}}">
+		<a href="user.php?email={{student.email}}"> {{student.name}} </a>
+		<br>
+	{% else %}
+		No students found.
+	{% endfor %}
+	</div>
+
+	<div class="userDiv">
+	<h3> Field site users </h3>
+	{% for site in siteUsers %}
+		<input type="hidden" value="0"> <input type ="checkbox" name="usersSelected[]" value="{{site.id}}">
+		<a href="user.php?email={{site.email}}"> {{site.name}} </a>
+		<br>
+	{% else %}
+		No field sites users found.
+	{% endfor %}
+	</div>
+	
+	<div class="userDiv">
+	<h3> Field site </h3>
+	<select name="site" value="{{site.id}}">		
+	{% for site in fieldSites %}
+		<option value="{{site.id}}"> {{site.name}} </option>
+		<br>
+	{% else %}
+		<option value="-1"> No field sites found. </option>
+	{% endfor %}
+	</select>
+	</div>
+	
+	<input type="submit" value="Assign selected users" name="submitAssignUsers">
+
+</form>
+</div>
+</center>
+</body>
+
+{% endblock %}

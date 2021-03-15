@@ -5,22 +5,8 @@ require 'config.php';
 $enabledUsers = get_users();
 $disabledUsers = get_users(1);
 
-echo $twig->render('users.html', ['enabledUsers' => $enabledUsers, 'disabledUsers' => $disabledUsers]);
+$admins = get_users_by_role(1);
+$students = get_users_by_role(2);
+$fieldsites = get_users_by_role(3);
 
-if (isset($_POST['submitDisableUsers'])) {
-	$usersToDisable = $_POST['usersToDisable'];
-	
-	foreach ($usersToDisable as $userId) {
-		disable_user($userId);
-		header("Location: users.php");
-	}
-}
-
-else if (isset($_POST['submitEnableUsers'])) {
-	$usersToEnable = $_POST['usersToEnable'];
-	
-	foreach ($usersToEnable as $userId) {
-		enable_user($userId);
-		header("Location: users.php");
-	}
-}
+echo $twig->render('users.html', ['admins' => $admins, 'students' => $students, 'fieldsites' => $fieldsites]);
