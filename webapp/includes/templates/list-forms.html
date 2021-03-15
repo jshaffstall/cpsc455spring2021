@@ -3,8 +3,20 @@
 {% block title %}Forms{% endblock %}
 {% block content %}
 	<div>
-		{% for form in forms %}
-			<a href="display-form.php?form={{form.id}}">{{form.name}}</a><br>
-		{% endfor %}
+		{% if user.role == '1' %}
+			{% for form in forms %}
+				<a href="display-form.php?form={{form.id}}">{{form.name}}</a><br>
+			{% endfor %}
+		{% endif %}
+		{% if user.role == '2' %}
+			{% for form in studentForms %}
+				<a href="display-form.php?form={{form.id}}">{{form.name}}</a><br>
+			{% endfor %}
+		{% endif %}
+		{% if user.role == '3' %}
+			{% for form in siteForms %}
+				<a href="display-form.php?form={{form.id}}">{{form.name}}</a><br>
+			{% endfor %}
+		{% endif %}
 	</div>
 {% endblock %}
