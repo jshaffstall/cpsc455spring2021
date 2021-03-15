@@ -12,8 +12,8 @@
 <div>
 <h2>Current form field info</h2>
 
-<li>id: {{field.id}}, type: {{field.name}}, label: {{field.label}}, default: {{field.default}}, 
-order: {{field.order}}, name: {{field.fieldname}}, eol:{{field.eol}}, size: {{field.size}} </li>
+<li>id: {{field.id}}, type: {{field.name}}, label: {{field.label}},
+order: {{field.order}}, name: {{field.fieldname}}, eol:{{field.eol}}, size: {{field.size}}, required: {{field.required}} </li>
 
 <h2>Edit form field</h2>
 <div class="section">
@@ -28,9 +28,6 @@ Type <br> <select name="type">
 </select>
 <br>
 Label <input type="text" name="label" value="{{field.label}}">
-<br>
-
-Default <input type="text" name="default" value="{{field.default}}">
 <br>
 
 Order <input type="text" name="order" value="{{field.order}}">
