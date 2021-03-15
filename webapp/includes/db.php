@@ -891,6 +891,8 @@ function remove_user_from_site($userid, $siteid)
 
 function get_users_for_site($siteid, $roleid)
 {
+    global $pdo;
+	
     $sql = "SELECT * FROM usersitemappings, users WHERE siteid=:siteid AND userid=users.id AND users.roleid=:roleid";
     $stmt = $pdo->prepare($sql);
     
@@ -907,6 +909,8 @@ function get_users_for_site($siteid, $roleid)
 
 function get_sites_for_user($userid)
 {
+    global $pdo;
+	
     $sql = "SELECT * FROM usersitemappings,fieldworksites WHERE userid=:userid AND siteid=fieldworksites.id";
     $stmt = $pdo->prepare($sql);
     
