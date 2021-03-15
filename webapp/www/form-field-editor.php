@@ -7,8 +7,8 @@ global $formfieldId;
 require 'config.php';
 
 // get form info
-$formName = $_GET["form"];
-$form = get_form($formName);
+$formId = $_GET["form"];
+$form = get_form_by_id($formId);
 $formfieldId = $_GET["formfield"];
 $formfield = get_form_field($formfieldId);
 $types = get_form_field_types();

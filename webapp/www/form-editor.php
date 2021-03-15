@@ -1,11 +1,12 @@
 <?php
 global $twig;
 global $form;
+global $formId;
 require 'config.php';
 
 // get form info
-$formName = $_GET["form"];
-$form = get_form($formName);
+$formId = $_GET["form"];
+$form = get_form_by_id($formId);
 $types = get_form_field_types();
 
 $roles = get_roles();
@@ -36,16 +37,17 @@ function editForm() {
 	$role = $_POST["formRole"];
 	$forStudent = $_POST["forStudent"];
 	
-	$oldFormType = get_type_of_form($form["id"]);
-	
 	// return false if form of same name
-	update_form($form["id"], $formName, $role, $forStudent);
+	$test = update_form($form["id"], $formName, $role, $forStudent);
+	var_dump($test);
+	$id = $form["id"];
 	
-	header("Location: form-editor.php?form=$formName");
+	header("Location: form-editor.php?form=$id");
 }
 
 function addFormField() {
 	global $form;
+	global $formId;
 	
 	$type = $_POST["type"];
 	$label = $_POST["label"];
@@ -56,10 +58,9 @@ function addFormField() {
 	$size = $_POST["size"];
 	
 	//todo error checking
-	add_form_field ($form["id"], $type, $label, $order, $name, $eol, $size, $required);
+	add_form_field ($formId, $type, $label, $order, $name, $eol, $size, $required);
 	
 	// refresh page to show new field
-	$name = $form['name'];
-	header("Location: form-editor.php?form=$name");
+	header("Location: form-editor.php?form=$formId");
 }
 ?>

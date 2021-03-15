@@ -12,17 +12,17 @@
 <div>
 <h2>Current form field info</h2>
 
-<li>id: {{field.id}}, type: {{field.name}}, label: {{field.label}},
+<li>id: {{field.id}}, type: {{field.name}} ({{field.type}}), label: {{field.label}},
 order: {{field.order}}, name: {{field.fieldname}}, eol:{{field.eol}}, size: {{field.size}}, required: {{field.required}} </li>
 
 <h2>Edit form field</h2>
 <div class="section">
-<form action="form-field-editor.php?form={{form.name}}&formfield={{field.id}}" method="post">
+<form action="form-field-editor.php?form={{form.id}}&formfield={{field.id}}" method="post">
 
 Type <br> <select name="type">
 
 {% for type in types %}
-	<option value="{{type.id}}"> {{type.name}} </option>
+	<option value="{{type.id}}" {% if field.type == type.id %} selected {% endif %}> {{type.name}} </option>
 {% endfor %}
 
 </select>
