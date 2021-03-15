@@ -34,8 +34,8 @@ For students? <input type="hidden" name="forStudent" value="0"> <input type ="ch
 <h2>Form fields</h2>
 {% for field in fields %}
 	<a href="form-field-editor.php?form={{form.name}}&formfield={{field.id}}"> id: {{field.id}}, type: {{field.name}},
-	label: {{field.label}}, default: {{field.default}}, order: {{field.order}}, name: {{field.fieldname}},
-	end of line: {{field.eol}}, size: {{field.size}} </a>
+	label: {{field.label}}, order: {{field.order}}, name: {{field.fieldname}},
+	end of line: {{field.eol}}, size: {{field.size}}, required: {{field.required}} </a>
 	<br>
 {% else %}
 	<p> No form fields found. </p>
@@ -58,9 +58,6 @@ Type <br> <select name="type">
 Label <input type="text" name="label">
 <br>
 
-Default <input type="text" name="default">
-<br>
-
 Order <input type="text" name="order">
 <br>
 
@@ -68,6 +65,9 @@ Name <input type="text" name="name">
 <br>
 
 End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1">
+<br>
+
+Required? <input type="hidden" name="required" value="0"> <input type ="checkbox" name="required" value="1" {% if field.required %} checked {% endif %}>
 <br>
 
 Size <input type="text" name="size">

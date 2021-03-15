@@ -49,14 +49,14 @@ function addFormField() {
 	
 	$type = $_POST["type"];
 	$label = $_POST["label"];
-	$default = $_POST["default"];
+	$required = $_POST["required"];
 	$order = $_POST["order"];
 	$name = $_POST["name"];
 	$eol = $_POST["eol"];
 	$size = $_POST["size"];
 	
 	//todo error checking
-	add_form_field ($form["id"], $type, $label, $default, $order, $name, $eol, $size);
+	add_form_field ($form["id"], $type, $label, $order, $name, $eol, $size, $required);
 	
 	// refresh page to show new field
 	$name = $form['name'];
