@@ -45,19 +45,6 @@ div {
 	padding: 20px;
 }
 
-.section {
-	border: 5px outset black;
-	
-	background-color: #e3e3e3;
-	/* 		I like this one too:	#c2c0c0		*/
-	
-  	margin-top: 50px;
-	margin-bottom: 50px;
-	margin-right: 50px;
-	margin-left: 50px;
-	overflow: auto;
-}
-
 p {
 	font-size: 1.2em;
 	font-family: "Verdana";
@@ -80,7 +67,6 @@ form {
 
 input[type=text], select {
 	font-size: 1em;
-	width: 100%;
 	padding: 12px 20px;
 	margin: 8px 0;
 	border-radius: 8px;
@@ -107,15 +93,21 @@ input[type=submit]:hover {
 .siteForm form {
 	font-family: "Verdana";
 	font-size: 1.2em;
-	margin-top: 50px;
-	margin-bottom: 50px;
-	margin-right: 50px;
-	margin-left: 50px;
 }
 
-.siteForm input[type=text], select {
+.siteForm input[type=text], input[type=email] {
 	font-size: 1em;
 	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	border-radius: 8px;
+}
+
+/* Can't add select to above, for some reason. Must be separate to work */
+.siteForm select {
+	font-size: 1em;
+	/* Makes the size match textbox size */
+	width: 103.6%;
 	padding: 12px 20px;
 	margin: 8px 0;
 	border-radius: 8px;
@@ -133,6 +125,18 @@ input[type=submit]:hover {
 	border-radius: 4px;
 }
 
+.siteForm input[type=submit]:hover {
+	background-color: #6045e6;
+}
+
+.siteForm input[type=checkbox] {
+	transform: scale(2.5);
+	margin-left: 8px;
+	margin-right: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
 /* Generated forms */
 .generatedForm form {
 	font-family: "Verdana";
@@ -145,7 +149,6 @@ input[type=submit]:hover {
 
 .generatedForm input[type=text], select {
 	font-size: 1em;
-	width: 250px;
 	margin: 8px 0;
 	border-radius: 2px;
 }
@@ -174,23 +177,15 @@ input[type=submit]:hover {
 	margin-left: 80px;
 }
 
-.siteForm input[type=checkbox] {
-	transform: scale(2.5);
-	margin-top: 50px;
-	margin-bottom: 50px;
-	margin-right: 50px;
-	margin-left: 50px;
-}
-
-input[type=checkbox] {
-	transform: scale(1.5);
-}
-
 .generatedForm label {
 	font-family: "Verdana";
 	font-size: 1.2em;
 	padding: 12px 20px;
 	border-radius: 8px;
+}
+
+input[type=checkbox] {
+	transform: scale(1.5);
 }
 
 .userDiv {
@@ -206,6 +201,64 @@ input[type=checkbox] {
   clear: both;
 }
 
+.topForm input[type=checkbox] {
+	transform: scale(1.5);
+}
 
+.topForm input[type=text] {
+	width: 15%;
+	margin: 0px 0px;
+	font-size: .8em;
+	padding: 3px 3px;
+	margin: 2px 0;
+	border-radius: 8px;
+}
+
+.topForm select {
+	font-size: .8em;
+	width: 15%;
+	margin-left: 4px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	border-radius: 8px;
+	padding: 3px 3px;
+}
+
+.topForm input[type=submit] {
+	width: 15%;
+	margin: 3px 0px;
+	font-size: .8em;
+	padding: 1px 2px;
+	border-radius: 4px;
+	float: right;
+}
+
+.topForm input[type=submit]:hover {
+	background-color: #6045e6;
+}
+
+.topForm p {
+	font-size: .8em;
+	margin-left: 32px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	display: inline;
+}
+
+.section {
+	border: 5px outset black;
+	background-color: #e3e3e3;
+	margin: 50px 50px;
+	overflow: auto;
+}
+
+.topSection {
+	padding: 0px 20px;
+	border: 5px outset black;
+	border-bottom: none;
+	background-color: #c2c0c0;
+	margin: 0px 50px;
+	overflow: auto;
+}
 
 

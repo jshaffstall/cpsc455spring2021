@@ -9,43 +9,30 @@
 </head>
 
 <body>
-<h1>{{form.name}}</h2>
+<a href="form-creator.php"> &lt Back to forms </a>
 
-<div class="section">
-<h2> Edit form </h2>
+<div class="section" style="margin-top: 0px;">
+<center>
+<h1>{{form.name}}</h1>
+</center>
+<h2>Edit form</h2>
+<form class="topForm" action="form-editor.php?form={{form.id}}" method="post">
+<p style="margin-left: 0px;">Form name</p> <input type="text" value="{{form.name}}" name="formName">
 
-<form action="form-editor.php?form={{form.id}}" method="post">
-
-Name <input type="text" value="{{form.name}}" name="formName">
-Current role id: {{form.roleid}} | For students: {{form.student}}<br>
-Role <br> <select name="formRole" value="{{form.roleid}}">
+<p>For role</p> <select name="formRole">
 {% for role in roles %}
 	<option value="{{role.id}}" {% if form.roleid == role.id %} selected {% endif %}> {{role.name}} </option>
 {% endfor %}
+
 </select>
-<br>
-For students? <input type="hidden" name="forStudent" value="0"> <input type ="checkbox" name="forStudent" value="1" {% if form.student %} checked {% endif %}>
-<input type="submit" name="submitForm">
+<p>For students?</p> <input type="hidden" name="forStudent" value="0"> <input type ="checkbox" name="forStudent" value="1" {% if form.student %} checked {% endif %}>
+<input type="submit" name="submitForm" value="Edit form">
 
 </form>
-</div>
 
-<div class="section">
-<h2>Form fields</h2>
-{% for field in fields %}
-	<a href="form-field-editor.php?form={{form.id}}&formfield={{field.id}}"> id: {{field.id}}, type: {{field.name}},
-	label: {{field.label}}, order: {{field.order}}, name: {{field.fieldname}},
-	end of line: {{field.eol}}, size: {{field.size}}, required: {{field.required}} </a>
-	<br>
-{% else %}
-	<p> No form fields found. </p>
-{% endfor %}
-</div>
+<h2>Create form field</h2>
 
-<div class="section">
-<h2>Create new form field</h2>
-<form action="form-editor.php?form={{form.id}}" method="post">
-
+<form class="siteForm" action="form-editor.php?form={{form.id}}" method="post">
 Type <br> <select name="type" value="{{field.type}}">
 
 {% for type in types %}
@@ -64,19 +51,30 @@ Order <input type="text" name="order">
 Name <input type="text" name="name">
 <br>
 
-End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1">
+<input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1"> End of line? 
 <br>
 
-Required? <input type="hidden" name="required" value="0"> <input type ="checkbox" name="required" value="1">
+<input type="hidden" name="required" value="0"> <input type ="checkbox" name="required" value="1"> Required?
 <br>
 
 Size <input type="text" name="size">
 <br>
 
-<input type="submit" name="submitField">
+<input type="submit" name="submitField" value="Create form field">
 </form>
+</div>
+
+<div class="section">
+<h2>Form fields</h2>
+{% for field in fields %}
+	<a href="form-field-editor.php?form={{form.id}}&formfield={{field.id}}"> {{field.fieldname}} </a>
+	<br>
+{% else %}
+	<p> No form fields found. </p>
+{% endfor %}
 </div>
 </body>
 </html>
+
 
 {% endblock %}

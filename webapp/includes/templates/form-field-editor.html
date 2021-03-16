@@ -8,16 +8,13 @@
 <head>
 <title> Edit Formfield </title>
 </head>
-
-<div>
-<h2>Current form field info</h2>
-
-<li>id: {{field.id}}, type: {{field.name}} ({{field.type}}), label: {{field.label}},
-order: {{field.order}}, name: {{field.fieldname}}, eol:{{field.eol}}, size: {{field.size}}, required: {{field.required}} </li>
-
-<h2>Edit form field</h2>
+<a href="form-editor.php?form={{form.id}}"> &lt Back to form </a>
 <div class="section">
-<form action="form-field-editor.php?form={{form.id}}&formfield={{field.id}}" method="post">
+<center>
+<h1>{{field.name}}<h1>
+</center>
+<h2>Edit form field</h2>
+<form class="siteForm"  action="form-field-editor.php?form={{form.id}}&formfield={{field.id}}" method="post">
 
 Type <br> <select name="type">
 
@@ -35,17 +32,18 @@ Order <input type="text" name="order" value="{{field.order}}">
 
 Name <input type="text" name="name" value="{{field.fieldname}}">
 <br>
-
-End of line? <input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1" {% if field.eol %} checked {% endif %}>
+<br>
+<input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1" class="siteForm" {% if field.eol %} checked {% endif %}> End of line?
+<br>
 <br>
 
-Required? <input type="hidden" name="required" value="0"> <input type ="checkbox" name="required" value="1" {% if field.required %} checked {% endif %}>
+<input type="hidden" name="required" value="0"> <input type ="checkbox" name="required" value="1" class="siteForm" {% if field.required %} checked {% endif %}> Required?
 <br>
-
+<br>
 Size <input type="text" name="size" value="{{field.size}}">
 <br>
 
-<input type="submit" name="submit">
+<input type="submit" name="submit" value="Edit form field">
 </form>
 </div>
 	

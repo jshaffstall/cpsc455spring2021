@@ -37,7 +37,7 @@ if ($submitted) {
 	
 	update_form_field($form, $formfieldId, $type, $label, $order, $name, $eol, $size, $required);
 	
-	$formName = $form['name'];
-	header("Location: form-field-editor.php?form=$formName&formfield=$formfieldId");
+	$formId= $form['id'];
+	header("Location: form-field-editor.php?form=$formId&formfield=$formfieldId");
 }
 ?>
