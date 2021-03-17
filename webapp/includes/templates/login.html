@@ -3,13 +3,17 @@
 
 {% block title %}Login{% endblock %}
 {% block content %}
-        <form class="generatedForm" method ='POST'>
-            <label for "email">Email: </label>
-            <input type="email" id="email" placeholder="Email" name ="email" >
-            <label for "password">Password: </label>
-            <input type="password" id="password" placeholder="Password" name ="password">
-			<br>
-			<a href="password-forgot.php"> Forgot password </a>
-            <input class="siteForm" type="submit" value = "Submit">
-        </form>	
+<div class="section">
+	<form class="generatedForm" method ='POST'>
+		<label for "email" style="margin-right: 46px;">Email: </label>
+		<input type="email" id="email" placeholder="Email" name ="email">
+		<br>
+		<label for "password">Password: </label>
+		<input type="password" id="password" placeholder="Password" name ="password">
+		<br>
+		<a href="password-forgot.php" style="font-size: .8em; margin-left: 20px;"> Forgot password </a>
+		<br>
+		<input class="siteForm" style="margin-left:20px; width:46%;" type="submit" value = "Submit">
+	</form>	
+</div>
 {% endblock %}

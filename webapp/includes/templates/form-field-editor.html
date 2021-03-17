@@ -11,37 +11,33 @@
 <a href="form-editor.php?form={{form.id}}"> &lt Back to form </a>
 <div class="section">
 <center>
-<h1>{{field.name}}<h1>
+<h2>Editing "{{field.label}}"<h2>
 </center>
-<h2>Edit form field</h2>
 <form class="siteForm"  action="form-field-editor.php?form={{form.id}}&formfield={{field.id}}" method="post">
 
-Type <br> <select name="type">
+<p>Type</p> <br> <select name="type">
 
 {% for type in types %}
 	<option value="{{type.id}}" {% if field.type == type.id %} selected {% endif %}> {{type.name}} </option>
 {% endfor %}
 
 </select>
-<br>
-Label <input type="text" name="label" value="{{field.label}}">
-<br>
 
-Order <input type="text" name="order" value="{{field.order}}">
-<br>
+<p>Label</p> <input type="text" name="label" value="{{field.label}}">
 
-Name <input type="text" name="name" value="{{field.fieldname}}">
-<br>
-<br>
-<input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1" class="siteForm" {% if field.eol %} checked {% endif %}> End of line?
-<br>
-<br>
 
-<input type="hidden" name="required" value="0"> <input type ="checkbox" name="required" value="1" class="siteForm" {% if field.required %} checked {% endif %}> Required?
+<p>Order</p> <input type="text" name="order" value="{{field.order}}">
+
+
+<p>Name</p> <input type="text" name="name" value="{{field.fieldname}}">
+
+<input type="hidden" name="eol" value="0"> <input class="siteForm" type ="checkbox" name="eol" value="1"  {% if field.eol %} checked {% endif %}> <p>End of line?</p>
+
+
+<input type="hidden" name="required" value="0"> <input class="siteForm" style="margin-left: 20px;" type ="checkbox" name="required" value="1" {% if field.required %} checked {% endif %}> <p>Required?</p>
 <br>
-<br>
-Size <input type="text" name="size" value="{{field.size}}">
-<br>
+<p>Size</p> <input type="text" name="size" value="{{field.size}}">
+
 
 <input type="submit" name="submit" value="Edit form field">
 </form>

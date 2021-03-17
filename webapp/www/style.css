@@ -92,30 +92,29 @@ input[type=submit]:hover {
 
 .siteForm form {
 	font-family: "Verdana";
-	font-size: 1.2em;
+	font-size: .8em;
 }
 
 .siteForm input[type=text], input[type=email] {
-	font-size: 1em;
 	width: 100%;
 	padding: 12px 20px;
 	margin: 8px 0;
 	border-radius: 8px;
+	font-size: .8em;
 }
 
 /* Can't add select to above, for some reason. Must be separate to work */
 .siteForm select {
-	font-size: 1em;
 	/* Makes the size match textbox size */
 	width: 103.6%;
 	padding: 12px 20px;
 	margin: 8px 0;
 	border-radius: 8px;
+	font-size: .8em;
 }
 
 .siteForm input[type=submit] {
 	font-family: "Verdana";
-	font-size: 1em;
 	cursor: pointer;
 	width: 100%;
 	background-color: #608ee5;
@@ -123,6 +122,7 @@ input[type=submit]:hover {
 	padding: 14px 20px;
 	margin: 60px 0;
 	border-radius: 4px;
+	font-size: .8em;
 }
 
 .siteForm input[type=submit]:hover {
@@ -135,6 +135,12 @@ input[type=submit]:hover {
 	margin-right: 20px;
 	margin-top: 20px;
 	margin-bottom: 20px;
+}
+
+.siteForm p {
+	font-family: "Verdana";
+	font-size: .8em;
+	display: inline;
 }
 
 /* Generated forms */
@@ -182,6 +188,14 @@ input[type=submit]:hover {
 	font-size: 1.2em;
 	padding: 12px 20px;
 	border-radius: 8px;
+}
+
+.generatedForm input[type=email], input[type=password] {
+	width: 30%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	border-radius: 8px;
+	font-size: .8em;
 }
 
 input[type=checkbox] {
