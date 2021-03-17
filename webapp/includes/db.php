@@ -918,7 +918,7 @@ function get_sites_for_user($userid)
     
     $stmt->execute();
     
-    if ($stmt->rowCount() > 0)
+    if ($stmt->rowCount() == 0)
         return False;
 	
 	return $stmt;

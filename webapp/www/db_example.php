@@ -10,6 +10,6 @@ $forms = get_forms();
 $fields = get_form_fields(1);
 $field = get_form_field(1);
 
-$types = get_forms_of_type(1);
+$sites = get_sites_for_user(2);
 
-echo $twig->render('db_example.html', ['roles' => $roles, 'types' => $types, 'forms' => $forms, 'fields' => $fields, 'types' => $types]);
+echo $twig->render('db_example.html', ['roles' => $roles, 'forms' => $forms, 'fields' => $fields, 'types' => $types]);
