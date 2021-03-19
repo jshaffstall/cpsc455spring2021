@@ -3,8 +3,16 @@
 {% block title %}Forms{% endblock %}
 {% block content %}
 	<div>
+        {% set siteparam = "" %}
+        
+        {% if siteid %}
+            {% set siteparam %}
+&siteid={{siteid}}
+            {% endset %}
+        {% endif %}
+        
 		{% for form in forms %}
-			<a href="display-form.php?form={{form.id}}">{{form.name}}</a><br>
+			<a href="display-form.php?form={{form.id}}{{siteparam}}">{{form.name}}</a><br>
 		{% endfor %}
 	</div>
 {% endblock %}

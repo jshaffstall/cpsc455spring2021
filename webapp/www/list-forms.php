@@ -5,10 +5,10 @@ require 'config.php';
 // $_GET['siteid'] is the id of the site, if these forms are part of a site.  If not present, these forms are generic student forms.
 
 $forms = [];
-$siteid = False
+$siteid = False;
 
 if (isset($_GET['siteid']))
-	$siteid = $_GET['siteid']
+	$siteid = $_GET['siteid'];
 
 if ($user)
 {
