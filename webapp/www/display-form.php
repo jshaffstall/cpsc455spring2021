@@ -6,17 +6,12 @@ require 'config.php';
 // $_GET['siteid'] is the id of the site, if this form is being submitted for a particular site
 
 $errors = False;
-$siteid = False;
+$siteid = null;
 
 if (isset($_GET['siteid']))
 	$siteid = $_GET['siteid'];
 
 if(isset($_POST['formid'])){
-    $siteid = null;
-    
-    if (isset($_POST['siteid']))
-        $siteid = $_POST['siteid'];
-    
 	$errors = submit_form($user['id'], $_POST['formid'], $_POST, $siteid);
 	
 	if (!$errors)
@@ -30,7 +25,7 @@ if(isset($_POST['formid'])){
 	}
 }
 
-$submitted = get_form_submission($user['id'], $_GET['form'], null);
+$submitted = get_form_submission($user['id'], $_GET['form'], $siteid);
 
 $submissions = array();
 
