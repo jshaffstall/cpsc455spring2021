@@ -47,5 +47,8 @@
 	{% endfor %}
 	<br>
 	<input type='hidden' name='formid' value='{{form}}'>
+    {% if siteid %}
+	<input type='hidden' name='siteid' value='{{siteid}}'>
+    {% endif %}
 	<input class="generatedForm"  type="submit" value = "Submit">
 	</form>
