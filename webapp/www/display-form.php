@@ -12,11 +12,20 @@ if (isset($_GET['siteid']))
 	$siteid = $_GET['siteid'];
 
 if(isset($_POST['formid'])){
-	$errors = submit_form($user['id'], $_POST['formid'], $_POST);
+    $siteid = null;
+    
+    if (isset($_POST['siteid']))
+        $siteid = $_POST['siteid'];
+    
+	$errors = submit_form($user['id'], $_POST['formid'], $_POST, $siteid);
 	
 	if (!$errors)
 	{
-		header("Location: list-forms.php");
+        if (isset($_POST['siteid']))
+            header("Location: list-forms.php?siteid=".$_POST['siteid']);
+        else
+            header("Location: list-forms.php");
+        
 		exit();
 	}
 }
