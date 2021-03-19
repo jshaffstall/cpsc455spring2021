@@ -490,6 +490,22 @@ function submit_form($user, $formid, $values, $siteid=null)
     global $pdo;
     
     $submission = get_form_submission($user, $formid, $siteid);
+
+    process_form_submission ($user, $formid, $values, $siteid, $submission);
+}
+
+function submit_form_for_site($user, $formid, $values, $siteid)
+{
+    global $pdo;
+    
+    $submission = get_form_submission_for_site($formid, $siteid);
+    
+    process_form_submission ($user, $formid, $values, $siteid, $submission);
+}
+
+function process_form_submission($user, $formid, $values, $siteid, $submission)
+{
+    global $pdo;
     
     $pdo->beginTransaction();
     
@@ -498,10 +514,11 @@ function submit_form($user, $formid, $values, $siteid=null)
     if ($submission)
     {
         // Update the submission date for the new submission
-        $sql = "UPDATE formsubmissions SET `when`=NOW() WHERE id=:id";
+        $sql = "UPDATE formsubmissions SET `when`=NOW(), user=:user WHERE id=:id";
         $stmt = $pdo->prepare($sql);
         
         $stmt->bindValue(':id', $submission['id']);
+        $stmt->bindValue(':user', $user);
         
         $stmt->execute();
         
@@ -660,6 +677,25 @@ function get_form_submission($user, $formid, $siteid=null)
     
     if (! is_null($siteid))
         $stmt->bindValue(':siteid', $siteid);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function get_form_submission_for_site($formid, $siteid)
+{
+    global $pdo;
+
+    $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and siteid=:siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    $stmt->bindValue(':siteid', $siteid);
     
     $stmt->execute();
 	

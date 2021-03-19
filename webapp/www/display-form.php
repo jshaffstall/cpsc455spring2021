@@ -12,7 +12,13 @@ if (isset($_GET['siteid']))
 	$siteid = $_GET['siteid'];
 
 if(isset($_POST['formid'])){
-	$errors = submit_form($user['id'], $_POST['formid'], $_POST, $siteid);
+    if (isset($_POST['siteid']))
+        $siteid = $_POST['siteid'];    
+    
+    if ($user['role'] == 3)
+        $errors = submit_form_for_site($user['id'], $_POST['formid'], $_POST, $siteid);
+    else
+        $errors = submit_form($user['id'], $_POST['formid'], $_POST, $siteid);
 	
 	if (!$errors)
 	{
@@ -25,7 +31,10 @@ if(isset($_POST['formid'])){
 	}
 }
 
-$submitted = get_form_submission($user['id'], $_GET['form'], $siteid);
+if ($user['role'] == 3)
+    $submitted = get_form_submission_for_site($_GET['form'], $siteid);
+else
+    $submitted = get_form_submission($user['id'], $_GET['form'], $siteid);
 
 $submissions = array();
 
