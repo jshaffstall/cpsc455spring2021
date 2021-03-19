@@ -3,6 +3,6 @@
 {% block title %}Sites{% endblock %}
 {% block content %}
 	{% for site in siteAssigned %}
-		<a href="display-form.php?form={{site.id}}">{{site.name}}</a><br>
+		<a href="list-site-forms.php?site={{site.id}}">{{site.name}}</a><br>
 	{% endfor %}
 {% endblock %}

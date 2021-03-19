@@ -2,9 +2,14 @@
 
 require 'config.php';
 
-//var_dump($_GET);
+// $_GET['formid'] is the id of the form to display
+// $_GET['siteid'] is the id of the site, if this form is being submitted for a particular site
 
 $errors = False;
+$siteid = False
+
+if (isset($_GET['siteid']))
+	$siteid = $_GET['siteid']
 
 if(isset($_POST['formid'])){
 	$errors = submit_form($user['id'], $_POST['formid'], $_POST);
@@ -33,7 +38,7 @@ if ($submitted)
 $types = get_form_field_types();
 $fields = get_form_fields($_GET['form']);
 
-echo $twig->render('display-form.html',['fields' => $fields, 'types' => $types, 'form' => $_GET['form'], 'submissions' => $submissions, 'errors' => $errors]);
+echo $twig->render('display-form.html',['fields' => $fields, 'types' => $types, 'form' => $_GET['form'], 'submissions' => $submissions, 'errors' => $errors, 'siteid' => $siteid]);
 
 
 ?>
