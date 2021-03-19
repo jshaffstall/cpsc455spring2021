@@ -4,9 +4,16 @@ require 'config.php';
 
 //var_dump($_GET);
 
+$errors = False;
+
 if(isset($_POST['formid'])){
-	$submit = submit_form($user['id'], $_POST['formid'], $_POST);
-	//header("Location: list-forms.php");
+	$errors = submit_form($user['id'], $_POST['formid'], $_POST);
+	
+	if (!$errors)
+	{
+		header("Location: list-forms.php");
+		exit();
+	}
 }
 
 $submitted = get_form_submission($user['id'], $_GET['form'], null);
@@ -26,7 +33,7 @@ if ($submitted)
 $types = get_form_field_types();
 $fields = get_form_fields($_GET['form']);
 
-echo $twig->render('display-form.html',['fields' => $fields, 'types' => $types, 'form' => $_GET['form'], 'submissions' => $submissions]);
+echo $twig->render('display-form.html',['fields' => $fields, 'types' => $types, 'form' => $_GET['form'], 'submissions' => $submissions, 'errors' => $errors]);
 
 
 ?>
