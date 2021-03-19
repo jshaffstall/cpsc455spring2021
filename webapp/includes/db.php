@@ -570,20 +570,19 @@ function submit_form($user, $formid, $values, $siteid=null)
                 }
                 else
                 {
-                    $errors[] = "Problem accessing uploaded file";
+                    $errors[] = "Field '".$formfield['label']."' is required";
                 }
             }
             else
             {
-                // TODO: if this field is required, rollback and reject
-                // the submission
+                $errors[] = "Field '".$formfield['label']."' is required";
             }
         }
         else
         {
-            // TODO: if this field is required, rollback and reject
-            // the submission.  Need to work out how an empty field
-            // presents for each field type
+            if ($formfield['type'] == 1 || $formfield['type'] == 3)
+                if (empty($value))
+                    $errors[] = "Field '".$formfield['label']."' is required";
         }
         
         $sql = "INSERT INTO fieldsubmissions (formsubmissionid, value, type, name, file, content_type, size) VALUES (:formsubmissionid, :value, :type, :name, :file_contents, :content_type, :size)";
@@ -901,7 +900,7 @@ function get_users_for_site($siteid, $roleid)
     
     $stmt->execute();
     
-    if ($stmt->rowCount() > 0)
+    if ($stmt->rowCount() == 0)
         return False;
 	
 	return $stmt;
