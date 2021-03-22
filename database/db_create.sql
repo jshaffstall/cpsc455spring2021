@@ -112,7 +112,8 @@ CREATE TABLE `forms` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `roleid` int(11) NOT NULL,
-  `student` tinyint(1) NOT NULL
+  `student` tinyint(1) NOT NULL,
+  `archived` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -173,7 +174,11 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `name`, `password`, `role`, `token`, `token_issued`, `disabled`) VALUES
 (1, 'admin@muskingum.edu', 'Test Admin', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 1, NULL, NULL, 0),
 (2, 'student@muskingum.edu', 'Test Student', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 2, NULL, NULL, 0),
-(3, 'site@muskingum.edu', 'Test Site', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 3, NULL, NULL, 0);
+(3, 'site@muskingum.edu', 'Site User One', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 3, NULL, NULL, 0),
+(4, 'student2@muskingum.edu', 'Student Two', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 2, NULL, NULL, 0),
+(5, 'student3@muskingum.edu', 'Student Three', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 2, NULL, NULL, 0),
+(6, 'site2@muskingum.edu', 'Site User Two', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 3, NULL, NULL, 0),
+(7, 'site3@muskingum.edu', 'Site User Three', '$2y$10$BAR09FRDyy66TgVb9BRpWOdLrAaLVnihDYS/OO9fkkqdUjdRPdRAG', 3, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -264,50 +269,42 @@ ALTER TABLE `usersitemappings`
 -- AUTO_INCREMENT for table `fieldsubmissions`
 --
 ALTER TABLE `fieldsubmissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `fieldworksites`
 --
 ALTER TABLE `fieldworksites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `formfields`
 --
 ALTER TABLE `formfields`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `formfieldtypes`
 --
 ALTER TABLE `formfieldtypes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `formsubmissions`
 --
 ALTER TABLE `formsubmissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Constraints for dumped tables
 --
@@ -352,7 +349,6 @@ ALTER TABLE `users`
 ALTER TABLE `usersitemappings`
   ADD CONSTRAINT `usersitemappings_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `usersitemappings_ibfk_2` FOREIGN KEY (`siteid`) REFERENCES `fieldworksites` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
