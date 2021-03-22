@@ -726,9 +726,6 @@ function get_field_submissions($formsubmissionid)
     
     $stmt->execute();
 	
-    if ($stmt->rowCount() == 0)
-        return False;
-	
 	return $stmt;
 }
 
