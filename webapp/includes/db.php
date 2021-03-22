@@ -767,6 +767,12 @@ function search_form_submissions ($formid, $searchterms)
 			// Checkbox, exact searches only
 			$searches = " AND name=:".$name." AND value=:".$name."_value ";
 		}
+        
+		if ($formfield['type'] == 3)
+		{
+			// Date, exact searches only
+			$searches = " AND name=:".$name." AND value=:".$name."_value ";
+		}
  	}
 	
 	$sql .= $searches;
