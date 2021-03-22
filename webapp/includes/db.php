@@ -951,9 +951,6 @@ function get_users_for_site($siteid, $roleid)
     
     $stmt->execute();
     
-    if ($stmt->rowCount() == 0)
-        return False;
-	
 	return $stmt;
 }
 
