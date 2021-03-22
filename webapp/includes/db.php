@@ -503,6 +503,15 @@ function submit_form_for_site($user, $formid, $values, $siteid)
     process_form_submission ($user, $formid, $values, $siteid, $submission);
 }
 
+function submit_form_as_admin($user, $formid, $values, $siteid=null)
+{
+    global $pdo;
+    
+    $submission = get_form_submission_for_site($formid, $siteid);
+    
+    process_form_submission ($user, $formid, $values, $siteid, $submission);
+}
+
 function process_form_submission($user, $formid, $values, $siteid, $submission)
 {
     global $pdo;
@@ -934,7 +943,7 @@ function get_users_for_site($siteid, $roleid)
 {
     global $pdo;
 	
-    $sql = "SELECT * FROM usersitemappings, users WHERE siteid=:siteid AND userid=users.id AND users.roleid=:roleid";
+    $sql = "SELECT * FROM usersitemappings, users WHERE siteid=:siteid AND userid=users.id AND users.role=:roleid";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':roleid', $roleid);
