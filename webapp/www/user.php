@@ -2,6 +2,6 @@
 
 require 'config.php';
 
-$email = $_GET['email'];
-$user = get_user($email);
+$userid = $_GET['id'];
+$user = get_user_by_id ($userid);
 echo $twig->render('user.html', ['user' => $user]);

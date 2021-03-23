@@ -24,7 +24,7 @@
 	
 	{% for student in students %}
 		<input type="hidden" value="0"> <input type ="checkbox" name="usersSelected[]" value="{{student.id}}">
-		<a href="user.php?email={{student.email}}"> {{student.name}} </a>
+		<a href="user.php?id={{student.id}}"> {{student.name}} </a>
 		<br>
 	{% else %}
 		No students found.
@@ -35,7 +35,7 @@
 	<h3> Field site users </h3>
 	{% for site in siteUsers %}
 		<input type="hidden" value="0"> <input type ="checkbox" name="usersSelected[]" value="{{site.id}}">
-		<a href="user.php?email={{site.email}}"> {{site.name}} </a>
+		<a href="user.php?id={{site.id}}"> {{site.name}} </a>
 		<br>
 	{% else %}
 		No field sites users found.
