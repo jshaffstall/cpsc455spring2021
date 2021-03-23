@@ -244,7 +244,7 @@ function get_student_forms()
 {
     global $pdo;
     
-    $sql = "SELECT * FROM forms WHERE roleid=2 ORDER BY name";
+    $sql = "SELECT * FROM forms WHERE roleid=2 AND archived=0 ORDER BY name";
     $stmt = $pdo->prepare($sql);
     $stmt->execute ();
 
@@ -255,7 +255,7 @@ function get_site_forms()
 {
     global $pdo;
     
-    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=0 ORDER BY name";
+    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=0 AND archived=0 ORDER BY name";
     $stmt = $pdo->prepare($sql);
     $stmt->execute ();
 
@@ -266,7 +266,7 @@ function get_site_forms_for_students()
 {
     global $pdo;
     
-    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=1 ORDER BY name";
+    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=1 AND archived=0 ORDER BY name";
     $stmt = $pdo->prepare($sql);
     $stmt->execute ();
 
@@ -649,6 +649,8 @@ function get_all_form_submissions ()
 {
     global $pdo;
 
+    // TODO: This should not return submissions from archived forms
+    // or submissions from deactivated users
     $sql = "SELECT * FROM formsubmissions ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
@@ -665,6 +667,7 @@ function get_form_submissions ($user)
 {
     global $pdo;
 
+    // TODO: This should not return submissions from archived forms
     $sql = "SELECT * FROM formsubmissions WHERE user=:user ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
@@ -708,6 +711,7 @@ function get_form_submission_for_site($formid, $siteid)
 {
     global $pdo;
 
+    // TODO: This should not return submissions from archived forms
     $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and siteid=:siteid";
     
     $stmt = $pdo->prepare($sql);
@@ -758,6 +762,8 @@ function get_field_submission($fieldsubmissionid)
 
 function search_form_submissions ($formid, $searchterms)
 {
+    // TODO: This should not return submissions from archived forms
+    // or from submissions for deactivated users
 	$sql = "SELECT DISTINCT formsubmissions.id, formsubmissions.formid, formsubmissions.when, formsubmissions.user FROM formsubmissions, fieldsubmissions WHERE formsubmissions.formid=:formid and formsubmissions.id=fieldsubmissions.formsubmissionid ";
 	$searches = "";
 	
