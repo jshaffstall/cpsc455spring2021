@@ -220,23 +220,22 @@ function get_form_field_types()
     return $stmt;
 }
 
-function get_forms($namefilter=null)
+function get_forms($namefilter='', $archived=0)
 {
     global $pdo;
     
-    if (is_null($namefilter))
-        $sql = "SELECT * FROM forms ORDER BY name";
-    else
-        $sql = "SELECT * FROM forms WHERE name LIKE :namefilter ORDER BY name";
-    
+    $sql = "SELECT * FROM forms WHERE name LIKE :namefilter ORDER BY name";
     $stmt = $pdo->prepare($sql);
-    
-    if (! is_null($namefilter))
-        $stmt->bindValue(':namefilter', "%".$namefilter."%");
+    $stmt->bindValue(':namefilter', "%".$namefilter."%");
     
     $stmt->execute ();
 
     return $stmt;
+}
+
+function get_archived_forms($namefilter='')
+{
+    return get_forms($namefilter, 1);
 }
 
 function get_student_forms()
@@ -995,7 +994,7 @@ function unarchive_form($formid)
 {
     global $pdo;
     
-    $sql = "UPDATE forms SET archived=NULL WHERE id=:formid";
+    $sql = "UPDATE forms SET archived=0 WHERE id=:formid";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':formid', $formid);

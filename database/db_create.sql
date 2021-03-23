@@ -113,7 +113,7 @@ CREATE TABLE `forms` (
   `name` varchar(255) DEFAULT NULL,
   `roleid` int(11) NOT NULL,
   `student` tinyint(1) NOT NULL,
-  `archived` tinyint(1) DEFAULT NULL
+  `archived` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
