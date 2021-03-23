@@ -976,3 +976,31 @@ function get_sites_for_user($userid)
 	
 	return $stmt;
 }
+
+function archive_form($formid)
+{
+    global $pdo;
+    
+    $sql = "UPDATE forms SET archived=1 WHERE id=:formid";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    
+    $stmt->execute ();
+
+    return $stmt;
+}
+
+function unarchive_form($formid)
+{
+    global $pdo;
+    
+    $sql = "UPDATE forms SET archived=NULL WHERE id=:formid";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
+    
+    $stmt->execute ();
+
+    return $stmt;
+}
