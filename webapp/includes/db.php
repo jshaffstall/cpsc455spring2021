@@ -224,9 +224,11 @@ function get_forms($namefilter='', $archived=0)
 {
     global $pdo;
     
-    $sql = "SELECT * FROM forms WHERE name LIKE :namefilter ORDER BY name";
+    $sql = "SELECT * FROM forms WHERE name LIKE :namefilter AND archived=:archived ORDER BY name";
     $stmt = $pdo->prepare($sql);
+    
     $stmt->bindValue(':namefilter', "%".$namefilter."%");
+    $stmt->bindValue(':archived', $archived);
     
     $stmt->execute ();
 
