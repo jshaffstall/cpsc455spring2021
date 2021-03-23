@@ -220,12 +220,20 @@ function get_form_field_types()
     return $stmt;
 }
 
-function get_forms()
+function get_forms($namefilter=null)
 {
     global $pdo;
     
-    $sql = "SELECT * FROM forms ORDER BY name";
+    if (is_null($namefilter))
+        $sql = "SELECT * FROM forms ORDER BY name";
+    else
+        $sql = "SELECT * FROM forms WHERE name LIKE :namefilter ORDER BY name";
+    
     $stmt = $pdo->prepare($sql);
+    
+    if (! is_null($namefilter))
+        $stmt->bindValue(':namefilter', "%".$namefilter."%");
+    
     $stmt->execute ();
 
     return $stmt;
@@ -766,6 +774,7 @@ function search_form_submissions ($formid, $searchterms)
 		{
 			// Edit field, allow partial searches
 			$searches = " AND name=:".$name." AND value LIKE :".$name."_value ";
+            $searchterms[$name] = "%".$value."%";
 		}
 		
 		if ($formfield['type'] == 2)
