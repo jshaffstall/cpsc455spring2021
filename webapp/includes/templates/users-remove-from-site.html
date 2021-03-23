@@ -7,59 +7,111 @@
 
 <head>
 <title> Remove User From Site </title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
 
 
-<center>
 <div class="section">
 <a href="users-assign-to-site.php" style="float: right;"> Assign user to site > </a>
 <br>
 <h2> Remove users from site </h2>
-<form action="users-assign-to-site.php" method="post">
+<form action="users-remove-from-site.php" method="post">
+
 	<div class="userDiv">
 	
 	<h3> Students </h3>
-	
-	{% for student in students %}
-		<input type="hidden" value="0"> <input type ="checkbox" name="usersSelected[]" value="{{student.id}}">
-		<a href="user.php?email={{student.email}}"> {{student.name}} </a>
-		<br>
-	{% else %}
-		No students found.
-	{% endfor %}
-	
+		<div id="students">
+		
+		</div>
 	</div>
 
 	<div class="userDiv">
 	<h3> Field site users </h3>
-	{% for site in siteUsers %}
-		<input type="hidden" value="0"> <input type ="checkbox" name="usersSelected[]" value="{{site.id}}">
-		<a href="user.php?email={{site.email}}"> {{site.name}} </a>
-		<br>
-	{% else %}
-		No field sites users found.
-	{% endfor %}
+		<div id="siteUsers">
+
+		</div>
 	</div>
 	
 	<div class="userDiv">
-	<h3> Field site </h3>
-	<select name="site" value="{{site.id}}">		
-	{% for site in fieldSites %}
-		<option value="{{site.id}}"> {{site.name}} </option>
-		<br>
-	{% else %}
-		<option value="-1"> No field sites found. </option>
-	{% endfor %}
-	</select>
+		<h3> Field site </h3>
+			<select name="site" onload="return showAssignedUsers(this.value);" onchange="return showAssignedUsers(this.value);">	
+				<option value="none" selected disabled hidden>
+					Select a site
+				</option>			
+			{% for site in fieldSites %}
+				<option value="{{site.id}}"> {{site.name}} </option>
+				<br>
+			{% else %}
+				<option value="-1"> No field sites found. </option>
+			{% endfor %}
+			</select>
 	</div>
 	
 	<input type="submit" value="Remove selected users" name="submitRemoveUsers">
 	</form>
 	</div>
 </div>
-</center>
+
+<script type = "text/javascript">
+function showAssignedUsers(siteId) {
+	console.log("here1");
+	
+    $.ajax({
+		method: "POST",
+		url: "ajax-site-users.php",
+		data: {"siteId": siteId},
+		
+			success: function(data) {
+				console.log(data);
+				var obj = JSON.parse(data);
+				var students = obj.students;
+				var sites = obj.sites;
+				
+				for (student in students) {
+					console.log(students[student].name);
+					console.log(students[student].id);
+				}
+				
+				writeUsers(obj);
+				
+				for (site in sites) {
+					console.log(sites[site].name);
+					console.log(sites[site].id);
+				}
+			},
+			error: function() {
+				alert('Error in AJAX call');
+			}
+	});
+} 
+
+function writeUsers(userArr) {
+	var element = document.getElementById("students");
+	element.innerHTML = "";
+	
+	var users = userArr.students;
+	if (users.length == 0) {
+		element.innerHTML = "No students assigned.";
+	}
+	for (user in users) {
+		element.innerHTML += ("<input type=\"hidden\" value=\"0\"> <input type =\"checkbox\" name=\"usersSelected[]\" value=\"" + users[user].id +"\"> <a href=\"user.php?id=" + users[user].id + "\"> " + users[user].name + " </a> <br>");
+	}
+	
+	element = document.getElementById("siteUsers");
+	element.innerHTML = "";
+	
+	users = userArr.sites;
+	if (users.length == 0) {
+		element.innerHTML = "No sites assigned.";
+	}
+	for (user in users) {
+		element.innerHTML += ("<input type=\"hidden\" value=\"0\"> <input type =\"checkbox\" name=\"usersSelected[]\" value=\"" + users[user].id +"\"> <a href=\"user.php?id=" + users[user].id + "\"> " + users[user].name + " </a> <br>");
+	}
+}
+
+</script>
 </body>
 
 {% endblock %}

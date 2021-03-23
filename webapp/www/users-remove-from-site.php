@@ -13,8 +13,6 @@ $sites = get_sites();
 
 echo $twig->render('users-remove-from-site.html', ['students' => $students, 'siteUsers' => $siteUsers, 'fieldSites' => $sites]);
 
-//TODO hide users who are already assigned?
-
 if (isset($_POST['submitRemoveUsers'])) {
 	$usersToRemove = $_POST['usersSelected'];
 	$fieldSiteId = $_POST['site'];
@@ -23,5 +21,7 @@ if (isset($_POST['submitRemoveUsers'])) {
 		remove_user_from_site ($userId, $fieldSiteId);
 	}
 	
-	header("Location: users-assign-to-site.php");
+	header("Location: users-remove-from-site.php");
 }
+
+
