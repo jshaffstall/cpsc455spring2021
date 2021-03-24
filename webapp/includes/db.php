@@ -706,7 +706,7 @@ function get_form_submission_for_site($formid, $siteid)
 {
     global $pdo;
 
-    $sql = "SELECT * FROM formsubmissions,forms WHERE formid=:formid and siteid=:siteid AND formid=forms.id AND forms.archived=0";
+    $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and siteid=:siteid";
     
     $stmt = $pdo->prepare($sql);
     
