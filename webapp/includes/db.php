@@ -676,9 +676,6 @@ function get_form_submissions ($user)
     
     $stmt->execute();
 	
-    if ($stmt->rowCount() == 0)
-        return False;
-	
 	return $stmt;
 }
 
