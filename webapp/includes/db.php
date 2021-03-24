@@ -649,9 +649,8 @@ function get_all_form_submissions ()
 {
     global $pdo;
 
-    // TODO: This should not return submissions from archived forms
-    // or submissions from deactivated users
-    $sql = "SELECT * FROM formsubmissions ORDER BY `when` DESC";
+    // TODO: This should not return submissions from deactivated users
+    $sql = "SELECT * FROM formsubmissions,forms WHERE formid=forms.id AND forms.archived=0 ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
     
@@ -667,8 +666,7 @@ function get_form_submissions ($user)
 {
     global $pdo;
 
-    // TODO: This should not return submissions from archived forms
-    $sql = "SELECT * FROM formsubmissions WHERE user=:user ORDER BY `when` DESC";
+    $sql = "SELECT * FROM formsubmissions,forms WHERE user=:user AND formid=forms.id AND forms.archived=0 ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
     
@@ -708,8 +706,7 @@ function get_form_submission_for_site($formid, $siteid)
 {
     global $pdo;
 
-    // TODO: This should not return submissions from archived forms
-    $sql = "SELECT * FROM formsubmissions WHERE formid=:formid and siteid=:siteid";
+    $sql = "SELECT * FROM formsubmissions,forms WHERE formid=:formid and siteid=:siteid AND formid=forms.id AND forms.archived=0";
     
     $stmt = $pdo->prepare($sql);
     
