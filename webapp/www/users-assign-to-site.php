@@ -11,9 +11,14 @@ $siteUsers = get_users_by_role(3);
 
 $sites = get_sites();
 
-echo $twig->render('users-assign-to-site.html', ['students' => $students, 'siteUsers' => $siteUsers, 'fieldSites' => $sites]);
+/*
+$arr = [];
 
-//TODO hide users who are already assigned?
+foreach ($students as $row) {
+	$arr = $row;
+}
+*/
+echo $twig->render('users-assign-to-site.html', ['students' => $students->fetchAll(), 'siteUsers' => $siteUsers->fetchAll(), 'fieldSites' => $sites]);
 
 if (isset($_POST['submitAssignUsers'])) {
 	$usersToAssign = $_POST['usersSelected'];
@@ -21,17 +26,6 @@ if (isset($_POST['submitAssignUsers'])) {
 	
 	foreach ($usersToAssign as $userId) {
 		assign_user_to_site ($userId, $fieldSiteId);
-	}
-	
-	header("Location: users-assign-to-site.php");
-}
-
-else if (isset($_POST['submitRemoveUsers'])) {
-	$usersToRemove = $_POST['usersSelected'];
-	$fieldSiteId = $_POST['site'];
-	
-	foreach ($usersToRemove as $userId) {
-		remove_user_from_site ($userId, $fieldSiteId);
 	}
 	
 	header("Location: users-assign-to-site.php");

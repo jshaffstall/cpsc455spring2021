@@ -1,6 +1,10 @@
 <?php
 require 'config.php';
 
+/* 
+*	Returns the name and id of all student users and site users in a site
+*/
+
 if (isset($_POST['siteId'])) {
 	$siteId = $_POST['siteId'];
 	
