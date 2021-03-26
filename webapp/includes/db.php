@@ -605,18 +605,20 @@ function process_form_submission($user, $formid, $values, $siteid, $submission)
                 }
                 else
                 {
-                    $errors[] = "Field '".$formfield['label']."' is required";
+					if ($formfield['required'])
+						$errors[] = "Field '".$formfield['label']."' is required";
                 }
             }
             else
             {
-                $errors[] = "Field '".$formfield['label']."' is required";
+				if ($formfield['required'])
+					$errors[] = "Field '".$formfield['label']."' is required";
             }
         }
         else
         {
             if ($formfield['type'] == 1 || $formfield['type'] == 3)
-                if (empty($value))
+                if (empty($value) and $formfield['required'])
                     $errors[] = "Field '".$formfield['label']."' is required";
         }
         
