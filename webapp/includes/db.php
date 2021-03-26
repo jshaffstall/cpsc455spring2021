@@ -500,7 +500,7 @@ function submit_form($user, $formid, $values, $siteid=null)
     
     $submission = get_form_submission($user, $formid, $siteid);
 
-    process_form_submission ($user, $formid, $values, $siteid, $submission);
+    return process_form_submission ($user, $formid, $values, $siteid, $submission);
 }
 
 function submit_form_for_site($user, $formid, $values, $siteid)
@@ -509,7 +509,7 @@ function submit_form_for_site($user, $formid, $values, $siteid)
     
     $submission = get_form_submission_for_site($formid, $siteid);
     
-    process_form_submission ($user, $formid, $values, $siteid, $submission);
+    return process_form_submission ($user, $formid, $values, $siteid, $submission);
 }
 
 function submit_form_as_admin($user, $formid, $values, $siteid=null)
@@ -518,7 +518,7 @@ function submit_form_as_admin($user, $formid, $values, $siteid=null)
     
     $submission = get_form_submission_for_site($formid, $siteid);
     
-    process_form_submission ($submission['user'], $formid, $values, $siteid, $submission);
+    return process_form_submission ($submission['user'], $formid, $values, $siteid, $submission);
 }
 
 function process_form_submission($user, $formid, $values, $siteid, $submission)
