@@ -273,12 +273,13 @@ function get_site_forms()
     return $stmt;
 }
 
-function get_site_forms_for_students()
+function get_site_forms_for_students($siteid)
 {
     global $pdo;
     
-    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=1 AND archived=0 ORDER BY name";
+    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=1 AND archived=0 AND siteid=:siteid ORDER BY name";
     $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
     $stmt->execute ();
 
     return $stmt;
