@@ -1108,3 +1108,35 @@ function delete_site($siteid)
     $pdo->commit();
 }
 
+function delete_form($formid)
+{
+    global $pdo;
+    
+    // start transaction
+    $pdo->beginTransaction();
+    
+    // delete field submissions for that form
+    $sql = "DELETE fieldsubmissions FROM fieldsubmissions INNER JOIN formsubmissions ON formsubmissionid=formsubmissions.id WHERE formsubmissions.formid = :formid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':formid', $formid);
+    $stmt->execute ();
+    
+    // delete form submissions for that forms
+    $sql = "DELETE FROM formsubmissions WHERE formsubmissions.formid = :formid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':formid', $formid);
+    $stmt->execute ();
+    
+    // delete form
+    $sql = "DELETE FROM forms WHERE forms.formid = :formid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':formid', $formid);
+    $stmt->execute ();
+    
+    // commit transaction
+    $pdo->commit();
+}
+
