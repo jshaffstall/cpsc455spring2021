@@ -439,7 +439,7 @@ function delete_form_field($formfield)
     $stmt->execute();
 }
 
-function update_form($form, $name, $roleid, $forstudent)
+function update_form($form, $name, $roleid, $forstudent, $sitevisible=false, $siteid=null)
 {
     global $pdo;
 
@@ -454,13 +454,15 @@ function update_form($form, $name, $roleid, $forstudent)
     if ($stmt->rowCount() > 0)
         return False;	
 
-    $sql = "UPDATE forms SET name=:name, roleid=:roleid, student=:forstudent WHERE id=:form";
+    $sql = "UPDATE forms SET name=:name, roleid=:roleid, student=:forstudent, sitevisible=:sitevisible, siteid=:siteid WHERE id=:form";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
     $stmt->bindValue(':name', $name);
     $stmt->bindValue(':roleid', $roleid);
     $stmt->bindValue(':forstudent', $forstudent);
+    $stmt->bindValue(':sitevisible', $sitevisible);
+    $stmt->bindValue(':siteid', $siteid);
     
     $stmt->execute();
 }
