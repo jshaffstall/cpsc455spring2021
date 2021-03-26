@@ -1062,3 +1062,49 @@ function delete_user($userid)
     $pdo->commit();
 }
 
+function delete_site($siteid)
+{
+    global $pdo;
+    
+    // start transaction
+    $pdo->beginTransaction();
+    
+    // delete field submissions for forms for that site
+    $sql = "DELETE fieldsubmissions FROM fieldsubmissions INNER JOIN formsubmissions ON formsubmissionid=formsubmissions.id WHERE formsubmissions.siteid = :siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
+    $stmt->execute ();
+    
+    // delete form submissions for forms for that site
+    $sql = "DELETE FROM formsubmissions WHERE formsubmissions.siteid = :siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
+    $stmt->execute ();
+    
+    // delete forms created for that site
+    $sql = "DELETE FROM forms WHERE forms.siteid = :siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
+    $stmt->execute ();
+    
+    // delete site mappings for that  site
+    $sql = "DELETE FROM usersitemappings WHERE usersitemappings.siteid = :siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
+    $stmt->execute ();
+    
+    // delete the site
+    $sql = "DELETE FROM fieldworksites WHERE id = :siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
+    $stmt->execute ();
+    
+    // commit transaction
+    $pdo->commit();
+}
+
