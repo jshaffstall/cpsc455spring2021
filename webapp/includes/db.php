@@ -1022,3 +1022,43 @@ function unarchive_form($formid)
 
     return $stmt;
 }
+
+function delete_user($userid)
+{
+    global $pdo;
+    
+    // start transaction
+    $pdo->beginTransaction();
+    
+    // delete field submissions for that user
+    $sql = "DELETE fieldsubmissions FROM fieldsubmissions INNER JOIN formsubmissions ON formsubmissionid=formsubmissions.id WHERE formsubmissions.user = :userid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':userid', $userid);
+    $stmt->execute ();
+    
+    // delete form submissions for that user
+    $sql = "DELETE FROM formsubmissions WHERE formsubmissions.user = :userid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':userid', $userid);
+    $stmt->execute ();
+        
+    // delete site mappings for that  user
+    $sql = "DELETE FROM usersitemappings WHERE usersitemappings.userid = :userid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':userid', $userid);
+    $stmt->execute ();
+    
+    // delete the user
+    $sql = "DELETE FROM users WHERE users.id = :userid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':userid', $userid);
+    $stmt->execute ();
+    
+    // commit transaction
+    $pdo->commit();
+}
+
