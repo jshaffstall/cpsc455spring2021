@@ -307,7 +307,7 @@ function get_form_by_id($formid)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function add_form($name, $roleid, $forstudent)
+function add_form($name, $roleid, $forstudent, $sitevisible=false, $siteid=null)
 {
     global $pdo;
 
@@ -324,12 +324,14 @@ function add_form($name, $roleid, $forstudent)
     if ($stmt->rowCount() > 0)
         return False;
 
-    $sql = "INSERT INTO forms (name, roleid, student) VALUES (:name, :roleid, :forstudent)";
+    $sql = "INSERT INTO forms (name, roleid, student, sitevisible, siteid) VALUES (:name, :roleid, :forstudent, :sitevisible, :siteid)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':name', $name);
     $stmt->bindValue(':roleid', $roleid);
     $stmt->bindValue(':forstudent', $forstudent);
+    $stmt->bindValue(':sitevisible', $sitevisible);
+    $stmt->bindValue(':siteid', $siteid);
     
     $stmt->execute();
 	
