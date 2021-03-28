@@ -251,6 +251,17 @@ function get_student_forms()
     return $stmt;
 }
 
+function get_admin_forms()
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms WHERE roleid=1 AND archived=0 ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute ();
+
+    return $stmt;
+}
+
 function get_student_forms_for_site()
 {
     global $pdo;
