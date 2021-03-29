@@ -251,6 +251,28 @@ function get_student_forms()
     return $stmt;
 }
 
+function get_admin_forms()
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms WHERE roleid=1 AND archived=0 ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute ();
+
+    return $stmt;
+}
+
+function get_student_forms_for_site()
+{
+    global $pdo;
+    
+    $sql = "SELECT * FROM forms WHERE roleid=2 AND archived=0 AND sitevisible=1 ORDER BY name";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute ();
+
+    return $stmt;
+}
+
 function get_site_forms()
 {
     global $pdo;
@@ -262,12 +284,13 @@ function get_site_forms()
     return $stmt;
 }
 
-function get_site_forms_for_students()
+function get_site_forms_for_students($siteid)
 {
     global $pdo;
     
-    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=1 AND archived=0 ORDER BY name";
+    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=1 AND archived=0 AND siteid=:siteid ORDER BY name";
     $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
     $stmt->execute ();
 
     return $stmt;
@@ -307,7 +330,7 @@ function get_form_by_id($formid)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function add_form($name, $roleid, $forstudent)
+function add_form($name, $roleid, $forstudent, $sitevisible=false, $siteid=null)
 {
     global $pdo;
 
@@ -324,12 +347,14 @@ function add_form($name, $roleid, $forstudent)
     if ($stmt->rowCount() > 0)
         return False;
 
-    $sql = "INSERT INTO forms (name, roleid, student) VALUES (:name, :roleid, :forstudent)";
+    $sql = "INSERT INTO forms (name, roleid, student, sitevisible, siteid) VALUES (:name, :roleid, :forstudent, :sitevisible, :siteid)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':name', $name);
     $stmt->bindValue(':roleid', $roleid);
     $stmt->bindValue(':forstudent', $forstudent);
+    $stmt->bindValue(':sitevisible', $sitevisible);
+    $stmt->bindValue(':siteid', $siteid);
     
     $stmt->execute();
 	
@@ -437,7 +462,7 @@ function delete_form_field($formfield)
     $stmt->execute();
 }
 
-function update_form($form, $name, $roleid, $forstudent)
+function update_form($form, $name, $roleid, $forstudent, $sitevisible=false, $siteid=null)
 {
     global $pdo;
 
@@ -452,13 +477,15 @@ function update_form($form, $name, $roleid, $forstudent)
     if ($stmt->rowCount() > 0)
         return False;	
 
-    $sql = "UPDATE forms SET name=:name, roleid=:roleid, student=:forstudent WHERE id=:form";
+    $sql = "UPDATE forms SET name=:name, roleid=:roleid, student=:forstudent, sitevisible=:sitevisible, siteid=:siteid WHERE id=:form";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
     $stmt->bindValue(':name', $name);
     $stmt->bindValue(':roleid', $roleid);
     $stmt->bindValue(':forstudent', $forstudent);
+    $stmt->bindValue(':sitevisible', $sitevisible);
+    $stmt->bindValue(':siteid', $siteid);
     
     $stmt->execute();
 }
@@ -500,7 +527,7 @@ function submit_form($user, $formid, $values, $siteid=null)
     
     $submission = get_form_submission($user, $formid, $siteid);
 
-    process_form_submission ($user, $formid, $values, $siteid, $submission);
+    return process_form_submission ($user, $formid, $values, $siteid, $submission);
 }
 
 function submit_form_for_site($user, $formid, $values, $siteid)
@@ -509,7 +536,7 @@ function submit_form_for_site($user, $formid, $values, $siteid)
     
     $submission = get_form_submission_for_site($formid, $siteid);
     
-    process_form_submission ($user, $formid, $values, $siteid, $submission);
+    return process_form_submission ($user, $formid, $values, $siteid, $submission);
 }
 
 function submit_form_as_admin($user, $formid, $values, $siteid=null)
@@ -518,7 +545,7 @@ function submit_form_as_admin($user, $formid, $values, $siteid=null)
     
     $submission = get_form_submission_for_site($formid, $siteid);
     
-    process_form_submission ($submission['user'], $formid, $values, $siteid, $submission);
+    return process_form_submission ($submission['user'], $formid, $values, $siteid, $submission);
 }
 
 function process_form_submission($user, $formid, $values, $siteid, $submission)
@@ -605,18 +632,20 @@ function process_form_submission($user, $formid, $values, $siteid, $submission)
                 }
                 else
                 {
-                    $errors[] = "Field '".$formfield['label']."' is required";
+					if ($formfield['required'])
+						$errors[] = "Field '".$formfield['label']."' is required";
                 }
             }
             else
             {
-                $errors[] = "Field '".$formfield['label']."' is required";
+				if ($formfield['required'])
+					$errors[] = "Field '".$formfield['label']."' is required";
             }
         }
         else
         {
             if ($formfield['type'] == 1 || $formfield['type'] == 3)
-                if (empty($value))
+                if (empty($value) and $formfield['required'])
                     $errors[] = "Field '".$formfield['label']."' is required";
         }
         
@@ -1005,3 +1034,121 @@ function unarchive_form($formid)
 
     return $stmt;
 }
+
+function delete_user($userid)
+{
+    global $pdo;
+    
+    // start transaction
+    $pdo->beginTransaction();
+    
+    // delete field submissions for that user
+    $sql = "DELETE fieldsubmissions FROM fieldsubmissions INNER JOIN formsubmissions ON formsubmissionid=formsubmissions.id WHERE formsubmissions.user = :userid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':userid', $userid);
+    $stmt->execute ();
+    
+    // delete form submissions for that user
+    $sql = "DELETE FROM formsubmissions WHERE formsubmissions.user = :userid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':userid', $userid);
+    $stmt->execute ();
+        
+    // delete site mappings for that  user
+    $sql = "DELETE FROM usersitemappings WHERE usersitemappings.userid = :userid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':userid', $userid);
+    $stmt->execute ();
+    
+    // delete the user
+    $sql = "DELETE FROM users WHERE users.id = :userid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':userid', $userid);
+    $stmt->execute ();
+    
+    // commit transaction
+    $pdo->commit();
+}
+
+function delete_site($siteid)
+{
+    global $pdo;
+    
+    // start transaction
+    $pdo->beginTransaction();
+    
+    // delete field submissions for forms for that site
+    $sql = "DELETE fieldsubmissions FROM fieldsubmissions INNER JOIN formsubmissions ON formsubmissionid=formsubmissions.id WHERE formsubmissions.siteid = :siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
+    $stmt->execute ();
+    
+    // delete form submissions for forms for that site
+    $sql = "DELETE FROM formsubmissions WHERE formsubmissions.siteid = :siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
+    $stmt->execute ();
+    
+    // delete forms created for that site
+    $sql = "DELETE FROM forms WHERE forms.siteid = :siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
+    $stmt->execute ();
+    
+    // delete site mappings for that  site
+    $sql = "DELETE FROM usersitemappings WHERE usersitemappings.siteid = :siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
+    $stmt->execute ();
+    
+    // delete the site
+    $sql = "DELETE FROM fieldworksites WHERE id = :siteid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':siteid', $siteid);
+    $stmt->execute ();
+    
+    // commit transaction
+    $pdo->commit();
+}
+
+function delete_form($formid)
+{
+    global $pdo;
+    
+    // start transaction
+    $pdo->beginTransaction();
+    
+    // delete field submissions for that form
+    $sql = "DELETE fieldsubmissions FROM fieldsubmissions INNER JOIN formsubmissions ON formsubmissionid=formsubmissions.id WHERE formsubmissions.formid = :formid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':formid', $formid);
+    $stmt->execute ();
+    
+    // delete form submissions for that forms
+    $sql = "DELETE FROM formsubmissions WHERE formsubmissions.formid = :formid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':formid', $formid);
+    $stmt->execute ();
+    
+    // delete form
+    $sql = "DELETE FROM forms WHERE forms.formid = :formid";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':formid', $formid);
+    $stmt->execute ();
+    
+    // commit transaction
+    $pdo->commit();
+}
+

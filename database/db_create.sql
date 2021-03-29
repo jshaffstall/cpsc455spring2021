@@ -113,7 +113,9 @@ CREATE TABLE `forms` (
   `name` varchar(255) DEFAULT NULL,
   `roleid` int(11) NOT NULL,
   `student` tinyint(1) NOT NULL,
-  `archived` tinyint(1) NOT NULL DEFAULT '0'
+  `archived` tinyint(1) NOT NULL DEFAULT '0',
+  `sitevisible` tinyint(1) NOT NULL DEFAULT '0',
+  `siteid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -228,7 +230,8 @@ ALTER TABLE `formfieldtypes`
 --
 ALTER TABLE `forms`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `forms_ibfk_1` (`roleid`);
+  ADD KEY `forms_ibfk_1` (`roleid`),
+  ADD KEY `forms_ibfk_2` (`siteid`);
 
 --
 -- Indexes for table `formsubmissions`
@@ -269,7 +272,7 @@ ALTER TABLE `usersitemappings`
 -- AUTO_INCREMENT for table `fieldsubmissions`
 --
 ALTER TABLE `fieldsubmissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `fieldworksites`
 --
@@ -279,7 +282,7 @@ ALTER TABLE `fieldworksites`
 -- AUTO_INCREMENT for table `formfields`
 --
 ALTER TABLE `formfields`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `formfieldtypes`
 --
@@ -289,12 +292,12 @@ ALTER TABLE `formfieldtypes`
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `formsubmissions`
 --
 ALTER TABLE `formsubmissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `roles`
 --
@@ -327,7 +330,8 @@ ALTER TABLE `formfields`
 -- Constraints for table `forms`
 --
 ALTER TABLE `forms`
-  ADD CONSTRAINT `forms_ibfk_1` FOREIGN KEY (`roleid`) REFERENCES `roles` (`id`);
+  ADD CONSTRAINT `forms_ibfk_1` FOREIGN KEY (`roleid`) REFERENCES `roles` (`id`),
+  ADD CONSTRAINT `forms_ibfk_2` FOREIGN KEY (`siteid`) REFERENCES `fieldworksites` (`id`);
 
 --
 -- Constraints for table `formsubmissions`
