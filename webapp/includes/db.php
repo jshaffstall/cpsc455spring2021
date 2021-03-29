@@ -1168,7 +1168,7 @@ function delete_form($formid)
     $stmt->execute ();
     
     // delete form
-    $sql = "DELETE FROM forms WHERE forms.formid = :formid";
+    $sql = "DELETE FROM forms WHERE forms.id = :formid";
     
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':formid', $formid);
