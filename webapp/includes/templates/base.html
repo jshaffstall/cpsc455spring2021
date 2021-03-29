@@ -13,6 +13,7 @@
 			
 		{% else %}
 			<a class="toplink" href = "logout.php"> Log Out </a>
+            <a class="toplink" href = "list-documents.php"> Documents </a>
 			{% if user.role == '1' %}
 				<a class="toplink" href = "list-forms.php"> Forms </a>
 				<a class="toplink" href = "admin-panel.php"> Admin Panel </a>
@@ -24,6 +25,7 @@
 			{% endif %}
 			{% if user.role == '3' %}
 				<a class="toplink" href = "list-sites.php"> Sites </a>
+                <a class="toplink" href = "list-students.php"> Students </a>
 			{% endif %}
 		{% endif %}
 	</header>
