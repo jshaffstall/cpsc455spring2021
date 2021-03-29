@@ -324,7 +324,7 @@ ALTER TABLE `fieldsubmissions`
 --
 ALTER TABLE `formfields`
   ADD CONSTRAINT `formfields_ibfk_1` FOREIGN KEY (`type`) REFERENCES `formfieldtypes` (`id`),
-  ADD CONSTRAINT `formfields_ibfk_2` FOREIGN KEY (`form`) REFERENCES `forms` (`id`);
+  ADD CONSTRAINT `formfields_ibfk_2` FOREIGN KEY (`form`) REFERENCES `forms` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `forms`
