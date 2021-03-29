@@ -548,6 +548,15 @@ function submit_form_as_admin($user, $formid, $values, $siteid=null)
     return process_form_submission ($submission['user'], $formid, $values, $siteid, $submission);
 }
 
+function submit_admin_form($user, $formid, $values)
+{
+    global $pdo;
+    
+    $submission = get_admin_form_submission($formid);
+    
+    return process_form_submission ($user, $formid, $values, null, $submission);
+}
+
 function process_form_submission($user, $formid, $values, $siteid, $submission)
 {
     global $pdo;
@@ -741,6 +750,24 @@ function get_form_submission_for_site($formid, $siteid)
     
     $stmt->bindValue(':formid', $formid);
     $stmt->bindValue(':siteid', $siteid);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function get_admin_form_submission($formid)
+{
+    global $pdo;
+
+    $sql = "SELECT * FROM formsubmissions WHERE formid=:formid";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formid', $formid);
     
     $stmt->execute();
 	
