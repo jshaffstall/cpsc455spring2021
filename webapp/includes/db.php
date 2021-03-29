@@ -688,7 +688,7 @@ function get_all_form_submissions ()
     global $pdo;
 
     // TODO: This should not return submissions from deactivated users
-    $sql = "SELECT * FROM formsubmissions,forms WHERE formid=forms.id AND forms.archived=0 ORDER BY `when` DESC";
+    $sql = "SELECT formsubmissions.*, forms.* FROM formsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id WHERE forms.archived=0 AND users.disabled = 0 ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
     
