@@ -17,8 +17,19 @@ if(isset($_POST['formid'])){
     
     if ($user['role'] == 3)
         $errors = submit_form_for_site($user['id'], $_POST['formid'], $_POST, $siteid);
-    else
+	
+    if ($user['role'] == 2)
         $errors = submit_form($user['id'], $_POST['formid'], $_POST, $siteid);
+	
+    if ($user['role'] == 1)
+	{
+		$form = get_form_by_id($_POST['formid']);
+		
+		if ($form['roleid'] == 1)
+			$errors = submit_admin_form($user['id'], $_POST['formid'], $_POST);
+		else
+			$errors = submit_form_as_admin($user['id'], $_POST['formid'], $_POST, $siteid);
+	}
 	
 	if (!$errors)
 	{
