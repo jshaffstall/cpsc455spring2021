@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+	
+{% block content %}
+
+<div>
+	<form action="/search-searched.php" method="POST">
+	<label for="{{field.fieldname}}"> Choose a field:</label>
+	<select name="{{field.fieldname}}" >
+	{% for field in fields %}
+		<option value="{{field.fieldname}}">{{field.fieldname}}</option>
+	{% endfor %}
+	<input type="text" value="Search" placeholder="">
+	<input type="submit" value="Submit">
+	
+	</form>
+
+</div>
+
+{% endblock %}
+
