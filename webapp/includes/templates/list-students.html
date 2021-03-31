@@ -2,6 +2,7 @@
 
 {% block title %}Students for {{site.name}}{% endblock %}
 {% block content %}
+	<h1>Students Assigned To {{site.name}}</h1>
 	{% for student in students %}
 		<a href="list-submissions.php?user={{student.id}}&siteid={{site.id}}">{{student.name}} ({{student.email}})</a><br>
 	{% endfor %}
