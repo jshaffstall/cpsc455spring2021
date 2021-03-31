@@ -908,6 +908,23 @@ function get_site($name)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function get_site_by_id($siteid)
+{
+    global $pdo;
+	
+    $sql = "SELECT * FROM fieldworksites where id=:siteid";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':siteid', $siteid);
+    
+    $stmt->execute();
+    
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 function get_sites()
 {
     global $pdo;

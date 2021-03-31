@@ -2,7 +2,12 @@
 
 {% block title %}Sites{% endblock %}
 {% block content %}
+	<table>
 	{% for site in siteAssigned %}
-		<a href="list-forms.php?siteid={{site.id}}">{{site.name}}</a><br>
+	<tr>
+		<td width="30%"><a href="list-forms.php?siteid={{site.id}}">{{site.name}}</a></td>
+		<td><a href="list-students.php?siteid={{site.id}}" class="button">Show Students Assigned To {{site.name}}</a></td>
+	</tr>
 	{% endfor %}
+	</table>
 {% endblock %}

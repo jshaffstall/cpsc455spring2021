@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Students for {{site.name}}{% endblock %}
+{% block content %}
+	{% for student in students %}
+		<a href="list-submissions.php?user={{student.id}}&siteid={{site.id}}">{{student.name}} ({{student.email}})</a><br>
+	{% endfor %}
+{% endblock %}
