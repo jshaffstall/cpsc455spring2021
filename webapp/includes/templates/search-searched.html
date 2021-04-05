@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Searched{% endblock %}
+	
+{% block content %}
+
+<div>
+	{% for search in searches %}
+		<a href="display-form.php?form={{form.id}}{{siteparam}}">{{form.name}}</a><br>
+	{% endfor %}
+
+</div>
+
+{% endblock %}
