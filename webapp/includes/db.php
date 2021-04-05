@@ -776,6 +776,25 @@ function get_admin_form_submission($formid)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function get_form_submission_by_id($submissionid)
+{
+    global $pdo;
+
+    $sql = "SELECT * FROM formsubmissions WHERE id=:submissionid";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':submissionid', $submissionid);
+    
+    $stmt->execute();
+	
+    if ($stmt->rowCount() == 0)
+        return False;
+	
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
 function get_field_submissions($formsubmissionid)
 {
     global $pdo;

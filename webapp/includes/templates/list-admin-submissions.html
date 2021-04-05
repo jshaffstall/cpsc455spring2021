@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+    <div>
+		{% for submission in submissions %}
+			<a href="display-submission.php?submission={{submission.id}}">{{submission.name}}</a><br>
+		{% endfor %}
+	</div>
+{% endblock %}
