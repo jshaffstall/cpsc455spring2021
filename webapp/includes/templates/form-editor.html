@@ -8,68 +8,185 @@
 <title> Form Editor</title>
 </head>
 
-<body>
-<div class="section" style="margin-top: 0px;">
-<a href="form-creator.php"> &lt Back to forms </a>
-<center>
-<h1>{{form.name}}</h1>
-</center>
-<h2>Edit form</h2>
-<form class="topForm" action="form-editor.php?form={{form.id}}" method="post">
-<p style="margin-left: 0px;">Form name</p> <input type="text" value="{{form.name}}" name="formName">
+<body onload="load();">
 
-<p>For role</p> <select name="formRole">
-{% for role in roles %}
-	<option value="{{role.id}}" {% if form.roleid == role.id %} selected {% endif %}> {{role.name}} </option>
-{% endfor %}
+	<div style="overflow: auto; padding: 0px; margin: -5px;">
+	
+	<div id="sidebar" style="float: none; margin: 4px 4px;">
+		<table>
+		  <tr>
+			<td><a href="form-creator.php"> &lt; Back to forms </a></td>
+		  </tr>
+		</table>
+	</div>
 
-</select>
-<p>For students?</p> <input type="hidden" name="forStudent" value="0"> <input type ="checkbox" name="forStudent" value="1" {% if form.student %} checked {% endif %}>
-<input type="submit" name="submitForm" value="Edit form">
-
-</form>
-
-<h2>Create form field</h2>
-
-<form class="siteForm" action="form-editor.php?form={{form.id}}" method="post">
-Type <br> <select name="type" value="{{field.type}}">
-
-{% for type in types %}
-<option value="{{type.id}}"> {{type.name}} </option>
-{% endfor %}
-
-</select>
-<br>
-
-Label <input type="text" name="label">
-<br>
-
-Order <input type="text" name="order">
-<br>
-
-Name <input type="text" name="name">
-<br>
-
-<input type="hidden" name="eol" value="0"> <input type ="checkbox" name="eol" value="1"> End of line? 
-<input type="hidden" name="required" value="0"> <input style="margin-left: 20px;" type="checkbox" name="required" value="1"> Required?
-<br>
-
-Size <input type="text" name="size">
-<br>
-
-<input type="submit" name="submitField" value="Create form field">
-</form>
-</div>
-
-<div class="section">
-<h2>Form fields</h2>
-{% for field in fields %}
-	<a href="form-field-editor.php?form={{form.id}}&formfield={{field.id}}"> {{field.fieldname}} </a>
 	<br>
-{% else %}
-	<p> No form fields found. </p>
-{% endfor %}
-</div>
+
+	<!-- Edit form -->
+	
+	<div class="formCreatorSeparator">
+	
+		<div class="formCreatorTop">
+			<center>
+			<h2> Edit form </h2>
+			</center>
+		</div>
+		
+		<div class="formCreator" style="min-height:351px;">
+			<form action="form-editor.php?form={{form.id}}" method="post">
+				<p> Name </p> <input value="{{form.name}}" type="text" name="formName">
+				
+				<p> Role </p> <select id="roleSelect" name="formRole" onchange="setFieldVisibility(this);">
+					{% for role in roles %}
+						<option value="{{role.id}}" {% if form.roleid == role.id %} selected {% endif %}> {{role.name}} </option>
+					{% endfor %}
+				</select>
+				
+				<p> Site </p> <select name="siteId">
+					{% for site in sites %}
+						<option value="{{site.id}}" {% if form.siteid == site.id %} selected {% endif %}> {{site.name}} </option>
+					{% else %}
+						<option value="0"> No sites found </option>
+					{% endfor %}
+				</select>
+				
+				<br>
+				
+				<div id="forStudents" style="visibility: hidden;">
+					<input type="hidden" name="forStudent" value="0"> 
+					<input type ="checkbox" name="forStudent" value="1" {% if form.student %} checked {% endif %}> 
+
+					<div>
+						<p>For students?</p>
+					</div>
+					<br>
+				</div>
+				
+				<div id="siteVisible" style="visibility: hidden;">		
+					<input type="hidden" name="siteVisible" value="0"> 
+					<input type ="checkbox" name="siteVisible" value="1" {% if form.sitevisible %} checked {% endif %}> 
+					
+					<div>
+						<p>Visible to sites?</p>
+					</div>
+				</div>
+				
+				<input type="submit" name="submitForm" value="Edit form">
+			</form>
+		</div>
+	
+	</div>
+	
+	<!-- Create form field -->
+	
+	<div class="formCreatorSeparator">
+	
+		<div class="formCreatorTop">
+			<center>
+			<h2> Create form field </h2>
+			</center>
+		</div>
+			
+		<div class="formCreator">
+			
+			<form action="form-editor.php?form={{form.id}}" method="post">
+			<p> Type </p> <br> <select name="type" value="{{field.type}}">
+
+			{% for type in types %}
+			<option value="{{type.id}}"> {{type.name}} </option>
+			{% endfor %}
+
+			</select>
+
+			<input type="text" name="label" placeholder="Label">
+			<input type="text" name="order" placeholder="Order">
+			<input type="text" name="name" placeholder="Name">
+			<input type="text" name="size" placeholder="Size">
+			
+			<br>
+			
+			<input type="hidden" name="eol" value="0"> 
+			<input type ="checkbox" name="eol" value="1"> 
+			<div>
+				<p> End of line? </p>
+			</div>
+			
+			<br>
+			
+			<input type="hidden" name="required" value="0"> 
+			<input type="checkbox" name="required" value="1">
+			<div>
+				<p> Required? </p>
+			</div>
+			<br>
+
+
+			<input type="submit" name="submitField" value="Create form field">
+			</form>
+		</div>
+	
+	</div>
+	
+	<!-- Form fields -->
+	
+	<div class="formCreatorSeparator" style="width: 70%;"> 
+	
+		<div class="mainContentTop" style="margin-left: 0px; width: 100%;">
+			<center>
+			<h2 style="font-size:1.0em; margin: 2px;"> Edit form fields </h2>
+			</center>
+		</div>
+	
+		<div class="mainContent" style="min-height:351px; margin-left: 0px; ">
+			{% for field in fields %}
+				<a href="form-field-editor.php?form={{form.id}}&formfield={{field.id}}"> {{field.fieldname}} </a>
+				<br>
+			{% else %}
+				<p> No form fields found. </p>
+			{% endfor %}
+		</div>
+	</div>
+	
+	</div>
+	
+<script type="text/javascript">
+
+function setFieldVisibility(selected) {
+	console.log("called. selected is " + selected.value);
+	if (selected.value == 1) {
+		console.log("admin: toggle site visible");
+		
+		document.getElementById("forStudents").style.visibility = "hidden";
+		document.getElementById("siteVisible").style.visibility = "visible";
+	}
+	else if (selected.value == 2) {
+		document.getElementById("forStudents").style.visibility = "hidden";
+		document.getElementById("siteVisible").style.visibility = "hidden";
+	}
+	else if (selected.value == 3) {
+		console.log("field site: toggle for students");
+		
+		document.getElementById("forStudents").style.visibility = "visible";
+		document.getElementById("siteVisible").style.visibility = "hidden";
+	}
+}
+
+function load() {
+	var startingRole = document.getElementById("roleSelect")
+	var selected = startingRole.options[startingRole.selectedIndex];
+	
+	setFieldVisibility(selected);
+}
+
+function setSiteVisibility(selected) {
+	if (selected.checked) {
+		document.getElementById("siteDropdown").style.visibility = "visible";
+	}
+	else {
+		document.getElementById("siteDropdown").style.visibility = "hidden";
+	}
+}
+</script>
 </body>
 </html>
 

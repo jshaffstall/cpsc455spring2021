@@ -21,15 +21,11 @@ a {
 	font-size: 1.2em;
 }
 
-a:hover {
-	background-color: #7a7f7d;
-}
-
 h1, h2 {
 	font-family: "Verdana";
 }
 
-button {
+#head button {
 	color: white;
 	background-color: black;
 	cursor: pointer;
@@ -103,7 +99,6 @@ input[type=submit]:hover {
 	font-size: .8em;
 }
 
-/* Can't add select to above, for some reason. Must be separate to work */
 .siteForm select {
 	/* Makes the size match textbox size */
 	width: 103.6%;
@@ -159,21 +154,6 @@ input[type=submit]:hover {
 	border-radius: 2px;
 }
 
-.generatedForm input[type=submit] {
-	margin-top: 50px;
-	margin-bottom: 50px;
-	margin-right: 50px;
-	margin-left: 50px;
-	font-size: 1em;
-	padding: 5px 10px;
-	border-radius: 4px;
-	font-family: "Verdana";
-	cursor: pointer;
-	background-color: black;
-	color: white;
-	width: 30%;
-}
-
 .generatedForm input[type=submit]:hover {
 	background-color: #7a7f7d;
 }
@@ -205,8 +185,13 @@ input[type=checkbox] {
 .userDiv {
 	float: left; 
 	width: 30%;
-	background-color: #e3e3e3;
+	background-color: inherit;
 	overflow: hidden;
+}
+
+.compact h1, h2, h3, p {
+	color: black;
+	margin: 10px;
 }
 
 .clearfix:after {
@@ -259,10 +244,15 @@ input[type=checkbox] {
 }
 
 .section {
+	color:black;
 	border: 5px outset black;
 	background-color: #e3e3e3;
-	margin: 50px 50px;
+	margin-left: 200px;
 	overflow: auto;
+}
+
+.section h1, h2, h3, p {
+	color: black;
 }
 
 .topSection {
@@ -274,4 +264,373 @@ input[type=checkbox] {
 	overflow: auto;
 }
 
+* {box-sizing: border-box}
 
+button:hover {
+  opacity:1;
+}
+
+/* Float cancel and delete buttons and add an equal width */
+.cancelbtn, .deletebtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add a color to the cancel button */
+.cancelbtn {
+	background-color: #ccc;
+	color: black;
+  	cursor: pointer;
+	font-size: 1em;
+	padding: 12px 20px;
+	border-color: black;
+}
+
+.cancelbtn:hover {
+	background-color: #a1a1a1;
+}
+
+/* Add a color to the delete button */
+.deletebtn {
+	background-color: #f44336;
+  	cursor: pointer;
+	font-size: 1em;
+	padding: 12px 20px;
+	border-color: black;
+}
+
+.deletebtn:hover {
+	background-color: #ba2b2b;
+}
+
+.deletebtnForm {
+  	cursor: pointer;
+	width:90%; 
+	background-color: red; 
+	margin: 10px 0px;
+	border: 2px solid black;
+	border-radius: 4px;
+}
+
+.deletebtnForm:hover {
+	background-color: #ba2b2b;
+}
+
+/* Add padding and center-align text to the container */
+.container {
+  padding: 16px;
+  text-align: center;
+  color: black;
+}
+
+.container h1, p {
+	color: black;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #474e5d;
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* The Modal Close Button (x) */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and delete button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .deletebtn {
+    width: 100%;
+  }
+}
+
+.mainContent {
+	border-radius: 0px;
+	border: 3px solid black;
+	background-color: #b63c59;
+	margin-top: 0px;
+
+	overflow: auto;
+}
+
+.mainContent a {
+	text-decoration: none;
+	color: #f7e9ec;
+}
+
+.mainContent a:hover {
+	text-decoration: underline;
+}
+
+.mainContent h1, h2, h3, p {
+	color: #f7e9ec;
+}
+
+.mainContent input[type=submit] {
+	margin: 0px;
+	margin-top: 30px;
+	background-color: #841c3b;
+	border-color: black;
+	border-style: solid;
+}
+
+.mainContent input[type=submit]:hover {
+	background-color: #61152c;
+}
+
+.mainContent select {
+	width: 100%;
+}
+
+.mainContent input[type=email] {
+	font-size: 1em;
+	width: 100%;
+}
+
+.mainContent input[type=text] {
+	width: 100%;
+}
+
+.contentWithSidebar {
+	margin-left: 200px;
+}
+
+#sidebar {
+	margin: 0px;
+	font-size: .7em;
+	float:left;
+	padding: 0px;
+	width: 182px;
+}	
+
+#sidebar table, tr {
+	width: 182px;
+	background-color: #841c3b;
+	padding: 0px;
+}
+
+#sidebar table {
+	text-align: center; 
+	border: 3px outset black;
+}
+
+#sidebar a, h1, h2, h3, p {
+	color: #f7e9ec;
+	text-decoration: none;
+	padding: 0px;
+	margin: 10px 0px;	
+}
+
+#sidebar a:hover {
+	text-decoration: underline;
+}
+
+.mainContentTop {
+	border-radius: 0px;
+	border: 3px solid black;
+	overflow: auto;
+    padding:0px 0;
+	border-bottom: none;
+	background-color: #841c3b;
+}
+
+.mainContentSection {
+	float: left; 
+	width: 30%;
+	background-color: inherit;
+	overflow: hidden;
+	font-size: .7em;
+}
+
+.mainContentSection h2 {
+	margin: 0px;
+	margin-bottom: 5px;
+}
+
+.mainContentSection a {
+	margin-top: 10px;
+}
+
+.mainContentCompactForm {
+	padding: 0px;
+	background-color: inherit;
+}
+
+.mainContentCompactForm form {
+	margin: 20px;
+}
+
+.mainContentCompactForm input[type=checkbox] {
+	transform: scale(1.5);
+}
+
+.mainContentCompactForm input[type=text] {
+	width: 15%;
+	margin: 0px 0px;
+	font-size: .8em;
+	padding: 3px 3px;
+	margin: 2px 0;
+	border-radius: 8px;
+}
+
+.mainContentCompactForm select {
+	font-size: .8em;
+	width: 15%;
+	margin-left: 4px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	border-radius: 8px;
+	padding: 3px 3px;
+}
+
+.mainContentCompactForm input[type=submit] {
+	width: 15%;
+	margin: 0px;
+	font-size: .8em;
+	padding: 1px 2px;
+	border-radius: 4px;
+	float:right;
+}
+
+.mainContentCompactForm input[type=submit]:hover {
+	background-color: #6045e6;
+}
+
+.mainContentCompactForm p {
+	font-size: .8em;
+	margin-left: 32px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	display: inline;
+}
+
+.formCreator {
+	background-color: #b63c59;
+	border: 3px solid black;
+	border-radius: 0px;
+	margin: 0px auto;
+	font-size: .7em;
+	float:left;
+	padding: 0px;
+	width: 182px;
+}
+
+.formCreator form {
+	margin: 0px;
+	text-align: center;
+}
+
+.formCreator input[type=text] {
+	border-radius: 0px;
+	border-style: solid;
+	border-color: black;
+	padding: 0px;
+	width: 90%;
+	padding: 3px 3px;
+}
+
+.formCreator select {
+	border-radius: 0px;
+	border-style: solid;
+	border-color: black;
+	width: 90%;
+	padding: 3px 3px;
+}
+
+.formCreator p {
+	float: left;
+	font-size: 1em;
+	padding: 0px;
+	margin: 0px;
+	margin-left: 4px;
+	margin-top: 7px;
+}
+
+.formCreator input[type=checkbox] {
+	margin: 10px;
+	float: left;
+}
+
+.formCreator div {
+    border-radius: 0px;
+    background-color: inherit;
+    padding: 0px;
+	overflow: hidden;
+}
+
+.formCreator input[type=submit] {
+	margin: 5px 0px;
+	width: 90%;
+	padding: 0px;
+	background-color: #841c3b;
+	border-style: solid;
+	border-color: black;
+}
+
+.formCreator input[type=submit]:hover {
+	background-color: #61152c;
+}
+
+.formCreatorTop {
+	width: 182px;
+	border-radius: 0px;
+	margin-left: 0px;
+	border: 3px solid black;
+	overflow: auto;
+    padding:0px 0;
+	border-bottom: none;
+	background-color: #841c3b;
+}
+
+.formCreatorTop h2 {
+	padding: 0px;
+	margin: 2px;
+	font-size: 1em;
+}
+
+.formCreatorSeparator {
+	float: left;
+	padding: 0px;
+	margin: 5px;
+}

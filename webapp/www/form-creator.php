@@ -3,8 +3,9 @@ global $twig;
 require 'config.php';
 $forms = get_forms();
 $roles = get_roles();
+$sites = get_sites();
 
-$webpage = $twig->render('form-creator.html', ['forms' => $forms,'roles' => $roles]);
+$webpage = $twig->render('form-creator.html', ['forms' => $forms,'roles' => $roles, 'sites' => $sites]);
 echo $webpage;
 
 $submitted = false;
@@ -19,10 +20,12 @@ if ($submitted) {
 
 function createForm() {
 	$name = $_POST["form"];
-	$role = $_POST["role"];
+	$roleId = $_POST["role"];
 	$forStudent = $_POST["forStudent"];
+	$siteVisible = $_POST["siteVisible"];
+	$siteId = $_POST["siteId"];
 	
-	$form = add_form($name, $role, $forStudent);
+	add_form($name, $roleId, $forStudent, $siteVisible, $siteId);
 	header("Location: form-creator.php");
 }
 ?>

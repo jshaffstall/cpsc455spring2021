@@ -11,19 +11,33 @@
 
 <body>
 
-<div class="section">
-<a href="users-disable.php" style="float: right;"> Disable users > </a>
-<h2> Disabled users </h2>
-<form action="users-enable.php" method="post">
-{% for user in disabledUsers %}
-	<input type="hidden" value="0"> <input type ="checkbox" name="usersToEnable[]" value="{{user.id}}">
-	<a href="user.php"> {{user.name}} </a>
-	<br>
-{% else %}
-	<p> No disabled users found. </p>
-{% endfor %}
-<input type="submit" value="Enable Selected Users" name="submitEnableUsers">
-</form>
+<div id="sidebar" style="float: none;">
+	<table>
+	  <tr>
+		<td><a href="users-disable.php"> Disable users </a></td>
+	  </tr>
+	</table>
+</div>
+
+<br>
+
+<div class="mainContentTop">
+	<center>
+	<h2> All disabled users </h2>
+	</center>
+</div>
+
+<div class="mainContent">
+	<form action="users-enable.php" method="post">
+		{% for user in disabledUsers %}
+			<input type="hidden" value="0"> <input type ="checkbox" name="usersToEnable[]" value="{{user.id}}">
+			<a href="user.php"> {{user.name}} </a>
+			<br>
+		{% else %}
+			<p> No disabled users found. </p>
+		{% endfor %}
+		<input type="submit" value="Enable Selected Users" name="submitEnableUsers">
+	</form>
 </div>
 </body>
 

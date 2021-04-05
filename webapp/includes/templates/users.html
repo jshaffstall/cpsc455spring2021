@@ -10,42 +10,46 @@
 </head>
 
 <body>
-
-<div class="section">
-<a class="toplink" style="background-color:black;" href="users-active.php"> Enable/Disable users </a>
-	<center>
-	<div class="userDiv">
+	<div class="mainContentTop">
+		<center>
+		<h2> All users </h2>
+		</center>
+	</div>
 	
-	<h2> Admins </h2>
-	{% for admin in admins %}
-		<a href="user.php?email={{admin.email}}"> {{admin.name}} </a>
-		<br>
-	{% else %}
-		No admins found.
-	{% endfor %}
-	</div>
+	<div class="mainContent">
+		<center>
+		<div class="userDiv">
+		
+		<h2> Admins </h2>
+		{% for admin in admins %}
+			<a href="user.php?id={{admin.id}}"> {{admin.name}} </a>
+			<br>
+		{% else %}
+			No admins found.
+		{% endfor %}
+		</div>
 
-	<div class="userDiv">
-	<h2> Students </h2>
-	{% for student in students %}
-		<a href="user.php?email={{student.email}}"> {{student.name}} </a>
-		<br>
-	{% else %}
-		No students found.
-	{% endfor %}
-	</div>
+		<div class="userDiv">
+		<h2> Students </h2>
+		{% for student in students %}
+			<a href="user.php?id={{student.id}}"> {{student.name}} </a>
+			<br>
+		{% else %}
+			No students found.
+		{% endfor %}
+		</div>
 
-	<div class="userDiv">
-	<h2> Field sites </h2>
-	{% for site in fieldsites %}
-		<a href="user.php?email={{site.email}}"> {{site.name}} </a>
-		<br>
-	{% else %}
-		No field sites found.
-	{% endfor %}
+		<div class="userDiv">
+		<h2> Field sites </h2>
+		{% for site in fieldsites %}
+			<a href="user.php?id={{site.id}}"> {{site.name}} </a>
+			<br>
+		{% else %}
+			No field sites found.
+		{% endfor %}
+		</div>
+		</center>
 	</div>
-	</center>
-</div>
 </body>
 
 {% endblock %}

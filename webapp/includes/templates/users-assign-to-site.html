@@ -7,58 +7,158 @@
 
 <head>
 <title> Assign User To Site </title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
 
+	<div class="mainContentTop">
+		<center>
+		<h2 style="font-size:1.0em; margin: 2px;"> Assign users to site </h2>
+		</center>
+	</div>
+	
+	<div class="mainContent">
+		<a href="users-remove-from-site.php" style="float: right;"> Remove user from site > </a>
+		<form action="users-assign-to-site.php" method="post">
+			
+			<div class="userDiv">
+				<h3> Students </h3>
+				<div style="background-color: inherit;" id="students">
 
-<center>
-<div class="section">
-<a href="users-remove-from-site.php" style="float: right;"> Remove user from site > </a>
-<br>
-<h2> Assign users to site </h2>
-<form action="users-assign-to-site.php" method="post">
+				</div>
+			</div>
+
+			<div class="userDiv">
+				<h3> Field site users </h3>
+				<div style="background-color: inherit;" id="siteUsers">
+
+				</div>
+			</div>
+			
+			<div class="userDiv">
+				<h3> Field site </h3>
+					<select name="site" onload="return showAssignedUsers(this.value);" onchange="return showAssignedUsers(this.value);">	
+						<option value="none" selected disabled hidden>
+							Select a site
+						</option>			
+					{% for site in fieldSites %}
+						<option value="{{site.id}}"> {{site.name}} </option>
+						<br>
+					{% else %}
+						<option value="-1"> No field sites found. </option>
+					{% endfor %}
+					</select>
+			</div>
+			
+			<input type="submit" value="Assign selected users" name="submitAssignUsers">
+			
+		</form>
+	</div>
+
+<script type = "text/javascript">
+	allStudentUsers = [];
+	allSiteUsers = [];
 	
-	<div class="userDiv">
-	<h3> Students </h3>
-	
+	// create a student object for every student, add it to allStudentUsers array
 	{% for student in students %}
-		<input type="hidden" value="0"> <input type ="checkbox" name="usersSelected[]" value="{{student.id}}">
-		<a href="user.php?id={{student.id}}"> {{student.name}} </a>
-		<br>
+		var newStudent = {
+			"name": "{{student.name}}",
+			"id": {{student.id}}
+		}
+		
+		allStudentUsers.push(newStudent);
+	
 	{% else %}
-		No students found.
+		console.log("No students found");
 	{% endfor %}
-	</div>
 
-	<div class="userDiv">
-	<h3> Field site users </h3>
+	// create a site object for every site, add it to allSiteUsers array
 	{% for site in siteUsers %}
-		<input type="hidden" value="0"> <input type ="checkbox" name="usersSelected[]" value="{{site.id}}">
-		<a href="user.php?id={{site.id}}"> {{site.name}} </a>
-		<br>
-	{% else %}
-		No field sites users found.
-	{% endfor %}
-	</div>
+		var newSite = {
+			"name": "{{site.name}}",
+			"id": {{site.id}}
+		}
+		
+		allSiteUsers.push(newSite);
 	
-	<div class="userDiv">
-	<h3> Field site </h3>
-	<select name="site" value="{{site.id}}">		
-	{% for site in fieldSites %}
-		<option value="{{site.id}}"> {{site.name}} </option>
-		<br>
 	{% else %}
-		<option value="-1"> No field sites found. </option>
+		console.log("No sites found");
 	{% endfor %}
-	</select>
-	</div>
 	
-	<input type="submit" value="Assign selected users" name="submitAssignUsers">
+function showAssignedUsers(siteId) {
+	if (siteId == -1) {
+		return;
+	}
+	
+    $.ajax({
+		method: "POST",
+		url: "ajax-site-users.php",
+		data: {"siteId": siteId},
+		
+			success: function(data) {
+				console.log(data);
+				var obj = JSON.parse(data);
+				var students = obj.students;
+				var sites = obj.sites;
+				
+				writeUsers(obj);
+			},
+			error: function() {
+				alert('Error in AJAX call');
+			}
+	});
+} 
 
-</form>
-</div>
-</center>
+// return true if a given site contains a given user id
+function userInSite(id, usersInSite) {
+	for (user in usersInSite) {
+		if (id == usersInSite[user]['id']) {
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+function writeUsers(userArr) {
+	var element = document.getElementById("students");
+	element.innerHTML = "";
+	
+	var users = userArr.students;
+	
+	// only show users that are not assigned to the site
+	for (var i = 0; i < allStudentUsers.length; i++) {
+		var bool = userInSite(allStudentUsers[i]['id'], users);
+		
+		if (! userInSite(allStudentUsers[i]['id'], users)) {
+			element.innerHTML += ("<input type=\"hidden\" value=\"0\"> <input type =\"checkbox\" name=\"usersSelected[]\" value=\"" + allStudentUsers[i]['id'] +"\"> <a href=\"user.php?id=" + allStudentUsers[i]['id'] + "\"> " + allStudentUsers[i]['name'] + " </a> <br>");
+		}
+	}	
+	
+	if (element.innerHTML == "") {
+		element.innerHTML = "No students to assign.";
+	}
+	
+	element = document.getElementById("siteUsers");
+	element.innerHTML = "";
+	
+	users = userArr.sites;
+
+	// only show users that are not assigned to the site
+	for (var i = 0; i < allSiteUsers.length; i++) {
+		var bool = userInSite(allSiteUsers[i]['id'], users);
+		
+		if (! userInSite(allSiteUsers[i]['id'], users)) {
+			element.innerHTML += ("<input type=\"hidden\" value=\"0\"> <input type =\"checkbox\" name=\"usersSelected[]\" value=\"" + allSiteUsers[i]['id'] +"\"> <a href=\"user.php?id=" + allSiteUsers[i]['id']+ "\"> " + allSiteUsers[i]['name'] + " </a> <br>");
+		}
+	}
+	
+	if (element.innerHTML == "") {
+		element.innerHTML = "No field site users to assign.";
+	}
+}
+</script>
 </body>
 
 {% endblock %}
