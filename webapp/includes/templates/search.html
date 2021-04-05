@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+	
+{% block content %}
+
+<div>
+	{% for form in forms %}
+		<a href="search-form.php?form={{form.id}}{{siteparam}}">{{form.name}}</a><br>
+	{% endfor %}
+</div>
+
+{% endblock %}

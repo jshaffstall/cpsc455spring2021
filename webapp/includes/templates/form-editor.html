@@ -42,36 +42,37 @@
 					{% endfor %}
 				</select>
 				
-				<p> Site </p> <select name="siteId">
-					{% for site in sites %}
-						<option value="{{site.id}}" {% if form.siteid == site.id %} selected {% endif %}> {{site.name}} </option>
-					{% else %}
-						<option value="0"> No sites found </option>
-					{% endfor %}
-				</select>
-				
+			<div id="forStudents" style="visibility: hidden;">
+				<input type="hidden" name="forStudent" value="0" onchange="setSiteVisibility(this);"> 
+				<input type ="checkbox" id="forStudentsCheckbox" name="forStudent" value="1" onchange="setSiteVisibility(this);"> 
+				<div>
+					<p>For students?</p>
+				</div>
 				<br>
-				
-				<div id="forStudents" style="visibility: hidden;">
-					<input type="hidden" name="forStudent" value="0"> 
-					<input type ="checkbox" name="forStudent" value="1" {% if form.student %} checked {% endif %}> 
-
-					<div>
-						<p>For students?</p>
-					</div>
-					<br>
+			</div>
+			
+			<div id="siteDropdown" style="visibility: hidden;">
+			<p> Site </p>
+			<select id="siteDropdown" name="site">
+				{% for site in sites %}
+					<option value="{{site.id}}"> {{site.name}} </option>
+				{% else %}
+					<option value="-1"> No sites found </option>
+				{% endfor %}
+			</select>
+			</div>
+			
+			<br>
+			
+			<div id="siteVisible" style="visibility: hidden;">
+				<input type="hidden" name="siteVisible" value="0"> 
+				<input type ="checkbox" id="visibleToSitesCheckbox" name="siteVisible" value="1"> 
+				<div>
+					<p>Visible to sites?</p>
 				</div>
+			</div>			
+			<input type="submit" name="submit" value="Create form">
 				
-				<div id="siteVisible" style="visibility: hidden;">		
-					<input type="hidden" name="siteVisible" value="0"> 
-					<input type ="checkbox" name="siteVisible" value="1" {% if form.sitevisible %} checked {% endif %}> 
-					
-					<div>
-						<p>Visible to sites?</p>
-					</div>
-				</div>
-				
-				<input type="submit" name="submitForm" value="Edit form">
 			</form>
 		</div>
 	
@@ -151,23 +152,32 @@
 	
 <script type="text/javascript">
 
+// Hide/show fields depending on which role is selected
 function setFieldVisibility(selected) {
-	console.log("called. selected is " + selected.value);
+
+	// Always uncheck the checkboxes
+	document.getElementById("forStudentsCheckbox").checked = false;
+	document.getElementById("visibleToSitesCheckbox").checked = false;
+	
+	// TODO Do we need to unselect the site dropdown?
+	
+	// Admin
 	if (selected.value == 1) {
-		console.log("admin: toggle site visible");
-		
 		document.getElementById("forStudents").style.visibility = "hidden";
-		document.getElementById("siteVisible").style.visibility = "visible";
+		document.getElementById("siteVisible").style.visibility = "hidden";
+		document.getElementById("siteDropdown").style.visibility = "hidden";
 	}
+	// Student
 	else if (selected.value == 2) {
 		document.getElementById("forStudents").style.visibility = "hidden";
-		document.getElementById("siteVisible").style.visibility = "hidden";
+		document.getElementById("siteVisible").style.visibility = "visible";
+		document.getElementById("siteDropdown").style.visibility = "hidden";
 	}
+	// Field site
 	else if (selected.value == 3) {
-		console.log("field site: toggle for students");
-		
 		document.getElementById("forStudents").style.visibility = "visible";
 		document.getElementById("siteVisible").style.visibility = "hidden";
+		document.getElementById("siteDropdown").style.visibility = "hidden";
 	}
 }
 
