@@ -40,13 +40,16 @@
 				<br>
 			</div>
 			
-			<select id="siteDropdown" name="site" style="visibility: hidden;">
+			<div id="siteDropdown" style="visibility: hidden;">
+			<p> Site </p>
+			<select id="siteDropdown" name="site">
 				{% for site in sites %}
 					<option value="{{site.id}}"> {{site.name}} </option>
 				{% else %}
 					<option value="-1"> No sites found </option>
 				{% endfor %}
 			</select>
+			</div>
 			
 			<br>
 			
@@ -67,7 +70,7 @@
 		</center>
 	</div>
 
-	<div class="mainContent contentWithSidebar" style="min-height: 233px">
+	<div class="mainContent contentWithSidebar" style="min-height: 274px">
 		{% for form in forms %}
 			<a href="form-editor.php?form={{form.id}}">{{form.name}}</a>
 			<br>
@@ -90,13 +93,13 @@ function setFieldVisibility(selected) {
 	// Admin
 	if (selected.value == 1) {
 		document.getElementById("forStudents").style.visibility = "hidden";
-		document.getElementById("siteVisible").style.visibility = "visible";
+		document.getElementById("siteVisible").style.visibility = "hidden";
 		document.getElementById("siteDropdown").style.visibility = "hidden";
 	}
 	// Student
 	else if (selected.value == 2) {
 		document.getElementById("forStudents").style.visibility = "hidden";
-		document.getElementById("siteVisible").style.visibility = "hidden";
+		document.getElementById("siteVisible").style.visibility = "visible";
 		document.getElementById("siteDropdown").style.visibility = "hidden";
 	}
 	// Field site
