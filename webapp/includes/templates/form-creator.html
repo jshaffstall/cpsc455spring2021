@@ -10,35 +10,112 @@
 </head>
 
 <body>
-<h1>Forms</h1>
-<div class="section">
-<h2> Create new form </h2>
 
-<form class="topForm" action="form-creator.php" method="post">
-<p>Form name</p> <input type="text" name="form">
+	<div class="formCreatorTop">
+		<center>
+		<h2> Create form </h2>
+		</center>
+	</div>
+	
+	<div class="formCreator">
+		<form action="form-creator.php" method="post">
+			<input placeholder="Form name" type="text" name="form">
+			
+			<select name="role" onchange="setFieldVisibility(this);">
+				<option value="none" selected disabled hidden>
+					Select a role
+				</option>	
+				
+				{% for role in roles %}
+					<option value="{{role.id}}"> {{role.name}} </option>
+				{% endfor %}
+			</select>
+			
+			<div id="forStudents" style="visibility: hidden;">
+				<input type="hidden" name="forStudent" value="0" onchange="setSiteVisibility(this);"> 
+				<input type ="checkbox" id="forStudentsCheckbox" name="forStudent" value="1" onchange="setSiteVisibility(this);"> 
+				<div>
+					<p>For students?</p>
+				</div>
+				<br>
+			</div>
+			
+			<select id="siteDropdown" name="site" style="visibility: hidden;">
+				{% for site in sites %}
+					<option value="{{site.id}}"> {{site.name}} </option>
+				{% else %}
+					<option value="-1"> No sites found </option>
+				{% endfor %}
+			</select>
+			
+			<br>
+			
+			<div id="siteVisible" style="visibility: hidden;">
+				<input type="hidden" name="siteVisible" value="0"> 
+				<input type ="checkbox" id="visibleToSitesCheckbox" name="siteVisible" value="1"> 
+				<div>
+					<p>Visible to sites?</p>
+				</div>
+			</div>			
+			<input type="submit" name="submit" value="Create form">
+		</form>
+	</div>
+	
+	<div class="mainContentTop contentWithSidebar" style="margin-top: -26px">
+		<center>
+		<h2 style="font-size:1.0em; margin: 2px;"> Edit forms </h2>
+		</center>
+	</div>
 
-<p>Role</p>
-<select name="role">
-{% for role in roles %}
-<option value="{{role.id}}"> {{role.name}} </option>
-{% endfor %}
-</select>
+	<div class="mainContent contentWithSidebar" style="min-height: 233px">
+		{% for form in forms %}
+			<a href="form-editor.php?form={{form.id}}">{{form.name}}</a>
+			<br>
+		{% else %}
+			No forms found.
+		{% endfor %}
+	</div>
 
-<p>For students?</p>
-<input type="hidden" name="forStudent" value="0"> <input type ="checkbox" name="forStudent" value="1"> 
-<br>
-<input style="margin: 30px 25px;" type="submit" name="submit" value="Create form">
-</form>
+<script type="text/javascript">
 
+// Hide/show fields depending on which role is selected
+function setFieldVisibility(selected) {
 
+	// Always uncheck the checkboxes
+	document.getElementById("forStudentsCheckbox").checked = false;
+	document.getElementById("visibleToSitesCheckbox").checked = false;
+	
+	// TODO Do we need to unselect the site dropdown?
+	
+	// Admin
+	if (selected.value == 1) {
+		document.getElementById("forStudents").style.visibility = "hidden";
+		document.getElementById("siteVisible").style.visibility = "visible";
+		document.getElementById("siteDropdown").style.visibility = "hidden";
+	}
+	// Student
+	else if (selected.value == 2) {
+		document.getElementById("forStudents").style.visibility = "hidden";
+		document.getElementById("siteVisible").style.visibility = "hidden";
+		document.getElementById("siteDropdown").style.visibility = "hidden";
+	}
+	// Field site
+	else if (selected.value == 3) {
+		document.getElementById("forStudents").style.visibility = "visible";
+		document.getElementById("siteVisible").style.visibility = "hidden";
+		document.getElementById("siteDropdown").style.visibility = "hidden";
+	}
+}
 
-<h2> Edit forms </h2>
-{% for form in forms %}
-	<a href="form-editor.php?form={{form.id}}">{{form.name}}</a>
-	<br>
-{% endfor %}
-</div>
-
+function setSiteVisibility(selected) {
+	if (selected.checked) {
+		document.getElementById("siteDropdown").style.visibility = "visible";
+	}
+	else {
+		document.getElementById("siteDropdown").style.visibility = "hidden";
+	}
+}
+</script>
 </body>
 </html>
 

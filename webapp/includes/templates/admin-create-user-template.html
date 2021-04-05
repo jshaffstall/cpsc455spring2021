@@ -2,33 +2,41 @@
 
 {% block title %}Create User{% endblock %}
 {% block content %}
-<h1> Create new user </h1>
-<p id="message"></p>
 
-<div class="section">
-<form class="siteForm" action="admin-create-user.php" method="post">
+<body>
+	<p id="message"></p>
 
-Role <select name="role">
+	<div class="mainContentTop">
+		<center>
+		<h2> Create user </h2>
+		</center>
+	</div>
+	
+	<div class="mainContent">
+	<form action="admin-create-user.php" method="post">
 
-{% for role in roles %}
-<option value="{{role.id}}"> {{role.name}} </option>
-{% endfor %}
+	<select name="role">
+	<option value="" disabled selected>Select a role</option>
+	{% for role in roles %}
+		<option value="{{role.id}}"> {{role.name}} </option>
+	{% endfor %}
+	</select>
+	<br>
 
-</select>
-<br>
+	<input type="text" name="name" placeholder="Name">
+	<br>
 
-Name <input type="text" name="name">
-<br>
+	<input type="email" name="email" placeholder="Email">
+	<br>
 
-E-mail <input type="email" name="email">
-<br>
+	<input type="submit" name="user">
+	</form>
 
-<input type="submit" name="user">
-</form>
+	{% if message %}
+	<script type="text/javascript"> document.getElementById("message").textContent = "{{message}}"; </script>
+	{% endif %}
 
-{% if message %}
-<script type="text/javascript"> document.getElementById("message").textContent = "{{message}}"; </script>
-{% endif %}
+</body>
 
 {% endblock %}
 

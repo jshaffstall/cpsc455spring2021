@@ -11,31 +11,37 @@
 </head>
 
 <body>
+	<div class="mainContentTop" style="margin-left:0px;">
+		<center>
+		<h2> Admin Panel </h2>
+		</center>
+	</div>
 
-<h1> Admin Panel </h1>
+	<div class="mainContent" style="margin-left:0px;">
+		<div class="mainContentSection">
+			<h2> Forms </h2>
+			<a href="form-creator.php"> Create and edit forms </a>
+			<br>
+			<a href="form-submissions.php"> View form submissions </a>
+		</div>
 
-<div>
-	<h2> Forms </h2>
-	<a href="form-creator.php"> Create forms </a>
-	<br>
-	<a href="form-submissions.php"> View form submissions </a>
-</div>
-
-<div>
-	<h2> Users </h2>
-	<a href="admin-create-user.php"> Create new user </a>
-	<br>
-	<a href="users.php"> View users </a>
-	<br>
-	<a href="users-enable.php"> Enable/disable users </a>
-	<br>
-	<a href="users-assign-to-site.php"> Assign/remove users from field site </a>
-	<br>
-	<a href="admin-create-field-site.php"> Create fieldwork site </a>
-	
-	
-</div>
-
+		<div class="mainContentSection"> 
+			<h2> Users </h2>
+			<a href="admin-create-user.php"> Create new user </a>
+			<br>
+			<a href="users.php"> View users </a>
+			<br>
+			<a href="users-enable.php"> Enable users </a>
+			<br>
+			<a href="users-disable.php"> Disable users </a>
+			<br>			
+			<a href="users-assign-to-site.php"> Assign users to field site </a>
+			<br>
+			<a href="users-remove-from-site.php"> Remove users from field site </a>
+			<br>
+			<a href="admin-create-field-site.php"> Create fieldwork site </a>
+		</div>
+	</div>
 </html>
 
 {% endblock %}

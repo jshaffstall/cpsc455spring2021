@@ -11,15 +11,6 @@ $siteUsers = get_users_by_role(3);
 
 $sites = get_sites();
 
-/*
-$arr = [];
-
-foreach ($students as $row) {
-	$arr = $row;
-}
-*/
-echo $twig->render('users-assign-to-site.html', ['students' => $students->fetchAll(), 'siteUsers' => $siteUsers->fetchAll(), 'fieldSites' => $sites]);
-
 if (isset($_POST['submitAssignUsers'])) {
 	$usersToAssign = $_POST['usersSelected'];
 	$fieldSiteId = $_POST['site'];
@@ -30,3 +21,7 @@ if (isset($_POST['submitAssignUsers'])) {
 	
 	header("Location: users-assign-to-site.php");
 }
+
+echo $twig->render('users-assign-to-site.html', ['students' => $students->fetchAll(), 'siteUsers' => $siteUsers->fetchAll(), 'fieldSites' => $sites]);
+
+

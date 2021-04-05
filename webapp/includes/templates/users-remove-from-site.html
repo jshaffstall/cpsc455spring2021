@@ -12,51 +12,55 @@
 
 <body>
 
-
-<div class="section">
-<a href="users-assign-to-site.php" style="float: right;"> Assign user to site > </a>
-<br>
-<h2> Remove users from site </h2>
-<form action="users-remove-from-site.php" method="post">
-
-	<div class="userDiv">
+	<div class="mainContentTop">
+		<center>
+		<h2 style="font-size:1.0em; margin: 2px;"> Remove users from site </h2>
+		</center>
+	</div>
 	
-	<h3> Students </h3>
-		<div id="students">
-		
+	<div class="mainContent">
+		<a href="users-assign-to-site.php" style="float: right;"> Assign user to site > </a>
+		<form action="users-remove-from-site.php" method="post">
+
+			<div class="userDiv">
+				<h3> Students </h3>
+					<div style="background-color: inherit;" id="students">
+					
+					</div>
+				</div>
+
+				<div class="userDiv">
+				<h3> Field site users </h3>
+					<div style="background-color: inherit;" id="siteUsers">
+
+					</div>
+				</div>
+				
+				<div class="userDiv">
+					<h3> Field site </h3>
+						<select name="site" onload="return showAssignedUsers(this.value);" onchange="return showAssignedUsers(this.value);">	
+							<option value="none" selected disabled hidden>
+								Select a site
+							</option>			
+						{% for site in fieldSites %}
+							<option value="{{site.id}}"> {{site.name}} </option>
+							<br>
+						{% else %}
+							<option value="-1"> No field sites found. </option>
+						{% endfor %}
+						</select>
+				</div>
+			
+			<input type="submit" value="Remove selected users" name="submitRemoveUsers">
+		</form>
 		</div>
 	</div>
-
-	<div class="userDiv">
-	<h3> Field site users </h3>
-		<div id="siteUsers">
-
-		</div>
-	</div>
-	
-	<div class="userDiv">
-		<h3> Field site </h3>
-			<select name="site" onload="return showAssignedUsers(this.value);" onchange="return showAssignedUsers(this.value);">	
-				<option value="none" selected disabled hidden>
-					Select a site
-				</option>			
-			{% for site in fieldSites %}
-				<option value="{{site.id}}"> {{site.name}} </option>
-				<br>
-			{% else %}
-				<option value="-1"> No field sites found. </option>
-			{% endfor %}
-			</select>
-	</div>
-	
-	<input type="submit" value="Remove selected users" name="submitRemoveUsers">
-	</form>
-	</div>
-</div>
 
 <script type = "text/javascript">
 function showAssignedUsers(siteId) {
-	console.log("here1");
+	if (siteId == -1) {
+		return;
+	}
 	
     $.ajax({
 		method: "POST",
@@ -69,17 +73,7 @@ function showAssignedUsers(siteId) {
 				var students = obj.students;
 				var sites = obj.sites;
 				
-				for (student in students) {
-					console.log(students[student].name);
-					console.log(students[student].id);
-				}
-				
 				writeUsers(obj);
-				
-				for (site in sites) {
-					console.log(sites[site].name);
-					console.log(sites[site].id);
-				}
 			},
 			error: function() {
 				alert('Error in AJAX call');

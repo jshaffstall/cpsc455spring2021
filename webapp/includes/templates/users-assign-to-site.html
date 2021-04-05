@@ -11,46 +11,50 @@
 </head>
 
 <body>
-<div class="section">
-	<a href="users-remove-from-site.php" style="float: right;"> Remove user from site > </a>
-	<br>
-	<h2> Assign users to site </h2>
+
+	<div class="mainContentTop">
+		<center>
+		<h2 style="font-size:1.0em; margin: 2px;"> Assign users to site </h2>
+		</center>
+	</div>
 	
-	<form action="users-assign-to-site.php" method="post">
-		
-		<div class="userDiv">
-			<h3> Students </h3>
-			<div id="students">
+	<div class="mainContent">
+		<a href="users-remove-from-site.php" style="float: right;"> Remove user from site > </a>
+		<form action="users-assign-to-site.php" method="post">
+			
+			<div class="userDiv">
+				<h3> Students </h3>
+				<div style="background-color: inherit;" id="students">
 
+				</div>
 			</div>
-		</div>
 
-		<div class="userDiv">
-			<h3> Field site users </h3>
-			<div id="siteUsers">
+			<div class="userDiv">
+				<h3> Field site users </h3>
+				<div style="background-color: inherit;" id="siteUsers">
 
+				</div>
 			</div>
-		</div>
-		
-		<div class="userDiv">
-			<h3> Field site </h3>
-				<select name="site" onload="return showAssignedUsers(this.value);" onchange="return showAssignedUsers(this.value);">	
-					<option value="none" selected disabled hidden>
-						Select a site
-					</option>			
-				{% for site in fieldSites %}
-					<option value="{{site.id}}"> {{site.name}} </option>
-					<br>
-				{% else %}
-					<option value="-1"> No field sites found. </option>
-				{% endfor %}
-				</select>
-		</div>
-		
-		<input type="submit" value="Assign selected users" name="submitAssignUsers">
-		
-	</form>
-</div>
+			
+			<div class="userDiv">
+				<h3> Field site </h3>
+					<select name="site" onload="return showAssignedUsers(this.value);" onchange="return showAssignedUsers(this.value);">	
+						<option value="none" selected disabled hidden>
+							Select a site
+						</option>			
+					{% for site in fieldSites %}
+						<option value="{{site.id}}"> {{site.name}} </option>
+						<br>
+					{% else %}
+						<option value="-1"> No field sites found. </option>
+					{% endfor %}
+					</select>
+			</div>
+			
+			<input type="submit" value="Assign selected users" name="submitAssignUsers">
+			
+		</form>
+	</div>
 
 <script type = "text/javascript">
 	allStudentUsers = [];
@@ -83,6 +87,10 @@
 	{% endfor %}
 	
 function showAssignedUsers(siteId) {
+	if (siteId == -1) {
+		return;
+	}
+	
     $.ajax({
 		method: "POST",
 		url: "ajax-site-users.php",

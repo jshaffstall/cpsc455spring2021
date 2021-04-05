@@ -11,13 +11,27 @@
 
 <body>
 
-<div class="section">
-<a href="users-enable.php" style="float: right;"> Enable users > </a>
-<h2> Enabled users </h2>
-<form action="users-active.php" method="post">
+<div id="sidebar" style="float: none;">
+	<table>
+	  <tr>
+		<td><a href="users-enable.php"> Enable users </a></td>
+	  </tr>
+	</table>
+</div>
+
+<br>
+
+<div class="mainContentTop">
+	<center>
+	<h2> All enabled users </h2>
+	</center>
+</div>
+
+<div class="mainContent">
+<form action="users-disable.php" method="post">
 {% for user in enabledUsers %}
 	<input type="hidden" value="0"> <input type ="checkbox" name="usersToDisable[]" value="{{user.id}}">
-	<a href="user.php"> {{user.name}} </a>
+	<a href="user.php?id={{user.id}}"> {{user.name}} </a>
 	<br>
 {% else %}
 	<p> No enabled users found. </p>

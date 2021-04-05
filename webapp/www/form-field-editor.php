@@ -18,11 +18,17 @@ echo "$webpage";
 
 $submitted = false;
 
-if (isset($_POST["type"])) {
-	$submitted = true;
-}	
+if (isset($_POST["submit"])) {
+	echo "Submit button pressed";
+	updateFormfield();
+}
 
-if ($submitted) {
+else if (isset($_POST["delete"])) {
+	echo "Delete button pressed";
+	deleteFormfield();
+}
+
+function updateFormfield() {
 	global $form;
 	global $formfield;
 	global $formfieldId;
@@ -39,5 +45,14 @@ if ($submitted) {
 	
 	$formId= $form['id'];
 	header("Location: form-field-editor.php?form=$formId&formfield=$formfieldId");
+}
+
+function deleteFormfield() {
+	$formId = $_GET["form"];
+	$formfieldId = $_GET["formfield"];
+	
+	delete_form_field($formfieldId);
+	
+	header("Location: form-editor.php?form=$formId");
 }
 ?>

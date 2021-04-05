@@ -9,16 +9,30 @@
 </head>
 
 <body>
-<h1>{{site.name}}</h2>
 
-<div class="section">
-<h2> Edit site </h2>
+	<div style="overflow: auto; padding: 0px; margin: -5px;">
+	
+	<div id="sidebar" style="float: none; margin: 4px 0px;">
+		<table>
+		  <tr>
+			<td><a href="admin-create-field-site.php"> &lt; Back to form editor </a></td>
+		  </tr>
+		</table>
+	</div>
+	
+	<div class="formCreatorTop">
+		<center>
+		<h2 style="font-size:1.0em; margin: 2px;"> Editing "{{site.name}}" </h2>
+		</center>
+	</div>
+	
+	<div class="formCreator">
 
-<form action="site-editor.php?site={{site.name}}" method="post">
-Name <input type="text" value="{{site.name}}" name="siteName">
+	<form action="site-editor.php?site={{site.name}}" method="post">
+	<p> Name </p> <input type="text" value="{{site.name}}" name="siteName">
 
-<input type="submit" name="submitSite" method="post">
-</div>
+	<input type="submit" name="submitSite" method="post">
+	</div>
 </body>
 </html>
 
