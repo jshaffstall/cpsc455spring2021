@@ -10,11 +10,15 @@ if(! isset($_GET['submission'])){
 }
 
 $submitted = get_form_submission_by_id($_GET['submission']);
+$student = [];
 
 $submissions = array();
 
 if ($submitted)
 {
+    $student = get_user_by_id($submitted['user']);
+    $form = get_form_by_id($submitted['formid']);
+    
 	$temp = get_field_submissions($submitted['id']);
 	
 	foreach ($temp as $field)
@@ -26,7 +30,7 @@ if ($submitted)
 $types = get_form_field_types();
 $fields = get_form_fields($submitted ['formid']);
 
-echo $twig->render('display-submission.html',['fields' => $fields, 'types' => $types, 'submissions' => $submissions]);
+echo $twig->render('display-submission.html',['fields' => $fields, 'types' => $types, 'submissions' => $submissions, 'student' => $student, 'form' => $form]);
 
 
 ?>
