@@ -687,7 +687,7 @@ function get_all_form_submissions ()
 {
     global $pdo;
 
-    $sql = "SELECT formsubmissions.*, forms.* FROM formsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id WHERE forms.archived=0 AND users.disabled = 0 ORDER BY `when` DESC";
+    $sql = "SELECT formsubmissions.*, forms.name, forms.roleid, forms.student FROM formsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id WHERE forms.archived=0 AND users.disabled = 0 ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
     
@@ -703,11 +703,42 @@ function get_form_submissions ($user)
 {
     global $pdo;
 
-    $sql = "SELECT * FROM formsubmissions,forms WHERE user=:user AND formid=forms.id AND forms.archived=0 ORDER BY `when` DESC";
+    $sql = "SELECT formsubmissions.*, forms.name, forms.roleid, forms.student FROM formsubmissions,forms WHERE user=:user AND formid=forms.id AND forms.archived=0 ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':user', $user);
+    
+    $stmt->execute();
+	
+	return $stmt;
+}
+
+function get_form_submissions_visible_to_sites ($user)
+{
+    global $pdo;
+
+    $sql = "SELECT formsubmissions.*, forms.name, forms.roleid, forms.student FROM formsubmissions,forms WHERE user=:user AND formid=forms.id AND forms.archived=0 AND sitevisible=1 ORDER BY `when` DESC";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':user', $user);
+    
+    $stmt->execute();
+	
+	return $stmt;
+}
+
+function get_student_form_submissions_for_site ($user, $site)
+{
+    global $pdo;
+
+    $sql = "SELECT formsubmissions.*, forms.name, forms.roleid, forms.student FROM formsubmissions,forms WHERE user=:user AND formid=forms.id AND forms.archived=0 AND forms.siteid=:site AND roleid=3 AND student=1 ORDER BY `when` DESC";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':user', $user);
+    $stmt->bindValue(':site', $site);
     
     $stmt->execute();
 	
@@ -832,7 +863,7 @@ function search_form_submissions ($formid, $searchterms)
 {
     // TODO: This should not return submissions from archived forms
     // or from submissions for deactivated users
-	$sql = "SELECT DISTINCT formsubmissions.id, formsubmissions.formid, formsubmissions.when, formsubmissions.user FROM formsubmissions, fieldsubmissions WHERE formsubmissions.formid=:formid and formsubmissions.id=fieldsubmissions.formsubmissionid ";
+	$sql = "SELECT DISTINCT formsubmissions.* FROM formsubmissions, fieldsubmissions WHERE formsubmissions.formid=:formid and formsubmissions.id=fieldsubmissions.formsubmissionid ";
 	$searches = "";
 	
 	foreach ($searchterms as $name => $value)
