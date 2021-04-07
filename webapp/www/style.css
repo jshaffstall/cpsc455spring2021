@@ -634,3 +634,10 @@ hr {
 	padding: 0px;
 	margin: 5px;
 }
+
+.orderButton {
+	margin: 0px;
+	width: auto;
+	font-size: .7em;
+	padding: 0px;
+}

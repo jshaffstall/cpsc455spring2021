@@ -23,7 +23,13 @@ function createForm() {
 	$roleId = $_POST["role"];
 	$forStudent = $_POST["forStudent"];
 	$siteVisible = $_POST["siteVisible"];
-	$siteId = $_POST["siteId"];
+	
+	if ($roleId == 3 && $forStudent) {
+		$siteId = null;
+	}
+	else {
+		$siteId = $_POST["siteId"];
+	}
 	
 	add_form($name, $roleId, $forStudent, $siteVisible, $siteId);
 	header("Location: form-creator.php");
