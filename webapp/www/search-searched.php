@@ -2,14 +2,21 @@
 
 require 'config.php';
 
-//searchterms should an array with pairs of key and search words
-//create array with POST fieldname and POST search
+$forms = [];
+$searches = [];
 
 $searchterms = array(
 	array($_POST['fieldname'], $_POST['searchterm'])
 );
 
-$search = search_form_submissions($_POST['formid'], $searchterms);
+$searches[] = [search_form_submissions($_POST['formid'], $searchterms)];
 
-	echo $twig->render('search-searched.html',['formid' => $_POST['formid'],'search' => $search]);
+	foreach($searches as $search){
+	
+		$form = get_form_by_id($_POST['formid']);
+		$searches[] = [$searches, 'name' => $form['name']];
+	
+	}
+
+	echo $twig->render('search-searched.html',['formid' => $_POST['formid'],'searches' => $searches, 'name' =>$forms]);
 ?>
