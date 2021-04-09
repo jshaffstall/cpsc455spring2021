@@ -641,3 +641,10 @@ hr {
 	font-size: .7em;
 	padding: 0px;
 }
+
+.orderButton input[type=submit] {
+	margin: 0px;
+	width: auto;
+	font-size: .7em;
+	padding: 0px;
+}
