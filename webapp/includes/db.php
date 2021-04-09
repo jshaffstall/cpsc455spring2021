@@ -454,13 +454,12 @@ function add_form_field ($form, $type, $label, $order, $name, $eol=True, $size=2
 	if (empty($size))
 		$size = 20;
 	
-    $sql = "INSERT INTO formfields (form, type, label, `order`, fieldname, eol, size, required) VALUES (:form, :type, :label, :order, :name, :eol, :size, :required)";
+    $sql = "INSERT INTO formfields (form, type, label, `order`, fieldname, eol, size, required) VALUES (:form, :type, :label, COALESCE((SELECT MAX( `order` )+1 FROM formfields ff WHERE ff.form=:form), 1), :name, :eol, :size, :required)";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':form', $form);
     $stmt->bindValue(':type', $type);
     $stmt->bindValue(':label', $label);
-    $stmt->bindValue(':order', $order);
     $stmt->bindValue(':name', $name);
     $stmt->bindValue(':eol', $eol);
     $stmt->bindValue(':size', $size);
