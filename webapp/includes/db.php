@@ -901,6 +901,8 @@ function search_form_submissions ($formid, $searchterms)
 	$sql .= $searches;
 	
     $stmt = $pdo->prepare($sql);
+	
+	$stmt->bindValue(':formid', $formid);
     
 	foreach ($searchterms as $name => $value)
 	{
