@@ -861,7 +861,9 @@ function get_field_submission($fieldsubmissionid)
 
 function search_form_submissions ($formid, $searchterms)
 {
-    // TODO: This should not return submissions from archived forms
+    global $pdo;
+
+	// TODO: This should not return submissions from archived forms
     // or from submissions for deactivated users
 	$sql = "SELECT DISTINCT formsubmissions.* FROM formsubmissions, fieldsubmissions WHERE formsubmissions.formid=:formid and formsubmissions.id=fieldsubmissions.formsubmissionid ";
 	$searches = "";
