@@ -6,7 +6,7 @@
 
 <div>
 	{% for s in searches %}
-		<a href="display-form.php?form={{s.id}}">{{s.name}},{{s.id}}</a><br>
+		<a href="display-submission.php?submission={{s.id}}">{{s.name}},{{s.user}}({{s.email}})</a><br>
 	{% endfor %}
 
 </div>

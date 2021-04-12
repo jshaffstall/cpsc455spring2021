@@ -7,11 +7,11 @@
 <div>
 	<form action="./search-searched.php" method="POST">
 	<label for="{{field.fieldname}}"> Choose a field:</label>
-	<select name="fieldname" >
+	<select name="fieldname" onchange='setFieldVisibility(this);'>
 	{% for field in fields %}
-		<option value="{{field.fieldname}}">{{field.fieldname}}</option>
+		<option value="{{field.fieldname}}" data-type="{{formfield.type}}">{{field.fieldname}}</option>
 	{% endfor %}
-	<input type="text" value="Search" name="searchterm" placeholder="...">
+	<input type="text" placeholder="Search..." name="searchterm">
 	<input type="submit" value="Submit">
 	
 	
@@ -21,5 +21,28 @@
 
 </div>
 
+<script type='text/javascript'>
+
+function setFieldVisability(selected){
+	
+	//textbox
+	if(selected.value == 1){
+		document.getElementBy
+		
+	}
+	//checkbox
+	else if(selected.value == 2){
+	
+	
+	}
+	//date
+	else if(selected.value == 3){
+	
+	
+	}
+	
+</script>
+
 {% endblock %}
+
 
