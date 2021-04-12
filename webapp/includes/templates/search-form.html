@@ -11,10 +11,18 @@
 	{% for field in fields %}
 		<option value="{{field.fieldname}}" data-type="{{formfield.type}}">{{field.fieldname}}</option>
 	{% endfor %}
-	<input type="text" placeholder="Search..." name="searchterm">
+	<div id="text" style="visibility: hidden;">
+		<input type="text" placeholder="..." name="searchterm">
+		
+	</div>
+	<div id="checkbox" style="visibility: hidden;">
+		<input type="checkbox" name="searchterm" placeholder=" ">
+	</div>
+	<div id="date" style="visibility: hidden;">
+		<input type="date" name="searchterm" placeholder=" ">
+	</div>
 	<input type="submit" value="Submit">
-	
-	
+		
 	<input type='hidden' name='formid' value='{{form}}'>
 	
 	</form>
@@ -24,20 +32,24 @@
 <script type='text/javascript'>
 
 function setFieldVisability(selected){
-	
+	var type = document.data('type');
 	//textbox
-	if(selected.value == 1){
-		document.getElementBy
-		
+	if(type == 1){
+		document.type('text').style.visibility="visible";
+		document.type('checkbox').style.visibility="hidden";
+		document.type('date').style.visibility="hidden";
 	}
 	//checkbox
-	else if(selected.value == 2){
-	
-	
+	else if(type == 2){
+		document.type('text').style.visibility="hidden";
+		document.type('checkbox').style.visibility="visible";
+		document.type('date').style.visibility="hidden";
 	}
 	//date
-	else if(selected.value == 3){
-	
+	else if(type == 3){
+		document.type('text').style.visibility="hidden";
+		document.type('checkbox').style.visibility="hidden";
+		document.type('date').style.visibility="visible";
 	
 	}
 	
