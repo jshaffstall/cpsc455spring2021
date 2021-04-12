@@ -25,10 +25,10 @@ function createForm() {
 	$siteVisible = $_POST["siteVisible"];
 	
 	if ($roleId == 3 && $forStudent) {
-		$siteId = null;
+		$siteId = $_POST["siteId"];
 	}
 	else {
-		$siteId = $_POST["siteId"];
+		$siteId = null;
 	}
 	
 	add_form($name, $roleId, $forStudent, $siteVisible, $siteId);

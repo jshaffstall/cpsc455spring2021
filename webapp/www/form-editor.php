@@ -23,9 +23,18 @@ else if (isset($_POST['delete'])) {
 	
 	header("Location: form-creator.php");
 }
+else if (isset($_POST['orderDown'])) {
+	$fieldOrder = $_POST['fieldOrder'];
+	// add 1 to field with fieldOrder, subtract 1 from field with fieldOrder+1
+}
+else if (isset($_POST['orderUp'])) {
+	$fieldOrder = $_POST['fieldOrder'];
+	// subtract 1 to field with fieldOrder, add 1 from field with fieldOrder+1
+}
 
 if ($form) {
 	$formFields = get_form_fields($form["id"]);
+	$formFields = $formFields->fetchAll();
 	$currentRole = $form["roleid"];
 	
 	$webpage = $twig->render('form-editor.html',['form' => $form, 'types' => $types, 'fields' => $formFields, 'roles' => $roles, 'sites' => $sites]);

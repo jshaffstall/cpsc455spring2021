@@ -140,14 +140,22 @@
 	
 		<div class="mainContent" style="min-height:351px; margin-left: 0px; ">
 			{% for field in fields %}
+			
+				<!-- Change order of formfield -->
+				<form>
+					<input type="hidden" name="fieldOrder" value="{{field.order}}">
+					
+					{% if field.order < fields|length %}
+						<input type="submit" class="orderButton" name="orderDown" value="v">
+					{% endif %}
+					
+					{% if field.order > 1 %}
+						<input type="submit" class="orderButton" name="orderUp" value="^">
+					{% endif %}
+				</form>
+				
 				<a href="form-field-editor.php?form={{form.id}}&formfield={{field.id}}"> {{field.fieldname}} </a>
 				
-				<!-- changing order with arrows WIP 
-				<form>
-					<input type="submit" class="orderButton" name="orderDown" value="v">
-					<input type="submit" class="orderButton" name="orderUp" value="^">
-				</form>
-				-->
 				<br>
 			{% else %}
 				<p> No form fields found. </p>
