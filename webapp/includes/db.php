@@ -894,9 +894,7 @@ function search_form_submissions ($formid, $searchterms)
 {
     global $pdo;
 
-	// TODO: This should not return submissions from archived forms
-    // or from submissions for deactivated users
-	$sql = "SELECT DISTINCT formsubmissions.* FROM formsubmissions, fieldsubmissions WHERE formsubmissions.formid=:formid and formsubmissions.id=fieldsubmissions.formsubmissionid ";
+	$sql = "SELECT DISTINCT formsubmissions.* FROM formsubmissions, fieldsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id WHERE forms.archived=0 AND users.disabled = 0 AND formsubmissions.formid=:formid and formsubmissions.id=fieldsubmissions.formsubmissionid ";
 	$searches = "";
 	
 	foreach ($searchterms as $name => $value)
