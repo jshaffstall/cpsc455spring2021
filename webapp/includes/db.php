@@ -539,6 +539,19 @@ function update_form_field($form, $formfield, $type, $label, $order, $name, $eol
     $stmt->execute();
 }
 
+function update_form_field_order($formfield, $order)
+{
+    global $pdo;
+
+    $sql = "UPDATE formfields SET `order`=:order WHERE id=:formfield";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':formfield', $formfield);
+    $stmt->bindValue(':order', $order);
+    
+    $stmt->execute();
+}
+
 function submit_form($user, $formid, $values, $siteid=null)
 {
     global $pdo;
