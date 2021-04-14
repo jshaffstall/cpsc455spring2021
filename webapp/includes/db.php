@@ -910,20 +910,20 @@ function search_form_submissions ($formid, $searchterms)
 		if ($formfield['type'] == 1)
 		{
 			// Edit field, allow partial searches
-			$searches = " AND name=:".$name." AND value LIKE :".$name."_value ";
+			$searches = " AND fieldsubmissions.name=:".$name." AND fieldsubmissions.value LIKE :".$name."_value ";
             $searchterms[$name] = "%".$value."%";
 		}
 		
 		if ($formfield['type'] == 2)
 		{
 			// Checkbox, exact searches only
-			$searches = " AND name=:".$name." AND value=:".$name."_value ";
+			$searches = " AND fieldsubmissions.name=:".$name." AND fieldsubmissions.value=:".$name."_value ";
 		}
         
 		if ($formfield['type'] == 3)
 		{
 			// Date, exact searches only
-			$searches = " AND name=:".$name." AND value=:".$name."_value ";
+			$searches = " AND fieldsubmissions.name=:".$name." AND fieldsubmissions.value=:".$name."_value ";
 		}
  	}
 	
