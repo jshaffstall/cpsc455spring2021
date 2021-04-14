@@ -2,13 +2,28 @@
 
 require 'config.php';
 
+var_dump($_POST);
 $forms = [];
 $submissions = [];
 $searches = [];
 
-$searchterms = array(
-	$_POST['fieldname'] => $_POST['searchterm']
+$name = get_form_field_by_name($_POST['formid'], $_POST['fieldname']);
+if($name['type'] == 1){
+	$searchterms = array(
+	$_POST['fieldname'] => $_POST['searchtext']
 );
+}
+if($name['type'] == 2){
+	$searchterms = array(
+	$_POST['fieldname'] => $_POST['searchcheck']
+);
+}
+if($name['type'] == 3){
+	$searchterms = array(
+	$_POST['fieldname'] => $_POST['searchdate']
+);
+}
+var_dump($searchterms);
 $searches = search_form_submissions($_POST['formid'], $searchterms);
 
 if($searches == false){

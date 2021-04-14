@@ -9,18 +9,19 @@
 	<label for="{{field.fieldname}}"> Choose a field:</label>
 	<select name="fieldname" onchange='setFieldVisibility(this);'>
 	{% for field in fields %}
-		<option value="{{field.fieldname}}" data-type="{{formfield.type}}">{{field.fieldname}}</option>
+		<option value="{{field.fieldname}}" data-type="{{field.type}}">{{field.fieldname}}</option>
 	{% endfor %}
-	<div id="text" style="visibility: hidden;">
-		<input type="text" placeholder="..." name="searchterm">
+	<span id="text" style="display: none;">
+		<input type="text" placeholder="..." name="searchtext" id="text">
 		
-	</div>
-	<div id="checkbox" style="visibility: hidden;">
-		<input type="checkbox" name="searchterm" placeholder=" ">
-	</div>
-	<div id="date" style="visibility: hidden;">
-		<input type="date" name="searchterm" placeholder=" ">
-	</div>
+	</span>
+	<span id="checkbox" style="display: none;">
+		<input type="checkbox" name="searchcheck" placeholder=" " id="checkbox" value="1">
+		<input type="hidden" name="searchcheck" id="checkbox" value="0">
+	</span>
+	<span id="date" style="display: none">
+		<input type="date" name="searchdate" placeholder=" " id="date">
+	</span>
 	<input type="submit" value="Submit">
 		
 	<input type='hidden' name='formid' value='{{form}}'>
@@ -31,27 +32,29 @@
 
 <script type='text/javascript'>
 
-function setFieldVisability(selected){
-	var type = document.data('type');
+function setFieldVisibility(selected){
+	var type = selected.options[selected.selectedIndex].dataset.type;
+	console.log(type);
 	//textbox
 	if(type == 1){
-		document.type('text').style.visibility="visible";
-		document.type('checkbox').style.visibility="hidden";
-		document.type('date').style.visibility="hidden";
+		document.getElementById('text').style.display="inline";
+		document.getElementById('checkbox').style.display="none";
+		document.getElementById('date').style.display="none";
 	}
 	//checkbox
 	else if(type == 2){
-		document.type('text').style.visibility="hidden";
-		document.type('checkbox').style.visibility="visible";
-		document.type('date').style.visibility="hidden";
+		document.getElementById('text').style.display="none";
+		document.getElementById('checkbox').style.display="inline";
+		document.getElementById('date').style.display="none";
 	}
 	//date
 	else if(type == 3){
-		document.type('text').style.visibility="hidden";
-		document.type('checkbox').style.visibility="hidden";
-		document.type('date').style.visibility="visible";
+		document.getElementById('text').style.display="none";
+		document.getElementById('checkbox').style.display="none";
+		document.getElementById('date').style.display="inline";
 	
 	}
+}
 	
 </script>
 
