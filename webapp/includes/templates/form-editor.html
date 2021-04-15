@@ -71,9 +71,11 @@
 					<p>Visible to sites?</p>
 				</div>
 			</div>			
+			
 			<input type="submit" name="editForm" value="Submit changes">
-				
 			</form>
+			
+			<center><button class="deletebtnForm" onclick="document.getElementById('id01').style.display='block'">Delete form</button></center>
 		</div>
 	
 	</div>
@@ -91,7 +93,7 @@
 		<div class="formCreator">
 			
 			<form action="form-editor.php?form={{form.id}}" method="post">
-			<p> Type </p> <br> <select name="type" value="{{field.type}}">
+			<p> Type </p> <br> <select id="typeSelect" name="type" value="{{field.type}}" onchange="setSizeVisibility(this);">
 
 			{% for type in types %}
 			<option value="{{type.id}}"> {{type.name}} </option>
@@ -102,7 +104,7 @@
 			<input type="text" name="label" placeholder="Label">
 			<input type="text" name="order" placeholder="Order">
 			<input type="text" name="name" placeholder="Name">
-			<input type="text" name="size" placeholder="Size">
+			<input type="text" id="size" name="size" placeholder="Size">
 			
 			<br>
 			
@@ -142,15 +144,17 @@
 			{% for field in fields %}
 			
 				<!-- Change order of formfield -->
-				<form>
+				<form action="form-editor.php?form={{form.id}}" method="post" style="margin: 0px; display:inline;">
 					<input type="hidden" name="fieldOrder" value="{{field.order}}">
 					
 					{% if field.order < fields|length %}
-						<input type="submit" class="orderButton" name="orderDown" value="v">
+						<input type="submit" style="margin: 0px; width: 20px; font-size: .7em; padding: 0px;" 
+						name="orderDown" value="v">
 					{% endif %}
 					
 					{% if field.order > 1 %}
-						<input type="submit" class="orderButton" name="orderUp" value="^">
+						<input type="submit" style="margin: 0px; width: 20px; font-size: .7em;padding: 0px;" 
+						name="orderUp" value="^">
 					{% endif %}
 				</form>
 				
@@ -163,6 +167,22 @@
 		</div>
 	</div>
 	
+	</div>
+	
+	<!-- Deletion confirmation -->
+	<div id="id01" class="modal">
+	  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+	  <form class="modal-content" action="form-editor.php?form={{form.id}}" method="post">
+		<div class="container">
+		  <h1 style="color:black;">Delete Form "{{form.name}}"</h1>
+		  <p style="color:black;">Are you sure you want to delete this form?</p>
+
+		  <div class="clearfix">
+			<button type="button" class="cancelbtn" onclick="document.getElementById('id01').style.display='none'">Cancel</button>
+			<button type="submit" name="delete" class="deletebtn" value="Delete"> Delete </button>
+		  </div>
+		</div>
+	  </form>
 	</div>
 	
 <script type="text/javascript">
@@ -199,11 +219,24 @@ function setFieldVisibility(selected) {
 	}
 }
 
+function setSizeVisibility(selected) {
+	if (selected.value == 1) {
+		document.getElementById("size").style.visibility = "visible";
+	}
+	else {
+		document.getElementById("size").style.visibility = "hidden";
+	}
+}
+
 function load() {
-	var startingRole = document.getElementById("roleSelect")
-	var selected = startingRole.options[startingRole.selectedIndex];
+	var startingRole = document.getElementById("roleSelect");
+	var startingFieldType = document.getElementById("typeSelect");
 	
-	setFieldVisibility(selected);
+	var selectedRole = startingRole.options[startingRole.selectedIndex];
+	var selectedType = startingFieldType.options[startingFieldType.selectedIndex];
+	
+	setFieldVisibility(selectedRole);
+	setSizeVisibility(selectedType);
 }
 
 function setSiteVisibility(selected) {

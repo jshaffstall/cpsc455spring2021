@@ -12,7 +12,11 @@ $sites = get_sites();
 $roles = get_roles();
 $currentRole = null;
 
-if (isset($_POST['editForm'])) {
+if (isset($_POST['delete'])) {
+	delete_form($formId);
+	header("Location: form-creator.php");
+}
+else if (isset($_POST['editForm'])) {
 	editForm();
 } 
 else if (isset($_POST['submitField'])) {
@@ -24,12 +28,27 @@ else if (isset($_POST['delete'])) {
 	header("Location: form-creator.php");
 }
 else if (isset($_POST['orderDown'])) {
-	$fieldOrder = $_POST['fieldOrder'];
-	// add 1 to field with fieldOrder, subtract 1 from field with fieldOrder+1
+	$formId = $_GET["form"];
+
+	$order = $_POST['fieldOrder'];
+	
+	$formfield1 = get_form_field_by_order($formId, $order);
+	$formfield2 = get_form_field_by_order($formId, $order+1);
+	
+	update_form_field_order($formfield1['id'], $order+1);
+	update_form_field_order($formfield2['id'], $order);
+	
 }
 else if (isset($_POST['orderUp'])) {
-	$fieldOrder = $_POST['fieldOrder'];
-	// subtract 1 to field with fieldOrder, add 1 from field with fieldOrder+1
+	$formId = $_GET["form"];
+	
+	$order = $_POST['fieldOrder'];
+	
+	$formfield1 = get_form_field_by_order($formId, $order);
+	$formfield2 = get_form_field_by_order($formId, $order-1);
+	
+	update_form_field_order($formfield1['id'], $order-1);
+	update_form_field_order($formfield2['id'], $order);
 }
 
 if ($form) {
