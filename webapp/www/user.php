@@ -3,10 +3,15 @@
 require 'config.php';
 
 $userid = $_GET['id'];
-$user = get_user_by_id ($userid);
-echo $twig->render('user.html', ['user' => $user]);
+$currentUser = get_user_by_id ($userid);
+echo $twig->render('user.html', ['user' => $currentUser]);
 
 if (isset($_POST['delete'])) {
-	delete_user($userid);
-	header("Location: users.php");
+	if ($userid == $user['id']) {
+		echo "You cannot delete yourself";
+	}
+	else {
+		delete_user($userid);
+		header("Location: users.php");
+	}
 }

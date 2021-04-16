@@ -36,7 +36,7 @@ function updateFormfield() {
 	$type = $_POST["type"];
 	$label = $_POST["label"];
 	$required = $_POST["required"];
-	$order = $_POST["order"];
+	$order = $formfield["order"];
 	$name = $_POST["name"];
 	$eol = $_POST["eol"];
 	$size = $_POST["size"];

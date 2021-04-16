@@ -96,13 +96,12 @@ function addFormField() {
 	$type = $_POST["type"];
 	$label = $_POST["label"];
 	$required = $_POST["required"];
-	$order = $_POST["order"];
 	$name = $_POST["name"];
 	$eol = $_POST["eol"];
 	$size = $_POST["size"];
 	
 	//todo error checking
-	add_form_field ($formId, $type, $label, $order, $name, $eol, $size, $required);
+	add_form_field ($formId, $type, $label, $name, $eol, $size, $required);
 	
 	// refresh page to show new field
 	header("Location: form-editor.php?form=$formId");

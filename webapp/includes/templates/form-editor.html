@@ -102,7 +102,6 @@
 			</select>
 
 			<input type="text" name="label" placeholder="Label">
-			<input type="text" name="order" placeholder="Order">
 			<input type="text" name="name" placeholder="Name">
 			<input type="text" id="size" name="size" placeholder="Size">
 			
@@ -144,9 +143,9 @@
 			{% for field in fields %}
 			
 				<!-- Change order of formfield -->
+				
 				<form action="form-editor.php?form={{form.id}}" method="post" style="margin: 0px; display:inline;">
 					<input type="hidden" name="fieldOrder" value="{{field.order}}">
-					
 					{% if field.order < fields|length %}
 						<input type="submit" style="margin: 0px; width: 20px; font-size: .7em; padding: 0px;" 
 						name="orderDown" value="v">
