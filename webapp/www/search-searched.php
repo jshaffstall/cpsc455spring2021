@@ -32,6 +32,7 @@ else{
 		$form = get_form_by_id($search['formid']);
 		$user = get_user_by_id($search['user']);
 		$submissions[] = ['name' => $form['name'], 'id' => $search['id'], 'user' => $user['name'], 'email' =>$user['email']];
+		var_dump($search);
 	
 	}
 }
