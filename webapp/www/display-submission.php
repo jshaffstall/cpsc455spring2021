@@ -11,6 +11,7 @@ if(! isset($_GET['submission'])){
 
 $submitted = get_form_submission_by_id($_GET['submission']);
 $student = [];
+$form = [];
 
 $submissions = array();
 
