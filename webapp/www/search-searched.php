@@ -2,7 +2,6 @@
 
 require 'config.php';
 
-var_dump($_POST);
 $forms = [];
 $submissions = [];
 $searches = [];
@@ -23,7 +22,6 @@ if($name['type'] == 3){
 	$_POST['fieldname'] => $_POST['searchdate']
 );
 }
-var_dump($searchterms);
 $searches = search_form_submissions($_POST['formid'], $searchterms);
 
 if($searches == false){
