@@ -5,7 +5,7 @@ require 'config.php';
 $forms = [];
 $submissions = [];
 $searches = [];
-
+var_dump($_POST);
 $name = get_form_field_by_name($_POST['formid'], $_POST['fieldname']);
 if($name['type'] == 1){
 	$searchterms = array(
