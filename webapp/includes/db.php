@@ -472,12 +472,26 @@ function delete_form_field($formfield)
 {
 	global $pdo;
 	
+	$field = get_form_field($formfield);
+	
+	if (! $field)
+		return;
+	
     $sql = "DELETE FROM formfields where id=:id";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':id', $formfield);
     
     $stmt->execute();
+	
+	$sql = "UPDATE formfields SET `order` = `order` - 1 WHERE `order` > :order and form = :form";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':order', $field['order']);
+    $stmt->bindValue(':form', $field['form']);
+    
+    $stmt->execute();
+	
 }
 
 function update_form($form, $name, $roleid, $forstudent, $sitevisible=false, $siteid=null)
