@@ -436,7 +436,7 @@ function get_form_field_by_order($formid, $order)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function add_form_field ($form, $type, $label, $order, $name, $eol=True, $size=20, $required=0)
+function add_form_field ($form, $type, $label, $name, $eol=True, $size=20, $required=0)
 {
     global $pdo;
 
