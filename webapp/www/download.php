@@ -2,7 +2,7 @@
 
 require 'config.php';
 
-if (isset($_GET['id']))
+if (isset($_GET['id']) && $user)
 {
 	$submission = get_field_submission($_GET['id']);
 	

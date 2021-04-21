@@ -4,7 +4,7 @@ require 'config.php';
 
 // $_GET['submission'] is the id of the submission to display
 
-if(! isset($_GET['submission'])){
+if(! $user || ! isset($_GET['submission'])){
     header("Location: index.php");
 	exit();
 }
@@ -19,7 +19,41 @@ if ($submitted)
 {
     $student = get_user_by_id($submitted['user']);
     $form = get_form_by_id($submitted['formid']);
+	
+	if ($user['role'] == 2)
+	{
+		// Students should be able to see forms they submitted, or admin forms
+		// For any other forms, redirect them to the home page
+		if ($submitted['user'] != $user['id'] && $form['roleid'] != 1)
+		{
+			header("Location: index.php");
+			exit();
+		}
+	}
     
+	if ($user['role'] == 3)
+	{
+		// Site owners should be able to see forms for their site, or admin forms
+		// For any other forms, redirect them to the home page
+		$sitematch = False;
+		
+		$sites = get_sites_for_user($user['id']);
+		
+		foreach ($sites as $site)
+		{
+			if ($site['id'] == $submitted['siteid'])
+				$sitematch = True;
+		}
+		
+		if (! $sitematch && $form['roleid'] != 1)
+		{
+			header("Location: index.php");
+			exit();
+		}
+	}
+	
+	// Admins can see any forms, so no need to check for them
+	
 	$temp = get_field_submissions($submitted['id']);
 	
 	foreach ($temp as $field)
