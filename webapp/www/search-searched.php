@@ -1,7 +1,8 @@
 <?php
 
 require 'config.php';
-
+if(!($user && $user['role'] == 1))
+{
 $forms = [];
 $submissions = [];
 $searches = [];
@@ -36,4 +37,5 @@ else{
 	}
 }
 	echo $twig->render('search-searched.html',['formid' => $_POST['formid'],'searches' => $submissions, 'name' =>$forms]);
+}
 ?>
