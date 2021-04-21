@@ -3,11 +3,22 @@ global $twig;
 global $form;
 require 'config.php';
 
+if (! ($user && $user['role'] == 1))
+{
+    header ("Location: index.php");
+    exit();
+}
+
 // get form info
 $siteName = $_GET["site"];
 $site = get_site($siteName);
 
-if ($site) {
+if (isset($_POST['delete'])) {
+	delete_site($site['id']);
+	header("Location: admin-create-field-site.php");
+}
+
+else if ($site) {
 	$webpage = $twig->render('site-editor.html',['site' => $site]);
 	echo "$webpage";
 }

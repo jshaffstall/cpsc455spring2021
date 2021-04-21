@@ -1,6 +1,12 @@
 <?php
 require 'config.php';
 
+if (! ($user && $user['role'] == 1))
+{
+    header ("Location: index.php");
+    exit();
+}
+
 /* 
 *	Returns the name and id of all student users and site users in a site
 */

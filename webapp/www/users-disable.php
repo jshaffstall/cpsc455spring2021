@@ -2,6 +2,12 @@
 
 require 'config.php';
 
+if (! ($user && $user['role'] == 1))
+{
+    header ("Location: index.php");
+    exit();
+}
+
 // show enabled users so that we can disable them
 $enabledUsers = get_users();
 

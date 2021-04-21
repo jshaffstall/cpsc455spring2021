@@ -2,6 +2,12 @@
 
 require 'config.php';
 
+if (! ($user && $user['role'] == 1))
+{
+    header ("Location: index.php");
+    exit();
+}
+
 $userid = $_GET['id'];
 $currentUser = get_user_by_id ($userid);
 echo $twig->render('user.html', ['user' => $currentUser]);

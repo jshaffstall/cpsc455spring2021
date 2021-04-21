@@ -1,6 +1,13 @@
 <?php
 
 require 'config.php';
+
+if (! ($user && $user['role'] == 1))
+{
+    header ("Location: index.php");
+    exit();
+}
+
 global $message;
 $userid = $_GET['id'];
 $user = get_user_by_id($userid);

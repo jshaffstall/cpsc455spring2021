@@ -2,7 +2,14 @@
 global $twig;
 global $form;
 global $formId;
+global $message;
 require 'config.php';
+
+if (! ($user && $user['role'] == 1))
+{
+    header ("Location: index.php");
+    exit();
+}
 
 // get form info
 $formId = $_GET["form"];
@@ -20,7 +27,14 @@ else if (isset($_POST['editForm'])) {
 	editForm();
 } 
 else if (isset($_POST['submitField'])) {
-	addFormField();
+	$name = $_POST["name"];
+	$label = $_POST["label"];
+	if (error($name, $label) != "") {
+
+	}
+	else {
+		addFormField();
+	}
 }
 else if (isset($_POST['delete'])) {
 	delete_form($formId);
@@ -56,12 +70,26 @@ if ($form) {
 	$formFields = $formFields->fetchAll();
 	$currentRole = $form["roleid"];
 	
-	$webpage = $twig->render('form-editor.html',['form' => $form, 'types' => $types, 'fields' => $formFields, 'roles' => $roles, 'sites' => $sites]);
+	$webpage = $twig->render('form-editor.html',['form' => $form, 'types' => $types, 'fields' => $formFields, 'roles' => $roles, 'sites' => $sites, 'message' => $message]);
 	echo "$webpage";
 }
 else {
 	// TODO echo webpage with error
 	echo "Form does not exist";
+}
+
+function error($name, $label) {
+	if ($name == "") {
+		global $message;
+		$message = "Name cannot be empty";
+	}
+	else if ($label == "") {
+		global $message;
+		$message = "Label cannot be empty";		
+	}
+	else {
+		return "";
+	}
 }
 
 function editForm() {
