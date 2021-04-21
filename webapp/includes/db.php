@@ -436,7 +436,7 @@ function get_form_field_by_order($formid, $order)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function add_form_field ($form, $type, $label, $order, $name, $eol=True, $size=20, $required=0)
+function add_form_field ($form, $type, $label, $name, $eol=True, $size=20, $required=0)
 {
     global $pdo;
 
@@ -472,12 +472,26 @@ function delete_form_field($formfield)
 {
 	global $pdo;
 	
+	$field = get_form_field($formfield);
+	
+	if (! $field)
+		return;
+	
     $sql = "DELETE FROM formfields where id=:id";
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':id', $formfield);
     
     $stmt->execute();
+	
+	$sql = "UPDATE formfields SET `order` = `order` - 1 WHERE `order` > :order and form = :form";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindValue(':order', $field['order']);
+    $stmt->bindValue(':form', $field['form']);
+    
+    $stmt->execute();
+	
 }
 
 function update_form($form, $name, $roleid, $forstudent, $sitevisible=false, $siteid=null)
@@ -894,7 +908,7 @@ function search_form_submissions ($formid, $searchterms)
 {
     global $pdo;
 
-	$sql = "SELECT DISTINCT * FROM formsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id INNER JOIN fieldsubmissions ON formsubmissions.id = fieldsubmissions.formsubmissionid WHERE forms.archived=0 AND users.disabled = 0 AND formsubmissions.formid=:formid ";
+	$sql = "SELECT DISTINCT formsubmissions.* FROM formsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id INNER JOIN fieldsubmissions ON formsubmissions.id = fieldsubmissions.formsubmissionid WHERE forms.archived=0 AND users.disabled = 0 AND formsubmissions.formid=:formid ";
 	$searches = "";
 	
 	foreach ($searchterms as $name => $value)
