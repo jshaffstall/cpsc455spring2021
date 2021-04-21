@@ -33,7 +33,8 @@ if ($submitted)
     
 	if ($user['role'] == 3)
 	{
-		// Site owners should be able to see forms for their site, or admin forms
+		// Site owners should be able to see forms for their site, or admin forms,
+		// or student forms that are visible to sites for students that are assigned to their site
 		// For any other forms, redirect them to the home page
 		$sitematch = False;
 		
@@ -41,8 +42,19 @@ if ($submitted)
 		
 		foreach ($sites as $site)
 		{
+			if ($sitematch)
+				break;
+			
 			if ($site['id'] == $submitted['siteid'])
 				$sitematch = True;
+			
+			$students = get_users_for_site($site['id'], 2);
+			
+			foreach ($students as $student)
+			{
+				if ($student['id'] == $submitted['user'] && $form['sitevisible'])
+					$sitematch = True;
+			}
 		}
 		
 		if (! $sitematch && $form['roleid'] != 1)

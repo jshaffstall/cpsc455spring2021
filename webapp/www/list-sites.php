@@ -1,7 +1,7 @@
 <?php
 
 require 'config.php';
-if(!($user && $user['role'] == 1 || $user['role'] == 2))
+if(!$user || $user['role'] == 1 || $user['role'] == 2)
 {
 	header("Location:index.php");
 	exit();
