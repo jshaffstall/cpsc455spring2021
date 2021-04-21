@@ -1,7 +1,11 @@
 <?php
 
 require 'config.php';
-
+if(!($user && $user['role'] == 1))
+{
+	header("Location:index.php");
+	exit();
+}
 $students = [];
 $siteid = False;
 

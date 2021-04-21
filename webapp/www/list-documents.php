@@ -1,6 +1,11 @@
 <?php
 
 require 'config.php';
+if(! $user)
+{
+	header("Location:index.php");
+	exit();
+}
 
 $forms = [];
 
