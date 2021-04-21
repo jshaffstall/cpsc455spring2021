@@ -1,6 +1,12 @@
 <?php
 require 'config.php';
 
+if (! ($user && $user['role'] == 1))
+{
+    header ("Location: index.php");
+    exit();
+}
+
 $roles = get_roles();
 $submitted = false;
 

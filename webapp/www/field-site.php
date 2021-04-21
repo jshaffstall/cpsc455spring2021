@@ -2,6 +2,12 @@
 
 require 'config.php';
 
+if (! ($user && $user['role'] == 1))
+{
+    header ("Location: index.php");
+    exit();
+}
+
 $siteName = $_GET['site'];
 $site = get_site($siteName);
 echo $twig->render('field-site.html', ['site' => $site]);

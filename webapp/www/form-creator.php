@@ -1,5 +1,12 @@
 <?php
 global $twig;
+
+if (! ($user && $user['role'] == 1))
+{
+    header ("Location: index.php");
+    exit();
+}
+
 require 'config.php';
 $forms = get_forms();
 $roles = get_roles();
