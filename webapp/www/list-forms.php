@@ -3,6 +3,9 @@
 require 'config.php';
 if(! $user)
 {
+	header("Location:index.php");
+	exit();
+}
 // $_GET['siteid'] is the id of the site, if these forms are part of a site.  If not present, these forms are generic student forms.
 
 $forms = [];
@@ -27,5 +30,5 @@ if ($user)
 }
 
 echo $twig->render('list-forms.html',['forms' => $forms, 'siteid' => $siteid]);
-}
+
 ?>

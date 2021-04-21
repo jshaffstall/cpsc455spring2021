@@ -1,8 +1,11 @@
 <?php
 
 require 'config.php';
-if(! $user)
+if(!$user)
 {
+	header("Location:index.php");
+	exit();
+}
 // $_GET['formid'] is the id of the form to display
 // $_GET['siteid'] is the id of the site, if this form is being submitted for a particular site
 
@@ -65,5 +68,5 @@ $fields = get_form_fields($_GET['form']);
 
 echo $twig->render('display-form.html',['fields' => $fields, 'types' => $types, 'form' => $_GET['form'], 'submissions' => $submissions, 'errors' => $errors, 'siteid' => $siteid]);
 
-}
+
 ?>
