@@ -12,12 +12,12 @@
 		<option value="{{field.fieldname}}" data-type="{{field.type}}">{{field.fieldname}}</option>
 	{% endfor %}
 	<span id="text" style="display: none;">
-		<input type="text" placeholder="..." name="searchtext" id="text">
+		<input type="text" placeholder="Search..." name="searchtext" id="text">
 		
 	</span>
 	<span id="checkbox" style="display: none;">
-		<input type="checkbox" name="searchcheck" placeholder=" " id="checkbox" value="1">
-		<input type="hidden" name="searchcheck" id="checkbox" value="0">
+		<input type="hidden" name="searchcheck" value="0">
+		<input type="checkbox" name="searchcheck" placeholder=" " value="1">
 	</span>
 	<span id="date" style="display: none">
 		<input type="date" name="searchdate" placeholder=" " id="date">
@@ -31,7 +31,7 @@
 </div>
 
 <script type='text/javascript'>
-
+window.on("load" , setFieldVisibility)
 function setFieldVisibility(selected){
 	var type = selected.options[selected.selectedIndex].dataset.type;
 	console.log(type);
@@ -55,6 +55,7 @@ function setFieldVisibility(selected){
 	
 	}
 }
+document.ready(setFieldVisibility);
 	
 </script>
 

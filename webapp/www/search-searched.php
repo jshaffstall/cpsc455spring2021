@@ -1,11 +1,14 @@
 <?php
 
 require 'config.php';
-
+if(!($user && $user['role'] == 1))
+{
+	header("Location:index.php");
+	exit();
+}
 $forms = [];
 $submissions = [];
 $searches = [];
-
 $name = get_form_field_by_name($_POST['formid'], $_POST['fieldname']);
 if($name['type'] == 1){
 	$searchterms = array(
@@ -36,4 +39,5 @@ else{
 	}
 }
 	echo $twig->render('search-searched.html',['formid' => $_POST['formid'],'searches' => $submissions, 'name' =>$forms]);
+
 ?>

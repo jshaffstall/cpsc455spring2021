@@ -908,7 +908,7 @@ function search_form_submissions ($formid, $searchterms)
 {
     global $pdo;
 
-	$sql = "SELECT DISTINCT * FROM formsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id INNER JOIN fieldsubmissions ON formsubmissions.id = fieldsubmissions.formsubmissionid WHERE forms.archived=0 AND users.disabled = 0 AND formsubmissions.formid=:formid ";
+	$sql = "SELECT DISTINCT formsubmissions.* FROM formsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id INNER JOIN fieldsubmissions ON formsubmissions.id = fieldsubmissions.formsubmissionid WHERE forms.archived=0 AND users.disabled = 0 AND formsubmissions.formid=:formid ";
 	$searches = "";
 	
 	foreach ($searchterms as $name => $value)

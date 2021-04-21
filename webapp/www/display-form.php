@@ -1,7 +1,11 @@
 <?php
 
 require 'config.php';
-
+if(!$user)
+{
+	header("Location:index.php");
+	exit();
+}
 // $_GET['formid'] is the id of the form to display
 // $_GET['siteid'] is the id of the site, if this form is being submitted for a particular site
 
