@@ -7,7 +7,7 @@
 <div>
 	<form action="./search-searched.php" method="POST">
 	<label for="{{field.fieldname}}"> Choose a field:</label>
-	<select name="fieldname" onchange='setFieldVisibility(this);'>
+	<select name="fieldname" onchange='setFieldVisibility(this);' id='select'>
 	{% for field in fields %}
 		<option value="{{field.fieldname}}" data-type="{{field.type}}">{{field.fieldname}}</option>
 	{% endfor %}
@@ -31,7 +31,7 @@
 </div>
 
 <script type='text/javascript'>
-window.on("load" , setFieldVisibility)
+
 function setFieldVisibility(selected){
 	var type = selected.options[selected.selectedIndex].dataset.type;
 	console.log(type);
@@ -55,7 +55,9 @@ function setFieldVisibility(selected){
 	
 	}
 }
-document.ready(setFieldVisibility);
+window.onload = function(){
+	setFieldVisibility(document.getElementById('select'));
+};
 	
 </script>
 
