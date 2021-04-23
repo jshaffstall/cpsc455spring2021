@@ -1,4 +1,8 @@
 <h1>{{form.name}} submission for {{student.name}}</h1>
+
+<table class="generatedForm">
+{% set previouseol = true %}
+
 	{% for field in fields %}
 		{% if submissions[ field.fieldname ] is defined %}
 			{% set value = submissions[ field.fieldname ].value %}
@@ -6,14 +10,24 @@
 			{% set value = '' %}
 		{% endif %}
 		
+		{% if previouseol %}
+		<tr class="generatedRow"><td class="generatedCell">
+		{% endif %}
+		
 		{% if field.type == 1 %}
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
+			{% if previouseol %}
+			</td><td>
+			{% endif %}
 			<input class="generatedForm" type="text" name="{{field.fieldname}}" size="{{field.size}}" value="{{value}}" disabled>
 			{% if field.eol %}
 				<br>
 			{% endif %}
 		{% endif %}
 		{% if field.type == 2 %}
+			{% if previouseol %}
+			</td><td>
+			{% endif %}
 			<input type="hidden" name="{{field.fieldname}}" value="0">
 			<input type="checkbox" name="{{field.fieldname}}" value="1" {% if value %}checked{% endif %} disabled>
 			<label class="generatedForm" for="{{field.fieldname}}"> {{field.label}} </label>
@@ -23,6 +37,9 @@
 		{% endif %}
 		{% if field.type == 3 %}
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
+			{% if previouseol %}
+			</td><td>
+			{% endif %}
 			<input class="generatedForm" type="date" name="{{field.fieldname}}" value="{% if value %}{{value|date('Y-m-d')}}{% endif %}" disabled>
 			{% if field.eol %}
 				<br>
@@ -30,7 +47,9 @@
 		{% endif %}
 		{% if field.type == 4 %}
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
-			<input class="generatedForm" type="file" name="{{field.fieldname}}" disabled>
+			{% if previouseol %}
+			</td><td>
+			{% endif %}
 			{% if value %}
 			Submitted File: <a href="download.php?id={{submissions[ field.fieldname ].id}}">{{value}}</a>
 			{% endif %}
@@ -38,4 +57,13 @@
 				<br>
 			{% endif %}
 		{% endif %}
+		
+		{% if field.eol %}
+			</td></tr>
+			{% set previouseol = true %}
+		{% else %}
+			{% set previouseol = false %}
+		{% endif %}
 	{% endfor %}
+
+</table>
