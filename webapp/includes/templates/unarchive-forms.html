@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Archive Forms{% endblock %}
+{% block title %}Unarchive Forms{% endblock %}
 {% block content %}
 
 <div id="sidebar" style="float: none;">
 	<table>
 	  <tr>
-		<td><a href="unarchive-forms.php"> &lt Unarchive forms </a></td>
+		<td><a href="archive-forms.php"> &lt Archive forms </a></td>
 	  </tr>
 	</table>
 </div>
@@ -14,20 +14,20 @@
 
 <div class="mainContentTop">
 	<center>
-	<h2> Archive forms </h2>
+	<h2> Unarchive forms </h2>
 	</center>
 </div>
 
 <div class="mainContent">
-	<form action="archive-forms.php" method="post">
+	<form action="unarchive-forms.php" method="post">
 		{% for form in forms %}
-			<input type="hidden" value="0"> <input type ="checkbox" name="formsToArchive[]" value="{{form.id}}">
+			<input type="hidden" value="0"> <input type ="checkbox" name="formsToUnarchive[]" value="{{form.id}}">
 			<a href="form-editor.php?form={{form.id}}"> {{form.name}} </a>
 			<br>
 		{% else %}
 			<p> No forms found. </p>
 		{% endfor %}
-		<input type="submit" value="Archive Selected Forms" name="submitArchiveForms">
+		<input type="submit" value="Unarchive Selected Forms" name="submitUnarchiveForms">
 	</form>
 </div>
 

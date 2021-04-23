@@ -2,7 +2,7 @@
 
 require 'config.php';
 
-
+$error = null;
 if(isset($_POST['email'])){
 	$email = $_POST['email'];
 	$password = $_POST['password'];
@@ -16,10 +16,10 @@ if(isset($_POST['email'])){
 		exit();
 	}
 	else{
-		print("Email/Password combination not found");
+		$error = "Email/Password combination not found";
 	}
 }
 
-echo $twig->render('login.html',['user' => $user]);
+echo $twig->render('login.html',['user' => $user , 'error' => $error]);
 
 ?>

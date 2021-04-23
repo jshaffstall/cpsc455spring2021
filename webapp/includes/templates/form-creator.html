@@ -3,81 +3,73 @@
 {% block title %}Form Creator{% endblock %}
 {% block content %}
 
-<!DOCTYPE html>
-<html>
-<head>
-<title> View Forms </title>
-</head>
+<div class="formCreatorTop">
+	<center>
+	<h2> Create form </h2>
+	</center>
+</div>
 
-<body>
-
-	<div class="formCreatorTop">
-		<center>
-		<h2> Create form </h2>
-		</center>
-	</div>
-	
-	<div class="formCreator">
-		<form action="form-creator.php" method="post">
-			<input placeholder="Form name" type="text" name="form">
+<div class="formCreator">
+	<form action="form-creator.php" method="post">
+		<input placeholder="Form name" type="text" name="form">
+		
+		<select name="role" onchange="setFieldVisibility(this);">
+			<option value="none" selected disabled hidden>
+				Select a role
+			</option>	
 			
-			<select name="role" onchange="setFieldVisibility(this);">
-				<option value="none" selected disabled hidden>
-					Select a role
-				</option>	
-				
-				{% for role in roles %}
-					<option value="{{role.id}}"> {{role.name}} </option>
-				{% endfor %}
-			</select>
-			
-			<div id="forStudents" style="visibility: hidden;">
-				<input type="hidden" name="forStudent" value="0" onchange="setSiteVisibility(this);"> 
-				<input type ="checkbox" id="forStudentsCheckbox" name="forStudent" value="1" onchange="setSiteVisibility(this);"> 
-				<div>
-					<p>For students?</p>
-				</div>
-				<br>
+			{% for role in roles %}
+				<option value="{{role.id}}"> {{role.name}} </option>
+			{% endfor %}
+		</select>
+		
+		<div id="forStudents" style="visibility: hidden;">
+			<input type="hidden" name="forStudent" value="0" onchange="setSiteVisibility(this);"> 
+			<input type ="checkbox" id="forStudentsCheckbox" name="forStudent" value="1" onchange="setSiteVisibility(this);"> 
+			<div>
+				<p>For students?</p>
 			</div>
-			
-			<div id="siteDropdown" style="visibility: hidden;">
-			<p> Site </p>
-			<select id="siteDropdown" name="siteId">
-				{% for site in sites %}
-					<option value="{{site.id}}"> {{site.name}} </option>
-				{% else %}
-					<option> No sites found </option>
-				{% endfor %}
-			</select>
+			<br>
+		</div>
+		
+		<div id="siteDropdown" style="visibility: hidden;">
+		<p> Site </p>
+		<select id="siteDropdown" name="siteId">
+			{% for site in sites %}
+				<option value="{{site.id}}"> {{site.name}} </option>
+			{% else %}
+				<option> No sites found </option>
+			{% endfor %}
+		</select>
+		</div>
+		
+		<br>
+		
+		<div id="siteVisible" style="visibility: hidden;">
+			<input type="hidden" name="siteVisible" value="0"> 
+			<input type ="checkbox" id="visibleToSitesCheckbox" name="siteVisible" value="1"> 
+			<div>
+				<p>Visible to sites?</p>
 			</div>
-			
-			<br>
-			
-			<div id="siteVisible" style="visibility: hidden;">
-				<input type="hidden" name="siteVisible" value="0"> 
-				<input type ="checkbox" id="visibleToSitesCheckbox" name="siteVisible" value="1"> 
-				<div>
-					<p>Visible to sites?</p>
-				</div>
-			</div>			
-			<input type="submit" name="submit" value="Create form">
-		</form>
-	</div>
-	
-	<div class="mainContentTop contentWithSidebar" style="margin-top: -26px">
-		<center>
-		<h2 style="font-size:1.0em; margin: 2px;"> Edit forms </h2>
-		</center>
-	</div>
+		</div>			
+		<input type="submit" name="submit" value="Create form">
+	</form>
+</div>
 
-	<div class="mainContent contentWithSidebar" style="min-height: 274px">
-		{% for form in forms %}
-			<a href="form-editor.php?form={{form.id}}">{{form.name}}</a>
-			<br>
-		{% else %}
-			No forms found.
-		{% endfor %}
-	</div>
+<div class="mainContentTop contentWithSidebar" style="margin-top: -26px">
+	<center>
+	<h2 style="font-size:1.0em; margin: 2px;"> Edit forms </h2>
+	</center>
+</div>
+
+<div class="mainContent contentWithSidebar" style="min-height: 274px">
+	{% for form in forms %}
+		<a href="form-editor.php?form={{form.id}}">{{form.name}}</a>
+		<br>
+	{% else %}
+		No forms found.
+	{% endfor %}
+</div>
 
 <script type="text/javascript">
 
@@ -119,7 +111,5 @@ function setSiteVisibility(selected) {
 	}
 }
 </script>
-</body>
-</html>
 
 {% endblock %}
