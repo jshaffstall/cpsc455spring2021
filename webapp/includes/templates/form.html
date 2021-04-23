@@ -3,6 +3,8 @@
 <p class="error">{{error}}</p>
 {% endfor %}
 
+<table class="generatedForm">
+{% set previouseol = true %}
 <form class="generatedForm" enctype="multipart/form-data" method ='POST'>
 	{% for field in fields %}
 		{% if submissions[ field.fieldname ] is defined %}
@@ -11,39 +13,51 @@
 			{% set value = '' %}
 		{% endif %}
 		
+		{% if previouseol %}
+		<tr class="generatedRow"><td class="generatedCell">
+		{% endif %}
+		
 		{% if field.type == 1 %}
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
-			<input class="generatedForm" type="text" name="{{field.fieldname}}" size="{{field.size}}" value="{{value}}">
-			{% if field.eol %}
-				<br>
+			{% if previouseol %}
+			</td><td>
 			{% endif %}
+			<input class="generatedForm" type="text" name="{{field.fieldname}}" size="{{field.size}}" value="{{value}}">
 		{% endif %}
 		{% if field.type == 2 %}
+			{% if previouseol %}
+			</td><td>
+			{% endif %}
 			<input type="hidden" name="{{field.fieldname}}" value="0">
 			<input type="checkbox" name="{{field.fieldname}}" value="1" {% if value %}checked{% endif %}>
 			<label class="generatedForm" for="{{field.fieldname}}"> {{field.label}} </label>
-			{% if field.eol %}
-				<br>
-			{% endif %}
 		{% endif %}
 		{% if field.type == 3 %}
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
-			<input class="generatedForm" type="date" name="{{field.fieldname}}" value="{% if value %}{{value|date('Y-m-d')}}{% endif %}">
-			{% if field.eol %}
-				<br>
+			{% if previouseol %}
+			</td><td>
 			{% endif %}
+			<input class="generatedForm" type="date" name="{{field.fieldname}}" value="{% if value %}{{value|date('Y-m-d')}}{% endif %}">
 		{% endif %}
 		{% if field.type == 4 %}
             <input type="hidden" name="{{field.fieldname}}" value="1">
 			<label class="generatedForm" for="{{field.fieldname}}">{{field.label}}</label>
+			{% if previouseol %}
+			</td><td>
+			{% endif %}
 			<input class="generatedForm" type="file" name="{{field.fieldname}}">
 			{% if value %}
 			Submitted File: <a href="download.php?id={{submissions[ field.fieldname ].id}}">{{value}}</a>
 			{% endif %}
-			{% if field.eol %}
-				<br>
-			{% endif %}
 		{% endif %}
+		
+		{% if field.eol %}
+			</td></tr>
+			{% set previouseol = true %}
+		{% else %}
+			{% set previouseol = false %}
+		{% endif %}
+		
 	{% endfor %}
 	<br>
 	<input type='hidden' name='formid' value='{{form}}'>
@@ -52,3 +66,4 @@
     {% endif %}
 	<input class="generatedForm"  type="submit" value = "Submit">
 	</form>
+</table>
