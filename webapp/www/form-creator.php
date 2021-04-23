@@ -1,5 +1,6 @@
 <?php
 global $twig;
+require 'config.php';
 
 if (! ($user && $user['role'] == 1))
 {
@@ -7,7 +8,6 @@ if (! ($user && $user['role'] == 1))
     exit();
 }
 
-require 'config.php';
 $forms = get_forms();
 $roles = get_roles();
 $sites = get_sites();

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Enable Users{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title> Enable Users </title>
+</head>
+
+<body>
+
+<div id="sidebar" style="float: none;">
+	<table>
+	  <tr>
+		<td><a href="users-disable.php"> Disable users </a></td>
+	  </tr>
+	</table>
+</div>
+
+<br>
+
+<div class="mainContentTop">
+	<center>
+	<h2> Archive forms </h2>
+	</center>
+</div>
+
+<div class="mainContent">
+	<form action="archive-forms.php" method="post">
+		{% for form in forms %}
+			<input type="hidden" value="0"> <input type ="checkbox" name="formsToArchive[]" value="{{form.id}}">
+			<a href="form-editor.php"> {{form.name}} </a>
+			<br>
+		{% else %}
+			<p> No forms found. </p>
+		{% endfor %}
+		<input type="submit" value="Archive Selected Forms" name="submitArchiveForms">
+	</form>
+</div>
+</body>
+
+{% endblock %}
