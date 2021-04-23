@@ -64,6 +64,13 @@
     {% if siteid %}
 	<input type='hidden' name='siteid' value='{{siteid}}'>
     {% endif %}
+	
+	{% if not field.eol %}
+		</td></tr>
+	{% endif %}
+	
+	<tr><td colspan="2">
 	<input class="generatedForm"  type="submit" value = "Submit">
+	</td></tr>
 	</form>
 </table>

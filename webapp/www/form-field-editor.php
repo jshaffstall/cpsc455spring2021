@@ -25,7 +25,7 @@ $types = get_form_field_types();
 $submitted = false;
 
 if (isset($_POST["submit"])) {
-	if (error($_POST["name"], $_POST["label"]) {
+	if (error($_POST["name"], $_POST["label"])) {
 		return;
 	}
 	
