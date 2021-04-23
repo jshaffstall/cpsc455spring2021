@@ -10,14 +10,16 @@ if (! ($user && $user['role'] == 1))
 
 $userid = $_GET['id'];
 $currentUser = get_user_by_id ($userid);
-echo $twig->render('user.html', ['user' => $currentUser]);
+$error = null;
 
 if (isset($_POST['delete'])) {
 	if ($userid == $user['id']) {
-		echo "You cannot delete yourself";
+		$error = "You cannot delete yourself";
 	}
 	else {
 		delete_user($userid);
 		header("Location: users.php");
 	}
 }
+
+echo $twig->render('user.html', ['user' => $currentUser, 'error' => $error]);
