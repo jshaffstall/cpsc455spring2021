@@ -65,8 +65,9 @@ if ($submitted)
 
 $types = get_form_field_types();
 $fields = get_form_fields($_GET['form']);
+$form = get_form_by_id($_GET['form']);
 
-echo $twig->render('display-form.html',['fields' => $fields, 'types' => $types, 'form' => $_GET['form'], 'submissions' => $submissions, 'errors' => $errors, 'siteid' => $siteid]);
+echo $twig->render('display-form.html',['fields' => $fields, 'types' => $types, 'form' => $form, 'submissions' => $submissions, 'errors' => $errors, 'siteid' => $siteid]);
 
 
 ?>

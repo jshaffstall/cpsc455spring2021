@@ -3,6 +3,7 @@
 <p class="error">{{error}}</p>
 {% endfor %}
 
+<h1>{{form.name}}</h1>
 <table class="generatedForm">
 {% set previouseol = true %}
 <form class="generatedForm" enctype="multipart/form-data" method ='POST'>
@@ -60,7 +61,7 @@
 		
 	{% endfor %}
 	<br>
-	<input type='hidden' name='formid' value='{{form}}'>
+	<input type='hidden' name='formid' value='{{form.id}}'>
     {% if siteid %}
 	<input type='hidden' name='siteid' value='{{siteid}}'>
     {% endif %}
