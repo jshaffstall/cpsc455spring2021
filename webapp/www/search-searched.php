@@ -6,6 +6,7 @@ if(!($user && $user['role'] == 1))
 	header("Location:index.php");
 	exit();
 }
+$error = null;
 $forms = [];
 $submissions = [];
 $searches = [];
@@ -28,7 +29,7 @@ if($name['type'] == 3){
 $searches = search_form_submissions($_POST['formid'], $searchterms);
 
 if($searches == false){
-	echo 'No Results Found';
+	$error = "No results found";
 }
 else{
 	foreach($searches as $search){
@@ -38,6 +39,6 @@ else{
 	
 	}
 }
-	echo $twig->render('search-searched.html',['formid' => $_POST['formid'],'searches' => $submissions, 'name' =>$forms]);
+	echo $twig->render('search-searched.html',['formid' => $_POST['formid'],'searches' => $submissions, 'name' =>$forms], 'error' => $error);
 
 ?>
