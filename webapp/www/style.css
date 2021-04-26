@@ -62,7 +62,7 @@ form {
 	margin-left: 50px;
 }
 
-input[type=text], select {
+input[type=text], input[type=text] select {
 	font-size: 1em;
 	padding: 12px 20px;
 	margin: 8px 0;
@@ -92,7 +92,7 @@ input[type=submit]:hover {
 	font-size: .8em;
 }
 
-.siteForm input[type=text], input[type=email] {
+.siteForm input[type=text], .siteForm input[type=email] {
 	width: 100%;
 	padding: 12px 20px;
 	margin: 8px 0;
@@ -171,7 +171,7 @@ input[type=submit]:hover {
 	border-radius: 8px;
 }
 
-.generatedForm input[type=email], input[type=password] {
+.generatedForm input[type=email], .generatedForm input[type=password] {
 	width: 30%;
 	padding: 12px 20px;
 	margin: 8px 0;
@@ -190,7 +190,7 @@ input[type=checkbox] {
 	overflow: hidden;
 }
 
-.compact h1, h2, h3, p {
+.compact h1, .compact h2, .compact h3, .compact p {
 	color: black;
 	margin: 10px;
 }
@@ -252,7 +252,7 @@ input[type=checkbox] {
 	overflow: auto;
 }
 
-.section h1, h2, h3, p {
+.section h1, .section h2, .section h3, .section p {
 	color: black;
 }
 
@@ -404,7 +404,7 @@ hr {
 	text-decoration: underline;
 }
 
-.mainContent h1, h2, h3, p {
+.mainContent h1, .mainContent h2, .mainContent h3, .mainContent p {
 	color: #f7e9ec;
 }
 
@@ -445,7 +445,7 @@ hr {
 	width: 182px;
 }	
 
-#sidebar table, tr {
+#sidebar table, #sidebar tr {
 	width: 182px;
 	background-color: #841c3b;
 	padding: 0px;
@@ -456,7 +456,7 @@ hr {
 	border: 3px outset black;
 }
 
-#sidebar a, h1, h2, h3, p {
+#sidebar a, #sidebar h1, #sidebar h2, #sidebar h3, #sidebar p {
 	color: #f7e9ec;
 	text-decoration: none;
 	padding: 0px;
@@ -474,6 +474,9 @@ hr {
     padding:0px 0;
 	border-bottom: none;
 	background-color: #841c3b;
+}
+.mainContentTop h1, .mainContentTop h2 {
+	color: #f7e9ec;
 }
 
 .mainContentSection {
@@ -628,6 +631,7 @@ hr {
 	padding: 0px;
 	margin: 2px;
 	font-size: 1em;
+	color: #f7e9ec;
 }
 
 .formCreatorSeparator {

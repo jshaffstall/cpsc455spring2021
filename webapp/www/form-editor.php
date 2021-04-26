@@ -2,7 +2,7 @@
 global $twig;
 global $form;
 global $formId;
-global $message;
+global $error;
 require 'config.php';
 
 if (! ($user && $user['role'] == 1))
@@ -70,7 +70,7 @@ if ($form) {
 	$formFields = $formFields->fetchAll();
 	$currentRole = $form["roleid"];
 	
-	$webpage = $twig->render('form-editor.html',['form' => $form, 'types' => $types, 'fields' => $formFields, 'roles' => $roles, 'sites' => $sites, 'message' => $message]);
+	$webpage = $twig->render('form-editor.html',['form' => $form, 'types' => $types, 'fields' => $formFields, 'roles' => $roles, 'sites' => $sites, 'error' => $error]);
 	echo "$webpage";
 }
 else {
@@ -80,12 +80,12 @@ else {
 
 function error($name, $label) {
 	if ($name == "") {
-		global $message;
-		$message = "Name cannot be empty";
+		global $error;
+		$error = "Name cannot be empty";
 	}
 	else if ($label == "") {
-		global $message;
-		$message = "Label cannot be empty";		
+		global $error;
+		$error = "Label cannot be empty";		
 	}
 	else {
 		return "";
@@ -94,11 +94,19 @@ function error($name, $label) {
 
 function editForm() {
 	global $form;
+	global $error;
 	
 	$formName = $_POST["formName"];
-	$roleId = $_POST["formRole"];
 	$forStudent = $_POST["forStudent"];
 	$siteVisible = $_POST["siteVisible"];
+	
+	if (isset($_POST["formRole"])) {
+		$roleId = $_POST["formRole"];
+	}
+	else {
+		$error = "Please select a role";
+		return;
+	}
 	
 	if ($roleId == 3 && $forStudent) {
 		$siteId = null;
@@ -107,24 +115,42 @@ function editForm() {
 		$siteId = $_POST["siteId"];
 	}
 	
+	if ($formName == '') {
+		$error = "Please enter a name";
+		return;
+	}
+	
 	// return false if form of same name
-	// $test = update_form($form["id"], $formName, $role, $forStudent);
+	$success = update_form($form["id"], $formName, $roleId, $forStudent, $siteVisible, $siteId);
 	
-	$test = update_form($form["id"], $formName, $roleId, $forStudent, $siteVisible, $siteId);
-	var_dump($test);
-	$id = $form["id"];
-	
-	header("Location: form-editor.php?form=$id");
+	if ($success) {
+		$id = $form["id"];
+		header("Location: form-editor.php?form=$id");
+	}
+	else {
+		$error = "A form with that name already exists";	
+	}
 }
 
 function addFormField() {
+	global $error;
 	global $form;
 	global $formId;
 	
-	$type = $_POST["type"];
 	$label = $_POST["label"];
-	$required = $_POST["required"];
+	if ($label == "") {
+		$error = "Please enter a label";
+		return;
+	}
+	
 	$name = $_POST["name"];
+	if ($name == "") {
+		$error = "Please enter a name";
+		return;
+	}
+	
+	$type = $_POST["type"];
+	$required = $_POST["required"];
 	$eol = $_POST["eol"];
 	$size = $_POST["size"];
 	
