@@ -668,6 +668,8 @@ function process_form_submission($user, $formid, $values, $siteid, $submission)
 		
         if ($formfield['type'] == 4)
         {
+            if ($value == "1")
+                $value = null;
         
             // File upload, need to pull info from the $_FILES array
             // It's possible the user did not select a file.
@@ -676,13 +678,14 @@ function process_form_submission($user, $formid, $values, $siteid, $submission)
                 if (is_uploaded_file($_FILES[$formfield['fieldname']]['tmp_name']))
                 {
                     $value = $_FILES[$formfield['fieldname']]['name'];
+                    
                     $file_contents = file_get_contents($_FILES[$formfield['fieldname']]['tmp_name']);
                     
                     $finfo = finfo_open(FILEINFO_MIME_TYPE);
                     $content_type = finfo_file($finfo, $_FILES[$formfield['fieldname']]['tmp_name']);
                     finfo_close($finfo);
-					
-					$size = filesize($_FILES[$formfield['fieldname']]['tmp_name']);
+                    
+                    $size = filesize($_FILES[$formfield['fieldname']]['tmp_name']);
                 }
                 else
                 {
