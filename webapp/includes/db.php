@@ -584,11 +584,11 @@ function submit_form_for_site($user, $formid, $values, $siteid)
     return process_form_submission ($user, $formid, $values, $siteid, $submission);
 }
 
-function submit_form_as_admin($user, $formid, $values, $siteid=null)
+function submit_form_as_admin($user, $formid, $values, $submission, $siteid=null)
 {
     global $pdo;
     
-    $submission = get_form_submission_for_site($formid, $siteid);
+    $submission = get_form_submission_by_id($submission);
     
     return process_form_submission ($submission['user'], $formid, $values, $siteid, $submission);
 }
@@ -732,7 +732,7 @@ function get_all_form_submissions ()
 {
     global $pdo;
 
-    $sql = "SELECT formsubmissions.*, forms.name, forms.roleid, forms.student FROM formsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id WHERE forms.archived=0 AND users.disabled = 0 ORDER BY `when` DESC";
+    $sql = "SELECT formsubmissions.*, forms.name, forms.roleid, forms.student, users.name as username, users.email FROM formsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id WHERE forms.archived=0 AND users.disabled = 0 ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
     
@@ -748,8 +748,8 @@ function get_form_submissions ($user)
 {
     global $pdo;
 
-    $sql = "SELECT formsubmissions.*, forms.name, forms.roleid, forms.student FROM formsubmissions,forms WHERE user=:user AND formid=forms.id AND forms.archived=0 ORDER BY `when` DESC";
-    
+    $sql = "SELECT formsubmissions.*, forms.name, forms.roleid, forms.student, users.name as username, users.email FROM formsubmissions INNER JOIN users ON formsubmissions.user = users.id INNER JOIN forms ON formsubmissions.formid = forms.id WHERE user=:user AND forms.archived=0 AND users.disabled = 0 ORDER BY `when` DESC";
+
     $stmt = $pdo->prepare($sql);
     
     $stmt->bindValue(':user', $user);

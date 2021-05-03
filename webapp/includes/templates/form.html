@@ -65,6 +65,9 @@
     {% if siteid %}
 	<input type='hidden' name='siteid' value='{{siteid}}'>
     {% endif %}
+    {% if submissionid %}
+	<input type='hidden' name='submissionid' value='{{submissionid}}'>
+    {% endif %}
 	
 	{% if not field.eol %}
 		</td></tr>

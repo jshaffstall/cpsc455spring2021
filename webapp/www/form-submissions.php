@@ -7,7 +7,15 @@ if (! ($user && $user['role'] == 1))
     exit();
 }
 
-$formSubmissions = get_all_form_submissions();
-//$formSubmissions = get_form_submissions(1);
-echo $twig->render('form-submissions.html', ['formSubmissions' => $formSubmissions]);
+$user = null;
+
+if (isset($_GET['user']))
+	$user = get_user_by_id($_GET['user']);
+
+if ($user)
+    $formSubmissions = get_form_submissions($user['id']);
+else
+    $formSubmissions = get_all_form_submissions();
+
+echo $twig->render('form-submissions.html', ['formSubmissions' => $formSubmissions, 'user' => $user]);
 
