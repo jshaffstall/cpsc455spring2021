@@ -50,9 +50,9 @@ if ($submitted)
 			
 			$students = get_users_for_site($site['id'], 2);
 			
-			foreach ($students as $student)
+			foreach ($students as $student2)
 			{
-				if ($student['id'] == $submitted['user'] && $form['sitevisible'])
+				if ($student2['id'] == $submitted['user'] && $form['sitevisible'])
 					$sitematch = True;
 			}
 		}
