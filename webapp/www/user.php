@@ -22,4 +22,4 @@ if (isset($_POST['delete'])) {
 	}
 }
 
-echo $twig->render('user.html', ['user' => $currentUser, 'error' => $error]);
+echo $twig->render('user.html', ['currentUser' => $currentUser, 'error' => $error]);
