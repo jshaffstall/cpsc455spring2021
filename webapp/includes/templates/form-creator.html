@@ -35,10 +35,9 @@
 		<div id="siteDropdown" style="visibility: hidden;">
 		<p> Site </p>
 		<select id="siteDropdown" name="siteId">
+            <option value="-1"> All Sites </option>
 			{% for site in sites %}
 				<option value="{{site.id}}"> {{site.name}} </option>
-			{% else %}
-				<option> No sites found </option>
 			{% endfor %}
 		</select>
 		</div>

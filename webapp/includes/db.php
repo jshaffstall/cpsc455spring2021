@@ -288,7 +288,7 @@ function get_site_forms_for_students($siteid)
 {
     global $pdo;
     
-    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=1 AND archived=0 AND siteid=:siteid ORDER BY name";
+    $sql = "SELECT * FROM forms WHERE roleid=3 AND student=1 AND archived=0 AND (siteid=:siteid OR siteid IS NULL) ORDER BY name";
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':siteid', $siteid);
     $stmt->execute ();
@@ -466,6 +466,7 @@ function add_form_field ($form, $type, $label, $name, $eol=True, $size=20, $requ
     $stmt->bindValue(':required', $required);
     
     $stmt->execute();
+    return True;
 }
 
 function delete_form_field($formfield)
@@ -552,6 +553,7 @@ function update_form_field($form, $formfield, $type, $label, $order, $name, $eol
     $stmt->bindValue(':required', $required);
     
     $stmt->execute();
+    return True;
 }
 
 function update_form_field_order($formfield, $order)
@@ -782,7 +784,7 @@ function get_student_form_submissions_for_site ($user, $site)
 {
     global $pdo;
 
-    $sql = "SELECT formsubmissions.*, forms.name, forms.roleid, forms.student FROM formsubmissions,forms WHERE user=:user AND formid=forms.id AND forms.archived=0 AND forms.siteid=:site AND roleid=3 AND student=1 ORDER BY `when` DESC";
+    $sql = "SELECT formsubmissions.*, forms.name, forms.roleid, forms.student FROM formsubmissions,forms WHERE user=:user AND formid=forms.id AND forms.archived=0 AND formsubmissions.siteid=:site AND roleid=3 AND student=1 ORDER BY `when` DESC";
     
     $stmt = $pdo->prepare($sql);
     
@@ -1063,6 +1065,7 @@ function update_site($site, $name)
     $stmt->bindValue(':name', $name);
     
     $stmt->execute();
+    return True;
 }
 
 function remove_site($site)

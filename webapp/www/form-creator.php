@@ -41,11 +41,10 @@ function createForm() {
 		return;
 	}
 	
-	if ($roleId == 3 && $forStudent) {
+	$siteId = null;
+    
+	if ($roleId == 3 && $forStudent && $_POST["siteId"] != "-1") {
 		$siteId = $_POST["siteId"];
-	}
-	else {
-		$siteId = null;
 	}
 	
 	if ($name == '') {

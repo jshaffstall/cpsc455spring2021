@@ -48,10 +48,9 @@
 			<div id="siteDropdown" style="visibility: hidden;">
 			<p> Site </p>
 			<select id="siteDropdown" name="siteId">
+                <option value="-1"> All Sites </option>
 				{% for site in sites %}
 					<option value="{{site.id}}" {% if form.siteid == site.id %} selected {% endif %}> {{site.name}} </option>
-				{% else %}
-					<option value="-1"> No sites found </option>
 				{% endfor %}
 			</select>
 			</div>
