@@ -520,6 +520,7 @@ function update_form($form, $name, $roleid, $forstudent, $sitevisible=false, $si
     $stmt->bindValue(':siteid', $siteid);
     
     $stmt->execute();
+    return True;
 }
 
 function update_form_field($form, $formfield, $type, $label, $order, $name, $eol=True, $size=20, $required=0)
